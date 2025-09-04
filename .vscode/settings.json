@@ -1,0 +1,29 @@
+{
+    // Use spaces, set tab size, and disable auto-detection for consistent formatting
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    // Use Prettier as the default formatter and format on save
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    // Language-specific overrides
+    "[json]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    "[javascript]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    "[css]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    "[html]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    // Additional formatting preferences
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": false
+}
