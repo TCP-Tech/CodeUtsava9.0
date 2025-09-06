@@ -21,9 +21,9 @@
         "swiper": "^11.2.10"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "^4.1.12",
+        "@tailwindcss/vite": "^4.1.13",
         "@vitejs/plugin-react": "^5.0.2",
-        "tailwindcss": "^4.1.0",
+        "tailwindcss": "^4.1.13",
         "vite": "^7.1.4"
     }
 }

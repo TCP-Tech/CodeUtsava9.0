@@ -3,23 +3,25 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative min-h-screen flex items-center justify-center inset-0  bg-black/40 will-change-transform"
+      className="relative min-h-screen flex items-center justify-center inset-0"
     >
         <SparkleLayer/>
-      <div className=" bg-fuchsia-950/60 p-10 rounded-2xl max-w-3xl text-center text-white">
-        <h2 className="text-4xl font-bold mb-7">About Us</h2>
-        <p className="text-lg leading-relaxed">
+      <div className="bg-gradient-to-r from-blue-500/30 via-pink-500/30 to-emerald-500/40 
+                bg-black/50 backdrop-blur-sm 
+                p-16 rounded-2xl max-w-5xl text-center text-white">
+        <h2 className="text-5xl mb-9">About Us</h2>
+        <p className="text-xl leading-relaxed">
           
-<span className="text-fuchsia-400 font-bold">CodeUtsava</span> is an annual event organized by the <span className="text-fuchsia-400 font-bold">Turing Club of Programmers</span>. 
+<span className="text-sky-400 font-bold">CodeUtsava</span> is an annual event organized by the <span className="text-emerald-300 font-bold">Turing Club of Programmers</span>. 
 This event aims to bring like-minded coders from all over the nation together, 
 and foster coding culture among the students of the institute through its diverse range of programs such as Workshops,
  Hackathon, Coding competitions, Gaming Battles, Mic Sessions and much more.
  <br />
 
-The most envisioned event of <span className="text-fuchsia-400 font-bold">CodeUtsava</span>, is the <span className="text-fuchsia-400 font-bold">Hackathon</span>. The event consists of a 28-hour-long hackathon
+The most envisioned event of <span className="text-pink-400 font-bold">CodeUtsava</span>, is the <span className="text-pink-400 font-bold">Hackathon</span>. The event consists of a 28-hour-long hackathon
  that witnesses various teams with participants from across the nation and all four years stirring for 
  making the best applications with the most appealing innovations. This year,  
- <span className="text-fuchsia-400 font-bold"> CodeUtsava</span> also boasts a prize pool of 33 Lakhs, with 1.5-2 Lakh cash prizes.
+ <span className="text-emerald-400 font-bold"> CodeUtsava</span> also boasts a prize pool of 33 Lakhs, with 1.5-2 Lakh cash prizes.
         </p>
     {/* Features section */}
       <div className="flex flex-col md:flex-row justify-center items-center gap-16 text-center mt-12 text-white">
@@ -29,7 +31,7 @@ The most envisioned event of <span className="text-fuchsia-400 font-bold">CodeUt
             xmlns="http://www.w3.org/2000/svg"
             width="40"
             height="40"
-            fill="fuchsia"
+            fill="#1e90ff"
             viewBox="0 0 16 16"
             className="mb-4"
           >
@@ -46,7 +48,7 @@ The most envisioned event of <span className="text-fuchsia-400 font-bold">CodeUt
             xmlns="http://www.w3.org/2000/svg"
             width="40"
             height="40"
-            fill="fuchsia"
+            fill="#ff0099"
             viewBox="0 0 16 16"
             className="mb-4"
           >
@@ -68,7 +70,7 @@ The most envisioned event of <span className="text-fuchsia-400 font-bold">CodeUt
             xmlns="http://www.w3.org/2000/svg"
             width="40"
             height="40"
-            fill="fuchsia"
+            fill="#00ff85"
             viewBox="0 0 16 16"
             className="mb-4"
           >

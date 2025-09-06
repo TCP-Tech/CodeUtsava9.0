@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
 import bgVideo from "../assets/background/carnival_bg.mp4"; 
-import FAQimg from "../assets/images/FAQimg.png";
+import FAQimg from "../assets/images/faq_img_2.png";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -99,7 +99,8 @@ export default function FAQ() {
 
 
         <Navbar/>
-      <div className="max-w-3xl w-full bg-gradient-to-r from-blue-400/40 via-pink-500/40 to-green-500/40 backdrop-blur-md rounded-2xl shadow-2xl p-8 my-16">
+      <div className="max-w-3xl w-full bg-gradient-to-r from-blue-500/30 via-pink-500/30 to-emerald-500/40 
+                bg-black/50 backdrop-blur-sm rounded-2xl shadow-2xl p-8 my-16">
         {/* Header */}
 <div className="flex flex-col items-center mb-12">
   {/* Top Heading */}
@@ -108,10 +109,10 @@ export default function FAQ() {
   </h1>
 
   {/* Bottom Row: text + image */}
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center w-full max-w-4xl">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center w-full max-w-5xl">
     {/* Left text */}
-    <p className="text-lg text-white font-['Unica One'] leading-relaxed">
-      <b className="font-['Protest Revolution'] text-3xl block mb-2">
+    <p className="text-lg text-white font-body font-semibold leading-relaxed">
+      <b className="font-body text-3xl block mb-2">
         Have a question?
       </b>
       New to hackathon? <br />
@@ -122,7 +123,7 @@ export default function FAQ() {
     <img
       src={FAQimg}
       alt=""
-      className="h-48 w-auto mx-auto object-contain"
+      className="h-65 w-auto mx-auto object-contain"
     />
   </div>
 </div>
@@ -131,34 +132,38 @@ export default function FAQ() {
         {/* Accordion */}
         <div className="space-y-4">
             
-          {faqs.map((faq, idx) => (
-            <div
-              key={idx}
-              className="border border-white/60 bg-gradient-to-r from-blue-500/80 via-pink-500/80 to-green-500/80 rounded-lg shadow-md"
-            >
-              <div
-                className="cursor-pointer flex justify-between items-center px-4 py-3 text-white font-['Unica One'] text-lg font-bold"
-                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-              >
-                {faq.q}
-                <span className="relative w-4 h-4 flex items-center justify-center">
-    {/* Horizontal bar */}
-    <span className="absolute w-4 h-0.5 bg-white transition-transform duration-300"></span>
-    {/* Vertical bar */}
-    <span
-      className={`absolute w-0.5 h-4 bg-white transition-all duration-300 ${
-        openIndex === idx ? "opacity-0 rotate-270" : "opacity-100 rotate-0"
-      }`}
-    ></span>
-  </span>
-              </div>
-              {openIndex === idx && (
-                <div className="px-4 py-3 bg-gradient-to-r from-blue-500/60 via-pink-500/60 to-green-500/60 text-white font-sans font-semibold text-base">
-                  {faq.a}
-                </div>
-              )}
-            </div>
-          ))}
+{faqs.map((faq, idx) => (
+  <div
+    key={idx}
+    className="p-[2px] rounded-lg bg-gradient-to-r from-blue-500 via-pink-500 to-emerald-500 mb-4"
+  >
+    <div className="bg-white/80 rounded-lg shadow-md">
+      <div
+        className="cursor-pointer flex justify-between items-center px-4 py-3 text-sky-600 font-['Unica One'] text-lg font-bold"
+        onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+      >
+        {faq.q}
+        <span className="relative w-4 h-4 flex items-center justify-center">
+          {/* Horizontal bar */}
+          <span className="absolute w-4 h-0.5 bg-sky-600 transition-transform duration-300"></span>
+          {/* Vertical bar */}
+          <span
+            className={`absolute w-0.5 h-4 bg-green-600 transition-all duration-300 ${
+              openIndex === idx ? "opacity-0 rotate-270" : "opacity-100 rotate-0"
+            }`}
+          ></span>
+        </span>
+      </div>
+      {openIndex === idx && (
+        <div className="px-4 py-3 bg-transparent text-pink-500/80 font-semibold font-body text-base">
+          {faq.a}
+        </div>
+      )}
+    </div>
+  </div>
+))}
+
+    
         </div>
       </div>
     </div>
