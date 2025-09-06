@@ -1,81 +1,34 @@
-import React, { useEffect, useRef } from "react";
-import bg from "../../assets/images/bg.png";
-import SocialRail from "../overlays/SocialRail.jsx";
-import RightRail from "../overlays/RightRail.jsx";
-import BottomCTAs from "../overlays/BottomCTAs.jsx";
+import React from "react";
+import bg_image from "../../assets/images/bg_image.webp";
+import bg_video from "../../assets/bg_video.webm";
+import SocialRail from "./SocialRail.jsx";
+import RightRail from "./RightRail.jsx";
+import BottomCTAs from "./BottomCTAs.jsx";
 import Fireworks from "../overlays/Fireworks.jsx";
 import SparkleLayer from "../overlays/SparkleLayer.jsx";
+import Navbar from "../navbar/Navbar.jsx"; // ⬅️ import Navbar here
+import BackgroundMedia from "../background/Background.jsx";
 
 export default function Hero() {
-    const bgRef = useRef(null);
-    const overlayRef = useRef(null);
-
-    // Smooth parallax
-    useEffect(() => {
-        let raf = 0;
-        const speed = 0.2;
-        const overlaySpeed = 0.1;
-
-        const onScroll = () => {
-            if (raf) return;
-            raf = requestAnimationFrame(() => {
-                const scrollY = window.scrollY;
-                if (bgRef.current) {
-                    bgRef.current.style.transform = `translate3d(0, ${-scrollY * speed}px, 0)`;
-                }
-                if (overlayRef.current) {
-                    overlayRef.current.style.transform = `translate3d(0, ${-scrollY * overlaySpeed}px, 0)`;
-                }
-                raf = 0;
-            });
-        };
-
-        window.addEventListener("scroll", onScroll, { passive: true });
-        onScroll();
-        return () => {
-            window.removeEventListener("scroll", onScroll);
-            if (raf) cancelAnimationFrame(raf);
-        };
-    }, []);
-
     return (
-        // select-none prevents any text selection inside the hero
-        <header className="relative overflow-hidden h-screen select-none" aria-label="Hero">
-            {/* === Background === */}
-            <div
-                ref={bgRef}
-                className="absolute inset-0 -z-30 will-change-transform"
-                style={{
-                    backgroundImage: `url(${bg})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat"
-                }}
-            />
+        // `isolate` creates a stacking context so absolute children (Navbar/Rails)
+        // are layered only within the Hero, not across the whole page.
+        <header className="relative isolate overflow-hidden h-screen select-none" aria-label="Hero">
+            {/* Fixed, reusable background (image → video, single darken overlay) */}
+            <BackgroundMedia imageSrc={bg_image} videoSrc={bg_video} darken={0.5} />
 
-            {/* === Overlay darkener === */}
-            <div ref={overlayRef} className="absolute inset-0 -z-20 bg-black/60 will-change-transform" />
+            {/* Navbar is now scoped to the Hero (absolute) */}
+            <Navbar />
 
-            {/* === Neon gradient overlay === */}
-            <div
-                className="absolute inset-0 -z-20 pointer-events-none"
-                style={{
-                    background:
-                        "linear-gradient(180deg, rgba(30,144,255,0.2) 0%, rgba(255,0,153,0.18) 55%, rgba(0,255,133,0.1) 100%)",
-                    mixBlendMode: "overlay"
-                }}
-            />
-
-            {/* === Bottom scrim === */}
-            <div className="scrim-bottom absolute inset-x-0 bottom-0 h-[70%] pointer-events-none -z-10" />
-
-            {/* === FX === */}
+            {/* FX (kept inside Hero so they don't bleed over other sections) */}
             <Fireworks />
             <SparkleLayer />
+
+            {/* Rails are absolute to Hero instead of fixed to viewport */}
             <SocialRail />
             <RightRail />
 
-            {/* === Hero Content (no box) === */}
+            {/* Hero Content (no box) */}
             <div className="relative z-10 h-full max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center">
                 <h2
                     className="text-3xl md:text-5xl font-arcade tracking-widest text-outline-soft"
@@ -101,6 +54,7 @@ export default function Hero() {
                 </p>
             </div>
 
+            {/* Bottom CTAs anchored to Hero only */}
             <BottomCTAs />
         </header>
     );

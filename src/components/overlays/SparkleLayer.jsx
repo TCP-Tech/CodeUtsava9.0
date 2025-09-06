@@ -48,7 +48,7 @@ export default function SparkleLayer() {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute inset-0 pointer-events-none -z-5 sparkle-canvas"
+            className="absolute inset-0 pointer-events-none -z-5 sparkle-layer__canvas"
         />
     );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { FiDownload as Download, FiMessageSquare as MessageSquare } from "react-icons/fi";
+import logo from "../../assets/images/codeutsava.png"; // Ensure proper import path
 
 const NavItem = ({ children, href = "#" }) => (
     <a
@@ -12,15 +13,24 @@ const NavItem = ({ children, href = "#" }) => (
 
 export default function Navbar() {
     return (
-        <div className="fixed top-0 inset-x-0 z-50">
+        // ⬇️ Was: fixed top-0 inset-x-0 z-50
+        // Now absolute so it's positioned w.r.t. the Hero (its positioned ancestor)
+        <div className="absolute top-0 inset-x-0 z-40">
             <div className="mx-auto max-w-7xl px-4">
-                {/* slim gradient hairline + glass body for contrast on busy images */}
-                <div className="mt-4 p-[1px] rounded-2xl" style={{ backgroundImage: "var(--brand-grad)" }}>
+                {/* slim gradient hairline + glass body */}
+                <div
+                    className="mt-4 p-[1px] rounded-2xl"
+                    style={{ backgroundImage: "var(--brand-grad)" }}
+                >
                     <nav className="rounded-[14px] bg-black/70 border border-white/10 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,.35)]">
                         <div className="flex items-center justify-between px-4 py-3">
                             {/* left: logo */}
                             <a href="#" className="font-arcade text-lg drop-shadow">
-                                <span className="bg-black/40 px-3 py-2 rounded-md border border-white/10">CC</span>
+                                <img
+                                    src={logo}
+                                    alt="Logo"
+                                    className="h-10 w-auto" // adjust sizing as needed
+                                />
                             </a>
 
                             {/* center: nav */}
