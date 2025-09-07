@@ -18,17 +18,8 @@
 body {
     background: var(--color-background);
     color: var(--color-muted);
-<<<<<<< HEAD
-    -webkit-tap-highlight-color: transparent; /* mobile tap highlight */
-    font-family: 'Roboto',sans-serif;
-}
-h1,h2,h3,h4{
-    font-family: 'Jockey One';
-    font-size: 60px;
-=======
     -webkit-tap-highlight-color: transparent;
     /* mobile tap highlight */
->>>>>>> upstream/dev
 }
 
 /* === Navbar outline gradient === */
