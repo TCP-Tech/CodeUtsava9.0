@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import Intro from "./components/intro/Intro.jsx";
+import Intro from "./components/intro/intro.jsx";
 import Navbar from "./components/navbar/Navbar.jsx";
 import Hero from "./components/hero/Hero.jsx";
 import Footer from "./components/footer/Footer.jsx";

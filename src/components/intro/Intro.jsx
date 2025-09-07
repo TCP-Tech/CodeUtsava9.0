@@ -9,14 +9,41 @@ export default function FixedScrollSplit() {
 
   // Handle scroll wheel without moving the page
   useEffect(() => {
-    const handleWheel = (e) => {
-      e.preventDefault(); // prevent page scroll
-      setScrollAmount((prev) => Math.min(Math.max(prev + e.deltaY *(0.15), 0), maxScroll));
-    };
+  let touchStartY = 0;
 
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    return () => window.removeEventListener("wheel", handleWheel);
-  }, []);
+  const handleWheel = (e) => {
+    e.preventDefault();
+    setScrollAmount((prev) =>
+      Math.min(Math.max(prev + e.deltaY * 0.5, 0), maxScroll)
+    );
+  };
+
+  const handleTouchStart = (e) => {
+    touchStartY = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e) => {
+    e.preventDefault();
+    const touchY = e.touches[0].clientY;
+    const deltaY = touchStartY - touchY; // swipe up = positive
+    touchStartY = touchY;
+
+    setScrollAmount((prev) =>
+      Math.min(Math.max(prev + deltaY * 0.5, 0), maxScroll)
+    );
+  };
+
+  window.addEventListener("wheel", handleWheel, { passive: false });
+  window.addEventListener("touchstart", handleTouchStart, { passive: false });
+  window.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+  return () => {
+    window.removeEventListener("wheel", handleWheel);
+    window.removeEventListener("touchstart", handleTouchStart);
+    window.removeEventListener("touchmove", handleTouchMove);
+  };
+}, []);
+
 
   // Animate top and bottom halves
   const topSpring = useSpring({
@@ -29,7 +56,7 @@ export default function FixedScrollSplit() {
 
   // Animate text and button opacity/position
   const textSpring = useSpring({
-    opacity: scrollAmount >= maxScroll ? 0 : 1,
+    opacity: 1-(scrollAmount) / (maxScroll/25) ,
     transform: `translateY(-${scrollAmount / 2}px)`, // move up with scroll
     config: { tension: 120, friction: 20 },
   });
