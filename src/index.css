@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-
 /* === Theme Colors === */
 @theme {
     --color-primary: #1e90ff;
@@ -30,6 +29,10 @@ body {
         var(--color-accent) 45%,
         var(--color-accent-2) 100%
     );
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 /* === Utilities === */
