@@ -1,38 +1,45 @@
-import React, { Component } from "react";
-import "./App.css";
+import React from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import Intro from "./components/intro/Intro.jsx";
+import Navbar from "./components/navbar/Navbar.jsx";
+import Hero from "./components/hero/Hero.jsx";
+import Footer from "./components/footer/Footer.jsx";
+import BottomCTAs from "./components/hero/BottomCTAs.jsx";
+import RightRail from "./components/hero/RightRail.jsx";
+import SocialRail from "./components/hero/SocialRail.jsx";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+function Layout() {
+  const location = useLocation();
 
-import ScrollToTop from "./ScrollToTop";
-import HomePage from "./pages/home/HomePage";
-// import TeamTCP from "./pages/teamTcp/TeamTcp"
-// import Error404 from "./pages/Error404/Error404"
-// import ContactUs from "./pages/contactUs/ContactUs"
-// import FAQs from "./pages/faqs/FAQs"
-// import Events from "./pages/events/Events"
-// import Speakers from "./pages/speakers/Speakers"
-// import Merchandise from "./pages/merchandise/Merchandise";
-// import CountDown from "./pages/countDown/CountDown";
-// import Games from "./pages/games/Games";
+  return (
+    <div className="flex flex-col min-h-screen">
+      {/* Navbar */}
+      {location.pathname !== "/" && <Navbar />}
 
-export default class App extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <ScrollToTop />
+      {/* Main content grows to fill space */}
+      <main className="flex-grow overflow-x-hidden">
         <Routes>
-          {/* <Route path="*" element={<Error404 />} /> */}
-          <Route path="/" element={<HomePage />} />
-          {/* <Route path="/team" element={<TeamTCP />} />
-            <Route path="/contactus" element={<ContactUs />} />
-            <Route path="/faqs" element={<FAQs />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/speakers" element={<Speakers />} />
-            <Route path="/merchandise" element={<Merchandise />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/countdown" element={<CountDown />} /> */}
+          <Route path="/" element={<Intro />} />
+          <Route path="/hero" element={<Hero />} />
+          {/* Add other routes here */}
         </Routes>
-      </BrowserRouter>
-    );
-  }
+      </main>
+
+      {/* Footer */}
+      {location.pathname !== "/" && <Footer />}
+
+      {/* Floating overlays */}
+      {location.pathname !== "/" && <BottomCTAs />}
+      {location.pathname !== "/" && <RightRail />}
+      {location.pathname !== "/" && <SocialRail />}
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
+  );
 }
