@@ -13,7 +13,7 @@ const IconChip = ({ children, href = "#" }) => (
 
 export default function SocialRail() {
     return (
-        <div className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-4">
+        <div className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-30 flex-col gap-4">
             <IconChip><FiFacebook /></IconChip>
             <IconChip><FiInstagram /></IconChip>
             <IconChip><FiTwitter /></IconChip>

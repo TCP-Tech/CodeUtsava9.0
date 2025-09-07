@@ -2,8 +2,8 @@ import React from "react";
 
 export default function BottomCTAs() {
     return (
-        <div className="pointer-events-none">
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col md:flex-row gap-4 px-4">
+        <div className="bottom-ctas pointer-events-none">
+            <div className="bottom-ctas__wrap absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col md:flex-row gap-4 px-4">
                 <a
                     href="#"
                     className="bottom-ctas__btn bottom-ctas__btn--primary pointer-events-auto px-5 py-3 rounded-xl shadow-lg font-semibold transition hover:opacity-95 animate-soft-pulse"
