@@ -1,10 +1,15 @@
 @import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
 
 /* === Theme Colors === */
 @theme {
-    --color-primary: #1e90ff; /* blue */
-    --color-accent: #ff0099; /* pink */
-    --color-accent-2: #00ff85; /* neon green */
+    --color-primary: #1e90ff;
+    /* blue */
+    --color-accent: #ff0099;
+    /* pink */
+    --color-accent-2: #00ff85;
+    /* neon green */
     --color-background: #0d0d0d;
     --color-muted: #e0e0e0;
 }
@@ -13,12 +18,17 @@
 body {
     background: var(--color-background);
     color: var(--color-muted);
+<<<<<<< HEAD
     -webkit-tap-highlight-color: transparent; /* mobile tap highlight */
     font-family: 'Roboto',sans-serif;
 }
 h1,h2,h3,h4{
     font-family: 'Jockey One';
     font-size: 60px;
+=======
+    -webkit-tap-highlight-color: transparent;
+    /* mobile tap highlight */
+>>>>>>> upstream/dev
 }
 
 /* === Navbar outline gradient === */
@@ -35,14 +45,19 @@ h1,h2,h3,h4{
 .font-arcade {
     font-family: "Press Start 2P", system-ui, sans-serif;
 }
+
 .vertical-rl {
     writing-mode: vertical-rl;
     text-orientation: mixed;
 }
-.icon-chip {
+
+/* BEM: Social rail icon */
+.social-rail__icon {
     backdrop-filter: blur(2px);
 }
-.rail-pill {
+
+/* BEM: Right rail pill */
+.right-rail__pill {
     backdrop-filter: blur(2px);
 }
 
@@ -52,16 +67,18 @@ h1,h2,h3,h4{
         1px 0 3px rgba(0, 0, 0, 0.85), -1px 0 3px rgba(0, 0, 0, 0.85),
         0 0 12px rgba(0, 0, 0, 0.55);
 }
+
 .text-outline-soft {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65), 0 -1px 2px rgba(0, 0, 0, 0.55);
 }
+
 .text-stroke-strong {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.6);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 12px rgba(0, 0, 0, 0.35);
 }
 
-/* === Bottom scrim (transparent → dark) === */
-.scrim-bottom {
+/* === Hero Bottom scrim (transparent → dark) === */
+.hero__scrim {
     background: linear-gradient(
         to top,
         rgba(0, 0, 0, 0.8) 0%,
@@ -76,10 +93,12 @@ h1,h2,h3,h4{
     100% {
         box-shadow: 0 0 8px var(--color-accent-2), 0 0 16px var(--color-primary);
     }
+
     50% {
         box-shadow: 0 0 6px var(--color-primary), 0 0 14px var(--color-accent);
     }
 }
+
 .marquee-lights {
     animation: bulbs 1.4s ease-in-out infinite;
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -93,17 +112,19 @@ h1,h2,h3,h4{
         opacity: 0.92;
         transform: translateY(0);
     }
+
     50% {
         opacity: 1;
         transform: translateY(-2px);
     }
 }
+
 .animate-soft-pulse {
     animation: softPulse 2.2s ease-in-out infinite;
 }
 
 /* === Sparkle layer positioning === */
-canvas.sparkle-canvas {
+canvas.sparkle-layer__canvas {
     position: absolute;
     inset: 0;
     z-index: -5;
