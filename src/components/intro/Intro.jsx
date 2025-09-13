@@ -137,12 +137,13 @@ export default function FixedScrollSplit() {
           <img
             src={ropeImg}
             alt="Pull the rope to open the curtain"
+            className="rope-img"
             draggable={false}
             style={{
               position: "absolute",
-              left: 500,
+              left: "50%",                         // always start in the center
+              transform: "translateX(-50%) scale(8)", // keep scaling here
               top: ropeY,
-              transform: "scale(8)",
               width: 64,
               height: 80,
               cursor: curtainLocked.current ? "default" : "grab",
@@ -239,6 +240,39 @@ export default function FixedScrollSplit() {
           background: "radial-gradient(ellipse at center, #000 0%, transparent 80%)"
         }}
       />
+     <style>{`
+        /* 📱 Mobile overrides */
+        @media (max-width: 768px) {
+            .rope-img {
+            left: 50% !important;
+            margin-top:90px;
+            transform: translateX(-50%) scale(7) !important;
+            width: 48px !important;
+            height: 64px !important;
+            }
+            .text-gradient {
+            position: relative !important;
+            top: 180px !important;
+            left: 0 !important;
+            text-align: center !important;
+            width: 100% !important;
+            font-size: 1.25rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .rope-img {
+            top: 80px !important;
+            transform: translateX(-50%) scale(3.2) !important;
+            width: 40px !important;
+            height: 54px !important;
+            }
+            .text-gradient {
+            font-size: 1rem !important;
+            top: 150px !important;
+            }
+        }
+        `}</style>
     </div>
   );
 }
