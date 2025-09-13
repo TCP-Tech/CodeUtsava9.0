@@ -1,66 +1,66 @@
-
 import { useState, useRef, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import Hero from "../hero/Hero.jsx";
+import ropeImg from "../../assets/images/rope.png";
 
 export default function FixedScrollSplit() {
 
   // Curtain state: 0 = fully closed, 1 = fully open
+  // Curtain state: 0 = fully closed, 1 = fully open
   const [curtain, setCurtain] = useState(0);
   const maxCurtain = 1;
   const minCurtain = 0;
-  const curtainStep = 0.04; // how much to open per scroll event
-  const touchStartY = useRef(0);
   const curtainLocked = useRef(false); // lock after fully open
 
-  // Handle scroll and touch to open/close curtain
-  useEffect(() => {
-    const handleWheel = (e) => {
-      e.preventDefault();
-      setCurtain((prev) => {
-        if (curtainLocked.current) return prev;
-        let next = prev + (e.deltaY > 0 ? curtainStep : 0); // Only open
-        if (next >= maxCurtain) {
-          curtainLocked.current = true;
-          return maxCurtain;
-        }
-        return Math.max(minCurtain, Math.min(maxCurtain, next));
-      });
-    };
+  // Rope drag state
+  const [ropeY, setRopeY] = useState(0); // px from top
+  const ropeStartY = useRef(null);
+  const dragStartY = useRef(null);
+  const maxRopePull = 300; // px to fully open
+  const curtainStep = 0.04; // how much to open per scroll event
+  const touchStartY = useRef(0);
 
-    const handleTouchStart = (e) => {
-      if (e.touches && e.touches.length > 0) {
-        touchStartY.current = e.touches[0].clientY;
-      }
-    };
+  // Drag handlers for the rope
+  const handleRopeDragStart = (e) => {
+    if (curtainLocked.current) return;
+    if (e.type === "touchstart") {
+      dragStartY.current = e.touches[0].clientY;
+    } else {
+      dragStartY.current = e.clientY;
+    }
+    ropeStartY.current = ropeY;
+    document.addEventListener("mousemove", handleRopeDragMove);
+    document.addEventListener("mouseup", handleRopeDragEnd);
+    document.addEventListener("touchmove", handleRopeDragMove, { passive: false });
+    document.addEventListener("touchend", handleRopeDragEnd);
+  };
 
-    const handleTouchMove = (e) => {
-      e.preventDefault();
-      if (e.touches && e.touches.length > 0) {
-        const touchY = e.touches[0].clientY;
-        const deltaY = touchStartY.current - touchY;
-        touchStartY.current = touchY;
-        setCurtain((prev) => {
-          if (curtainLocked.current) return prev;
-          let next = prev + (deltaY > 0 ? curtainStep : 0); // Only open
-          if (next >= maxCurtain) {
-            curtainLocked.current = true;
-            return maxCurtain;
-          }
-          return Math.max(minCurtain, Math.min(maxCurtain, next));
-        });
-      }
-    };
+  const handleRopeDragMove = (e) => {
+    if (curtainLocked.current) return;
+    let clientY;
+    if (e.type === "touchmove") {
+      clientY = e.touches[0].clientY;
+    } else {
+      clientY = e.clientY;
+    }
+    let delta = clientY - dragStartY.current;
+    let newY = Math.max(0, Math.min(maxRopePull, ropeStartY.current + delta));
+    setRopeY(newY);
+    setCurtain(newY / maxRopePull);
+    if (newY >= maxRopePull) {
+      curtainLocked.current = true;
+    }
+    e.preventDefault && e.preventDefault();
+  };
 
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: false });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, []);
+  const handleRopeDragEnd = () => {
+    document.removeEventListener("mousemove", handleRopeDragMove);
+    document.removeEventListener("mouseup", handleRopeDragEnd);
+    document.removeEventListener("touchmove", handleRopeDragMove);
+    document.removeEventListener("touchend", handleRopeDragEnd);
+    // Snap rope to bottom if fully open
+    if (ropeY >= maxRopePull) setRopeY(maxRopePull);
+  };
 
   // Curtain animation: left and right panels slide out horizontally
   // Sway effect: edge of curtain sways as it opens
@@ -88,7 +88,7 @@ export default function FixedScrollSplit() {
     transform: `scale(${1 - curtain * 0.1}) translateY(-${curtain * 30}px)`,
     config: { tension: 120, friction: 20 },
   });
-
+  
   const curtainBase = {
     background: `
       linear-gradient(90deg, #7a0d0d 0%, #A11515 10%, #7a0d0d 20%, #A11515 30%, #7a0d0d 40%, #A11515 50%, #7a0d0d 60%, #A11515 70%, #7a0d0d 80%, #A11515 90%, #7a0d0d 100%),
@@ -117,6 +117,53 @@ export default function FixedScrollSplit() {
       <div className="absolute top-0 left-0 w-full h-full z-0">
         <Hero />
       </div>
+
+      <animated.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 flex flex-col items-center space-y-6"
+        style={textSpring}
+      >
+        
+        {/* Rope puller */}
+        <div
+          style={{
+            position: "relative",
+            width: 64,
+            height: maxRopePull + 80,
+            marginTop: -600,
+            userSelect: "none",
+            zIndex: 50,
+          }}
+        >
+          <img
+            src={ropeImg}
+            alt="Pull the rope to open the curtain"
+            draggable={false}
+            style={{
+              position: "absolute",
+              left: 500,
+              top: ropeY,
+              transform: "scale(8)",
+              width: 64,
+              height: 80,
+              cursor: curtainLocked.current ? "default" : "grab",
+              transition: curtainLocked.current ? "top 0.3s" : "none",
+              zIndex: 51,
+              filter: curtainLocked.current ? "grayscale(0.7)" : "none",
+            }}
+            onMouseDown={handleRopeDragStart}
+            onTouchStart={handleRopeDragStart}
+          />
+          
+        </div>
+        <div
+            className="text-black text-3xl font-arcade italic uppercase tracking-wider select-none text-gradient bg-clip-text text-transparent transition-opacity duration-300 ease-in-out"
+            style={{ opacity: curtainLocked.current ? 0 : 1, WebkitTextStroke: '1px black', position: 'relative', top: '180px', left: '20px' }}
+            >
+            Pull the rope to open
+            <style>{`.text-gradient{background-image:linear-gradient(90deg,#FFD54F,#FF8F00);background-size:200% 100%;animation:shimmer 3s linear infinite}@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}`}</style>
+        </div>
+
+      </animated.div>
 
       {/* Left Curtain with gold trim and pleats */}
       <animated.div
@@ -192,17 +239,6 @@ export default function FixedScrollSplit() {
           background: "radial-gradient(ellipse at center, #000 0%, transparent 80%)"
         }}
       />
-      {/* Centered intro text and button */}
-      <animated.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 flex flex-col items-center space-y-6"
-        style={textSpring}
-      >
-        <div className="flex flex-col items-center">
-            <h1 className="text-amber-400 [text-shadow:_2px_2px_0_#000,_-2px_-2px_0_#000,_2px_-2px_0_#000,_-2px_2px_0_#000] text-5xl sm:text-4xl md:text-5xl font-[Great_Vibes] text-center">
-                Scroll To Reveal
-            </h1>
-    </div>
-      </animated.div>
     </div>
   );
 }
