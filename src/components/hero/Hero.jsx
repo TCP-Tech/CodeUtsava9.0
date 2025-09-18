@@ -9,27 +9,50 @@ import BackgroundMedia from "../background/Background.jsx";
 
 export default function Hero() {
     return (
-        <header className="relative isolate overflow-hidden h-screen select-none" aria-label="Hero">
-            <BackgroundMedia imageSrc={bg_image} videoSrc={bg_video} darken={0.5} />
-            <Navbar />
-            <SocialRail />
-            <RightRail />
-            <div className="relative z-10 h-full max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center">
-                <h2 className="text-3xl md:text-5xl font-arcade tracking-widest text-outline-soft" style={{ color: "var(--color-primary)" }}>
-                    WELCOME TO
-                </h2>
-                <h1 className="mt-5 font-arcade text-4xl md:text-7xl leading-tight [letter-spacing:4px] text-white text-stroke-strong" style={{ whiteSpace: "nowrap" }}>
-                    CODEUTSAVA 9.0
-                </h1>
-                <p className="mt-8 text-2xl md:text-4xl font-semibold tracking-wide text-white text-outline-strong">
-                    CODE. INNOVATE. CELEBRATE.
-                </p>
-                <p className="mt-4 text-sm md:text-lg tracking-[0.2em] text-white text-outline-strong">
-                    CENTRAL INDIA’S <span style={{ color: "var(--color-accent-2)" }}>LARGEST CODING EVENT.</span> JOIN US ON{" "}
-                    <b style={{ color: "var(--color-primary)" }}>10—11 OCTOBER.</b>
-                </p>
+        <header
+            className="relative isolate overflow-hidden h-screen select-none"
+            aria-label="Hero"
+        >
+            {/* Background should ignore cursor events */}
+            <div className="absolute inset-0 pointer-events-none">
+                <BackgroundMedia
+                    imageSrc={bg_image}
+                    videoSrc={bg_video}
+                    darken={0.5}
+                />
             </div>
-            <BottomCTAs />
+
+            {/* Foreground gets cursor events */}
+            <div className="relative z-10 pointer-events-auto h-full flex flex-col">
+                <Navbar />
+                <SocialRail />
+                <RightRail />
+
+                <div className="flex-1 max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center">
+                    <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-arcade tracking-widest text-outline-soft text-primary">
+                        WELCOME TO
+                    </h2>
+
+                    <h1 className="mt-4 font-arcade text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight text-white text-stroke-strong break-words px-2">
+                        CODEUTSAVA 9.0
+                    </h1>
+
+                    <p className="mt-6 text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold tracking-wide text-white text-outline-strong">
+                        CODE. INNOVATE. CELEBRATE.
+                    </p>
+
+                    <p className="mt-4 text-xs sm:text-sm md:text-base lg:text-lg tracking-wide text-white text-outline-strong px-2">
+                        CENTRAL INDIA’S{" "}
+                        <span className="text-accent-2">
+                            LARGEST CODING EVENT.
+                        </span>{" "}
+                        JOIN US ON{" "}
+                        <b className="text-primary">10—11 OCTOBER.</b>
+                    </p>
+                </div>
+
+                <BottomCTAs />
+            </div>
         </header>
     );
 }

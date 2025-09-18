@@ -7,24 +7,35 @@ export default function BackgroundMedia({ imageSrc, videoSrc, darken = 0.45, cla
     useEffect(() => {
         const vid = videoRef.current;
         if (!vid) return;
+
         const handleCanPlayThrough = () => {
             setVideoReady(true);
-            vid.play?.().catch(() => { });
+            vid.play?.().catch(() => {});
         };
+
         vid.muted = true;
         vid.playsInline = true;
         vid.addEventListener("canplaythrough", handleCanPlayThrough, { once: true });
+
         return () => vid.removeEventListener("canplaythrough", handleCanPlayThrough);
     }, []);
 
     return (
-        <div className={`fixed inset-0 -z-50 pointer-events-none select-none ${className}`} aria-hidden="true">
+        <div
+            className={`fixed inset-0 -z-50 pointer-events-none select-none ${className}`}
+            aria-hidden="true"
+        >
+            {/* Fallback image while video loads */}
             <img
                 src={imageSrc}
                 alt=""
-                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoReady ? "opacity-0" : "opacity-100"}`}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                    videoReady ? "opacity-0" : "opacity-100"
+                }`}
                 draggable="false"
             />
+
+            {/* Background video */}
             <video
                 ref={videoRef}
                 src={videoSrc}
@@ -33,10 +44,16 @@ export default function BackgroundMedia({ imageSrc, videoSrc, darken = 0.45, cla
                 loop
                 muted
                 playsInline
-                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${videoReady ? "opacity-100" : "opacity-0"}`}
-                style={{ pointerEvents: "none" }}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                    videoReady ? "opacity-100" : "opacity-0"
+                }`}
             />
-            <div className="absolute inset-0" style={{ backgroundColor: `rgba(0,0,0,${Number(darken) || 0})` }} />
+
+            {/* Dark overlay */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ backgroundColor: `rgba(0,0,0,${Number(darken) || 0})` }}
+            />
         </div>
     );
 }
