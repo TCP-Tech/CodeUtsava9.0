@@ -38,7 +38,7 @@ export default function Navbar() {
                                 <NavItem>HOME</NavItem>
                                 <NavItem>ABOUT US</NavItem>
                                 <NavItem>FAQ</NavItem>
-                                <NavItem>CONTACT US</NavItem>
+                                <NavItem >CONTACT US</NavItem>
                                 <NavItem>TEAM</NavItem>
                             </div>
 

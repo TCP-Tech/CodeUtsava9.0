@@ -18,6 +18,7 @@
         "@mui/icons-material": "^7.3.2",
         "@mui/material": "^7.3.2",
         "@react-spring/web": "^10.0.1",
+        "@studio-freight/lenis": "^1.0.42",
         "framer-motion": "^12.23.12",
         "motion": "^12.23.12",
         "react": "^19.1.0",

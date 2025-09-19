@@ -4,6 +4,12 @@ import Hero from "../../components/hero/Hero.jsx";
 import Footer from "../../components/footer/Footer.jsx";
 import Fireworks from "../../components/overlays/Fireworks.jsx";
 import SparkleLayer from "../../components/overlays/SparkleLayer.jsx";
+import Lastyear from "../../components/LYparticipation/Lastyear.jsx";
+import AboutUS from "../../components/aboutUS/AboutUS.jsx";
+import Sponsors from "../../components/Sponsors/Spons.jsx";
+import Timeline from "../../components/timeline/Timeline.jsx";
+import GRandAN from "../../components/graphs&Analytics/GRandAN.jsx";
+import Guide from "../../components/guidelines/Guide.jsx";
 
 export default function Home({ skipIntro = false }) {
     const [revealed, setRevealed] = useState(skipIntro);
@@ -46,7 +52,7 @@ export default function Home({ skipIntro = false }) {
     return (
         <>
             {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
-            <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 15 }}>
+            <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
                 <SparkleLayer />
                 <Fireworks />
             </div>
@@ -56,6 +62,12 @@ export default function Home({ skipIntro = false }) {
             ) : (
                 <>
                     <Hero />
+                    <Lastyear />
+                    <AboutUS />
+                    <Sponsors />
+                    <Timeline />
+                    <Guide />
+                    <GRandAN />
                     <Footer />
                 </>
             )}
