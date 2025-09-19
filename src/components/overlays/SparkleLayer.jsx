@@ -12,7 +12,6 @@ export default function SparkleLayer() {
             canvas.height = window.innerHeight;
         };
         resize();
-
         window.addEventListener("resize", resize);
 
         const sparkles = Array.from({ length: 100 }).map(() => ({
@@ -26,29 +25,18 @@ export default function SparkleLayer() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             sparkles.forEach(s => {
                 s.y -= s.speed;
-                if (s.y < 0) {
-                    s.y = canvas.height;
-                    s.x = Math.random() * canvas.width;
-                }
-
+                if (s.y < 0) { s.y = canvas.height; s.x = Math.random() * canvas.width; }
                 ctx.beginPath();
                 ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
                 ctx.fillStyle = "rgba(255,255,255,0.6)";
                 ctx.fill();
             });
-
             requestAnimationFrame(loop);
         };
-
         loop();
 
         return () => window.removeEventListener("resize", resize);
     }, []);
 
-    return (
-        <canvas
-            ref={canvasRef}
-            className="absolute inset-0 pointer-events-none -z-5 sparkle-layer__canvas"
-        />
-    );
+    return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none sparkle-layer__canvas" />;
 }
