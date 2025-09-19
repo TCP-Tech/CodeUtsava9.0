@@ -48,7 +48,7 @@ const gold = [
 const partners = [
   {
     img: sponser9,
-    alt: "ETHINDIA LOGO"
+    alt: "ETHINDIA LOGO",
   },
   {
     img: sponser10,

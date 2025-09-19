@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import FWClickOnly from "/src/components/overlays/FW(ClickOnly).jsx";
 import NIT from "../../assets/images/NIT.webp";
 import tcpName from "../../assets/images/tcpName.png";
 import codeutsava from "../../assets/images/codeutsava.png";
@@ -14,7 +14,7 @@ const Footer = () => {
                  border-t border-white/10"
     >
       
-      
+      <FWClickOnly/>
       {/* Top Section */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-8">
         {/* Logos */}
