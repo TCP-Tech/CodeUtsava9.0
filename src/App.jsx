@@ -7,6 +7,7 @@ import Footer from "./components/footer/Footer.jsx";
 import BottomCTAs from "./components/hero/BottomCTAs.jsx";
 import RightRail from "./components/hero/RightRail.jsx";
 import SocialRail from "./components/hero/SocialRail.jsx";
+import Timeline from "./components/timeline/Timeline.jsx";
 
 function Layout() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Intro />} />
           <Route path="/hero" element={<Hero />} />
+          <Route path="/timeline" element={<Timeline/>} />
           {/* Add other routes here */}
         </Routes>
       </main>
