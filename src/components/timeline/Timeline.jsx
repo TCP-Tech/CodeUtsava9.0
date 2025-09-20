@@ -35,18 +35,18 @@ const Timeline = () => {
 
             const vh = window.innerHeight;
             const scrollY = window.scrollY;
-            const docEl = document.documentElement;
-            const scrollMax =
-                (docEl.scrollHeight || document.body.scrollHeight);
 
             // Start when viewport bottom meets rail top
-            const start = railTop - (window.innerHeight - TOP_OFFSET);
-            // End when the cart would reach the rail bottom, OR page end (whichever comes first)
-            const end = Math.min(railTop + railHeight - cartH);
+            const start = railTop - vh + TOP_OFFSET;
+            // End when we've scrolled enough for the cart to reach the bottom
+            const end = railTop + railHeight - vh + TOP_OFFSET;
 
-            const raw = (scrollY - start) / Math.max(1, end - start);
+            // Calculate progress based on scroll position
+            const scrollRange = Math.max(1, end - start);
+            const raw = (scrollY - start) / scrollRange;
             const clamped = Math.max(0, Math.min(1, raw));
 
+            // Apply the transform
             cartRef.current.style.transform = `translate(-50%, ${
                 clamped * maxY
             }px)`;
@@ -58,11 +58,14 @@ const Timeline = () => {
                 active = anyVisible;
                 handleScroll()
             },
-            { threshold: 0.2 }
+            { threshold: 0.1 }
         );
 
-        const cards = document.querySelectorAll(".codeutsava__timeline-card");
-        cards.forEach((el) => io.observe(el));
+        // Observe the timeline section instead of individual cards for better performance
+        const timelineSection = document.getElementById('timeline');
+        if (timelineSection) {
+            io.observe(timelineSection);
+        }
 
         window.addEventListener("scroll", handleScroll, { passive: true });
         window.addEventListener("resize", handleScroll, { passive: true });
@@ -70,6 +73,7 @@ const Timeline = () => {
         const img = cartRef.current?.querySelector("img");
         if (img && !img.complete) img.addEventListener("load", handleScroll);
 
+        // Initial call
         handleScroll();
 
         return () => {
@@ -94,7 +98,7 @@ const Timeline = () => {
           text-3xl md:text-5xl text-center font-arcade tracking-widest
           mt-10 mb-8
         "
-                style={{ color: "var(--color-primary)" }}
+                style={{ color: "white" }}
             >
                 TIMELINE
             </h2>
@@ -105,7 +109,7 @@ const Timeline = () => {
                 className="codeutsava__timeline-rail absolute left-1/2 -translate-x-1/2 w-[28px] rounded-lg pointer-events-none"
                 style={{
                     top: TOP_OFFSET,
-                    bottom: 0,
+                    bottom: 50,
                     backgroundImage:
                         "repeating-linear-gradient(to bottom, transparent 0 28px, rgba(255,255,255,0.18) 28px 32px)",
                 }}
@@ -131,8 +135,8 @@ const Timeline = () => {
                 ref={cartRef}
                 className="
           codeutsava__timeline-cart
-          absolute left-[790px] -translate-x-1/2 z-10
-          transition-transform duration-300 ease-out
+          absolute left-[808px] -translate-x-1/2 z-10
+          transition-transform duration-75 ease-out
           pointer-events-none
         "
                 style={{ top: TOP_OFFSET, transform: "translate(-50%, 0px)" }}
@@ -140,7 +144,7 @@ const Timeline = () => {
                 <img
                     src={rollerCoasterUrl}
                     alt="cart"
-                    className="h-12 w-12 md:h-14 md:w-14"
+                    className="h-24 w-24 md:h-20 md:w-20"
                 />
             </div>
 
@@ -163,7 +167,7 @@ const Timeline = () => {
                         }}
                         contentClassName="!p-0 !bg-transparent !shadow-none"
                         date={element.date}
-                        dateClassName="text-white/90 text-[18px] md:text-[20px] tracking-wide font-medium"
+                        dateClassName="!text-white/95 !text-[16px] md:!text-[18px] lg:!text-[20px] !leading-tight tracking-wide font-semibold"
                         className="codeutsava__timeline-item"
                     >
                         <div className="codeutsava__timeline-card relative rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-accent-2)] shadow-[0_10px_28px_rgba(0,0,0,0.45)]">

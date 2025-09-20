@@ -38,26 +38,28 @@ export default function Navbar() {
                                 <NavItem>HOME</NavItem>
                                 <NavItem>ABOUT US</NavItem>
                                 <NavItem>FAQ</NavItem>
-                                <NavItem>CONTACT US</NavItem>
+                                <NavItem >CONTACT US</NavItem>
                                 <NavItem>TEAM</NavItem>
                             </div>
 
                             {/* right: actions */}
                             <div className="flex items-center gap-3">
                                 <a
-                                    href="#"
+                                    href="https://docs.google.com/forms/d/e/1FAIpQLSfHv8OJ7jkp9thPyPx1HrWJNPoGZ2z7FaFtIqpz7lO3dIqqgg/viewform?pli=1"
                                     className="flex items-center gap-2 text-white font-semibold px-4 py-2 rounded-xl transition hover:opacity-90"
                                     style={{ background: "var(--color-accent)" }}
                                 >
                                     <MessageSquare className="shrink-0" /> FEEDBACK
                                 </a>
                                 <a
-                                    href="#"
+                                    href="/Brochure.pdf" 
+                                    download="CodeUtsava-Brochure.pdf" 
                                     className="flex items-center gap-2 text-black font-semibold px-4 py-2 rounded-xl transition hover:opacity-90"
                                     style={{ background: "var(--color-accent-2)" }}
                                 >
                                     <Download className="shrink-0" /> BROCHURE
                                 </a>
+
                             </div>
                         </div>
                     </nav>
