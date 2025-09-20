@@ -8,7 +8,7 @@
   background-color: #00000080;
   width: 100%;
   min-height: 100vh;
-  border-radius: 25px;
+  /* border-radius: 25px; */
   overflow: hidden;
   align-items: center;
   justify-content: center;
@@ -19,6 +19,11 @@
 .rye-regular {
   font-family: "Rye", serif;
   font-weight: 400;
+  font-style: normal;
+}
+.quicksand-regular {
+  font-family: "Quicksand", serif;
+  font-weight: 200;
   font-style: normal;
 }
 
@@ -37,7 +42,7 @@
   max-width: 550px;
   text-align: center;
   color: #fff;
-  margin: 1rem;
+  margin-inline: 9rem;
 }
 
 .about-3d {
@@ -55,6 +60,7 @@
   .about-3d {
     max-width: 90%;
     aspect-ratio: 1 / 1;  /* still square but shrinks nicely */
+    margin-top: 120px;
   }
 }
 
@@ -74,10 +80,13 @@
 }
 
 .about-text {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  background-color: #000000ac;
   line-height: 1.6;
-  width: 120%;
+  width: 140%;
   margin-block: 3rem;
+  margin-inline: -5rem;
+  margin-top: 70px;
   text-shadow: 1px 1px 2px #000;
 }
 
@@ -94,7 +103,17 @@
     font-size: 1rem;
     margin-top: 90px;
     width: 100%;
+    margin-inline: auto;
   }
+
+  .about-content {
+  position: relative;
+  z-index: 2;
+  max-width: 550px;
+  text-align: center;
+  color: #fff;
+  margin-inline: 2rem;
+}
 }
 @media (max-width: 1069px) {
   .about-title {
@@ -109,6 +128,16 @@
     font-size: 1.3rem;
     text-align: center;
     margin-top: 80px;
+    margin-inline: auto;
     width: 100%;
   }
+
+  .about-content {
+  position: relative;
+  z-index: 2;
+  max-width: 550px;
+  text-align: center;
+  color: #fff;
+  margin-inline: 2rem;
+}
 }

@@ -40,7 +40,7 @@ const Spons = () => {
     const slideX = useTransform(scrollYProgress, [flipEnd, 1], ["0%", "-100%"]);
 
     /** ---------- PHASE 3 : FADE OUT WHEN NEXT SECTION ARRIVES ---------- **/
-    const fadeOut = useTransform(scrollYProgress, [1.0,2.0], [1, 0]);
+    const fadeOut = useTransform(scrollYProgress, [0.95,1.0], [1, 0]);
 
     /** ---------- HELPERS ---------- **/
     const getRandomImage = (idx) => {
