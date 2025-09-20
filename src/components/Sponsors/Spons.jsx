@@ -62,10 +62,8 @@ const Spons = () => {
                 <BackgroundMedia imageSrc={bg_image} videoSrc={bg_video} darken={0.5} />
 
                 {/* Sticky container that locks while flipping */}
-                <div
-                    className={`${isFixed ? "fixed -top-0.1 w-full" : "relative"
-                        } top-0 h-screen flex flex-col items-center justify-center bg-transparent`}
-                >
+ <div className="sticky top-0 h-screen flex flex-col items-center justify-center bg-transparent">
+
                     <h1 className="font-arcade text-5xl text-white mb-25 text-center max-md:mt-70">
                         Our Sponsors
                     </h1>
