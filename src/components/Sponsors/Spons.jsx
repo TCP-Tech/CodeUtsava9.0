@@ -40,7 +40,7 @@ const Spons = () => {
     const slideX = useTransform(scrollYProgress, [flipEnd, 1], ["0%", "-100%"]);
 
     /** ---------- PHASE 3 : FADE OUT WHEN NEXT SECTION ARRIVES ---------- **/
-    const fadeOut = useTransform(scrollYProgress, [0.98, 1.0], [1, 0]);
+    const fadeOut = useTransform(scrollYProgress, [1.0,2.0], [1, 0]);
 
     /** ---------- HELPERS ---------- **/
     const getRandomImage = (idx) => {
@@ -70,9 +70,9 @@ const Spons = () => {
 
                 <motion.div
                     className={`${isFixed ? "fixed top-0 w-full" : "relative"} h-screen flex flex-col items-center justify-center bg-transparent`}
-                    style={{ opacity: fadeOut }}
+                    style={{ opacity: fadeOut}}
                 >
-                    <h1 className="font-arcade text-5xl text-white mb-25 text-center max-md:mt-20">
+                    <h1 className="text-6xl text-white mb-25 text-center max-md:mt-5 rye-regular">
                         Our Sponsors
                     </h1>
 
@@ -138,7 +138,7 @@ const Spons = () => {
                                                             backgroundImage: `url(${getRandomImage(idx)})`,
                                                             backgroundSize: "cover",
                                                             backgroundPosition: "center",
-                                                            margin: "8px",
+                                                            margin: "2px",
                                                             borderRadius: "0.75rem",
                                                         }}
                                                     />

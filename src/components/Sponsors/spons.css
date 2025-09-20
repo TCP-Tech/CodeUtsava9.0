@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Rye&display=swap');
+
+
 .topshadow {
   box-shadow: 
     inset 0 10px 15px rgb(0, 0, 0),
@@ -13,4 +16,10 @@
 
 .shadowbg{
     background: radial-gradient(circle at center, rgba(0, 0, 0, 0.303), rgba(0, 0, 0, 0.868));
+}
+
+.rye-regular {
+  font-family: "Rye", serif;
+  font-weight: 400;
+  font-style: normal;
 }
