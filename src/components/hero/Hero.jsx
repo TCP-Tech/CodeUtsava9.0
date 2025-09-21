@@ -29,11 +29,11 @@ export default function Hero() {
                 <RightRail />
 
                 <div className="flex-1 max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center">
-                    <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary">
+                    <h2 className="text-xl sm:text-4xl md:text-6xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary">
                         WELCOME TO
                     </h2>
 
-                    <h1 className="mt-4 font-rye text-3xl sm:text-5xl md:text-6xl lg:text-8xl leading-tight text-white text-stroke-strong break-words px-2">
+                    <h1 className="mt-4 font-rye text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight text-white text-stroke-strong break-words px-2">
                         CODEUTSAVA 9.0
                     </h1>
 
