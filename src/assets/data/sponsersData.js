@@ -30,6 +30,25 @@ const platinum = [
   {
     img: sponser2,
   },
+  // Repeated just to check scrolling effect
+  {
+    img: sponser4,
+  },
+  {
+    img: sponser6,
+  },
+  {
+    img: sponser15,
+  },
+  {
+    img: sponser16,
+  },
+  {
+    img: sponser1,
+  },
+  {
+    img: sponser2,
+  },
 ];
 
 const gold = [
