@@ -40,11 +40,7 @@ const Spons = () => {
     const slideX = useTransform(scrollYProgress, [flipEnd, 1], ["0%", "-100%"]);
 
     /** ---------- PHASE 3 : FADE OUT WHEN NEXT SECTION ARRIVES ---------- **/
-<<<<<<< HEAD
-    const fadeOut = useTransform(scrollYProgress, [0.98, 1.0], [1, 0]);
-=======
     const fadeOut = useTransform(scrollYProgress, [0.95,1.0], [1, 0]);
->>>>>>> c7b4e91efaba091524a365d0fb2712ac64b82a37
 
     /** ---------- HELPERS ---------- **/
     const getRandomImage = (idx) => {
@@ -115,14 +111,8 @@ const Spons = () => {
                                             >
                                                 {/* Back */}
                                                 <div
-<<<<<<< HEAD
-                                                    className={`absolute w-full h-full ${
-                                                        idx % 2 === 0 ? "mx-2" : "mx-5"
-                                                    } rounded-xl overflow-hidden`}
-=======
                                                     className={`absolute w-full h-full ${idx % 2 === 0 ? "mx-2" : "mx-5"
                                                         } rounded-xl overflow-hidden`}
->>>>>>> c7b4e91efaba091524a365d0fb2712ac64b82a37
                                                     style={{ backfaceVisibility: "hidden" }}
                                                 >
                                                     <img
@@ -134,14 +124,8 @@ const Spons = () => {
 
                                                 {/* Front */}
                                                 <div
-<<<<<<< HEAD
-                                                    className={`absolute w-full h-full ${
-                                                        idx % 2 === 0 ? "mx-2" : "mx-5"
-                                                    } rounded-xl flex flex-col items-center justify-center p-3 overflow-hidden`}
-=======
                                                     className={`absolute w-full h-full ${idx % 2 === 0 ? "mx-2" : "mx-5"
                                                         } rounded-xl flex flex-col items-center justify-center p-3 overflow-hidden`}
->>>>>>> c7b4e91efaba091524a365d0fb2712ac64b82a37
                                                     style={{
                                                         transform: "rotateY(180deg)",
                                                         backfaceVisibility: "hidden",
@@ -154,11 +138,7 @@ const Spons = () => {
                                                             backgroundImage: `url(${getRandomImage(idx)})`,
                                                             backgroundSize: "cover",
                                                             backgroundPosition: "center",
-<<<<<<< HEAD
-                                                            margin: "8px",
-=======
                                                             margin: "2px",
->>>>>>> c7b4e91efaba091524a365d0fb2712ac64b82a37
                                                             borderRadius: "0.75rem",
                                                         }}
                                                     />
