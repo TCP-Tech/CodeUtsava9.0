@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import bg_image from "../../assets/images/bg_image.webp";
-import bg_video from "../../assets/bg_video.webm";
+import bg_image from "../../assets/background/background_final2.png";
+// import bg_video from "../../assets/bg_video.webm";
 import SocialRail from "./SocialRail.jsx";
 import RightRail from "./RightRail.jsx";
 import BottomCTAs from "./BottomCTAs.jsx";
@@ -19,7 +19,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div
+    <div id="hero"
       className={`transition-opacity duration-1000 ease-in-out ${
         fadeIn ? "opacity-100" : "opacity-0"
       }`}
@@ -29,7 +29,7 @@ export default function Hero() {
         aria-label="Hero"
       >
         {/* Background */}
-        <BackgroundMedia imageSrc={bg_image} videoSrc={bg_video} darken={0.5} />
+        <BackgroundMedia imageSrc={bg_image}  darken={0.6} />
         {/* Navbar */}
         <Navbar />
 
@@ -44,14 +44,14 @@ export default function Hero() {
         {/* Hero Content */}
         <div className="relative z-10 h-full max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center">
           <h2
-            className="text-3xl md:text-5xl font-arcade tracking-widest text-outline-soft"
-            style={{ color: "var(--color-primary)" }}
+            className="text-3xl md:text-5xl font-rye tracking-widest text-outline-soft"
+            
           >
             WELCOME TO
           </h2>
 
           <h1
-            className="mt-5 font-arcade text-4xl md:text-7xl leading-tight [letter-spacing:4px] text-white text-stroke-strong"
+            className="mt-5 font-rye text-4xl md:text-7xl leading-tight [letter-spacing:4px] text-white text-stroke-strong"
             style={{ whiteSpace: "nowrap" }}
           >
             CODEUTSAVA 9.0

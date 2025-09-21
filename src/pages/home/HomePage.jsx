@@ -18,6 +18,9 @@ import Footer from "../../components/footer/Footer";
 // import Section9 from "./sections/section9/Section9";
 // import Guidelines from "../../components/Guidelines/Guidelines";
 // import ScrollToTopnew from "../../components/scrollToTop/ScrollToTop";
+import About from "./AboutUs";
+import FAQ from "../FAQ";
+import Events from "../events/Events";
 
 const HomePage = () => {
   return (
@@ -37,6 +40,9 @@ const HomePage = () => {
         <Guidelines />
         <Section9 /> */}
         <Section6 />
+        <About/>
+        <FAQ/>
+        <Events/>
         {/* <Section9 /> */}
         {/* <Section14 />
         <Section10 /> */}

@@ -21,7 +21,7 @@ export default function BottomCTAs() {
 
   return (
     <div
-      className={`pointer-events-none fixed bottom-8 left-1/2 -translate-x-1/2 z-40 
+      className={`pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 z-40 
                   flex flex-col md:flex-row gap-4 px-4 
                   transition-opacity duration-500 
                   ${hidden ? "opacity-0" : "opacity-100"}`}

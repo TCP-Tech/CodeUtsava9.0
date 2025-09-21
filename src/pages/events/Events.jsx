@@ -4,7 +4,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import bgVideo from "../../assets/background/carnival_bg.mp4";
+import Background from "../../components/background/Background.jsx"
 
 import EventCard from "./EventCard.jsx";
 
@@ -40,20 +40,11 @@ export default function Events() {
   ];
 
   return (
-    <div
+    <div id="events"
       className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center py-12 "
       
     >
-        {/* Background video */}
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="fixed inset-0 w-full h-full object-cover -z-10"
-              >
-                <source src={bgVideo} type="video/mp4" />
-              </video>
+        <Background/>
         
               {/* Black overlay */}
           <div className="absolute inset-0 bg-black/40 -z-10"></div>

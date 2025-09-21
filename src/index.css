@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rye&display=swap');
+
 @import "tailwindcss";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -13,7 +15,9 @@
     --color-background: #0d0d0d;
     --color-muted: #e0e0e0;
 }
-
+html{
+    scroll-behavior: smooth;
+}
 /* === Base === */
 body {
     background: var(--color-background);
@@ -36,6 +40,10 @@ body {
 .font-arcade {
     font-family: "Press Start 2P", system-ui, sans-serif;
 }
+.font-rye {
+    font-family: 'Rye', cursive;
+}
+
 
 .vertical-rl {
     writing-mode: vertical-rl;
@@ -142,3 +150,11 @@ canvas.sparkle-layer__canvas {
 .swiper-pagination-bullet-active {
   background: #ec4899; /* pink-500 (active) */
 }
+
+#analytics canvas {
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+

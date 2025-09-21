@@ -6,13 +6,13 @@ export default function About() {
       className="relative min-h-screen flex items-center justify-center inset-0"
     >
         <SparkleLayer/>
-      <div className="bg-gradient-to-r from-blue-500/30 via-pink-500/30 to-emerald-500/40 
-                bg-black/50 backdrop-blur-sm 
+      <div className="bg-gradient-to-r from-blue-500/25 via-pink-500/25 to-emerald-500/35 
+                bg-black/70 backdrop-blur-sm 
                 p-16 rounded-2xl max-w-5xl text-center text-white">
-        <h2 className="text-5xl mb-9">About Us</h2>
+        <h2 className="text-5xl font-['Rye'] mb-9">About Us</h2>
         <p className="text-xl leading-relaxed">
           
-<span className="text-sky-400 font-bold">CodeUtsava</span> is an annual event organized by the <span className="text-emerald-300 font-bold">Turing Club of Programmers</span>. 
+<span className="text-sky-400 font-bold">CodeUtsava</span> is an annual event organized by the <span className="text-pink-400 font-bold">Turing Club of Programmers</span>. 
 This event aims to bring like-minded coders from all over the nation together, 
 and foster coding culture among the students of the institute through its diverse range of programs such as Workshops,
  Hackathon, Coding competitions, Gaming Battles, Mic Sessions and much more.

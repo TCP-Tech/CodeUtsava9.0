@@ -20,7 +20,7 @@ export default function RightRail() {
 
   return (
     <div
-      className={`hidden lg:flex fixed right-4 top-1/2 -translate-y-1/2 z-40 transition-opacity duration-500 ${
+      className={`hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-40 transition-opacity duration-500 ${
         hidden ? "opacity-0" : "opacity-100"
       }`}
     >

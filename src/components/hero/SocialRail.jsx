@@ -31,7 +31,7 @@ export default function SocialRail() {
 
   return (
     <div
-      className={`hidden md:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-4 transition-opacity duration-500 ${
+      className={`hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-4 transition-opacity duration-500 ${
         hidden ? "opacity-0" : "opacity-100"
       }`}
     >
