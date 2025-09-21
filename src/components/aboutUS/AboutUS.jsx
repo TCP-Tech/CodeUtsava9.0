@@ -5,16 +5,6 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
-<<<<<<< HEAD
-const AboutUS = () => {
-    return (
-        <>
-            <div className='h-screen w-full relative bg-accent'>
-                <h1 className='text-white text-5xl tracking-tighter max-sm:text-xl font-bold text-center relative pt-40 pb-20 font-rye'>About US</h1>
-            </div>
-        </>
-    )
-=======
 // A small component to load and display a GLTF model
 function CarnivalModel(props) {
   const { scene } = useGLTF('/models/carnival.glb'); // put your model in /public/models/
@@ -32,7 +22,6 @@ function CarnivalModel(props) {
 
 
   return <primitive object={scene} {...props} />;
->>>>>>> c7b4e91efaba091524a365d0fb2712ac64b82a37
 }
 
 const AboutUS = () => {
