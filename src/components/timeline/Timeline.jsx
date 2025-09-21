@@ -5,7 +5,7 @@ import {
     VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import bg_image from "../../assets/images/bg_image.webp";
+import bg_image from "../../assets/images/bg-part2.jpg";
 import bg_video from "../../assets/bg_video.webm";
 import rollerCoasterUrl from "../../assets/images/rollercoaster.svg";
 import BackgroundMedia from "../background/Background.jsx";

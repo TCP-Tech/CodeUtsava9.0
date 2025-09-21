@@ -26,7 +26,7 @@ function CarnivalModel(props) {
 
 const AboutUS = () => {
   return (
-    <div className="about-container mt-10 ">
+    <div className="about-container mt-10 z-1">
 
       {/* 3D Canvas */}
       <div className="about-3d">
@@ -42,7 +42,7 @@ const AboutUS = () => {
       </div>
     <h1 className=' text-white absolute top-0 mt-8 rye-regular text-6xl'>About us</h1>
       <div className="about-content mt-15">
-        <p className="about-text text-left max-sm:text-center quicksand-regular border-1 border-[#ffc800] rounded-2xl p-5">
+        <p className="about-text text-left max-sm:text-center quicksand-regular rounded-2xl p-5">
           <strong className='text-[#ffc800] rye-regular'>CODEUTSAVA</strong> is an annual event organized by the Turing
           Club of Programmers. This event brings together like-minded coders
           from across the nation, fostering a coding culture with workshops,

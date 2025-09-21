@@ -10,7 +10,7 @@ import BackgroundMedia from "../background/Background.jsx";
 export default function Hero() {
     return (
         <header
-            className="relative isolate overflow-hidden h-screen select-none"
+            className="relative overflow-hidden h-screen select-none"
             aria-label="Hero"
         >
             {/* Background should ignore cursor events */}
@@ -33,7 +33,7 @@ export default function Hero() {
                         WELCOME TO
                     </h2>
 
-                    <h1 className="mt-4 font-rye text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight text-white text-stroke-strong break-words px-2">
+                    <h1 className="mt-4 font-rye text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight text-[#F3A83A] text-stroke-strong break-words px-2">
                         CODEUTSAVA 9.0
                     </h1>
 
