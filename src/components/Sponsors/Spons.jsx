@@ -1,15 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import sponsers from "/src/assets/data/sponsersData.js";
+import sponsers from "../../assets/data/sponsersData.js"; // fixed import path
 import bg_video from "../../assets/bg_video.webm";
 import bg_image from "../../assets/images/bg_image.webp";
 import BackgroundMedia from "../background/Background.jsx";
-import cardBlue from "/src/assets/images/CU9 stuff/blue.jpg";
-import cardRed from "/src/assets/images/CU9 stuff/red.jpg";
-import BDace from "/src/assets/images/CU9 stuff/BDace.jpg";
-import Bace from "/src/assets/images/CU9 stuff/Bace.jpg";
-import Dace from "/src/assets/images/CU9 stuff/Dace.jpg";
-import Hace from "/src/assets/images/CU9 stuff/Hace.jpg";
+import cardBlue from "../../assets/images/CU9 stuff/blue.jpg";
+import cardRed from "../../assets/images/CU9 stuff/red.jpg";
+import BDace from "../../assets/images/CU9 stuff/BDace.jpg";
+import Bace from "../../assets/images/CU9 stuff/Bace.jpg";
+import Dace from "../../assets/images/CU9 stuff/Dace.jpg";
+import Hace from "../../assets/images/CU9 stuff/Hace.jpg";
 import "./spons.css";
 
 const Spons = () => {

@@ -95,7 +95,7 @@ const Timeline = () => {
             <h2
                 className="
           codeutsava__timeline-header
-          text-3xl md:text-5xl text-center font-arcade tracking-widest
+          text-3xl sm:texxt-4xl md:text-5xl lg:text-6xl text-center font-rye tracking-widest
           mt-10 mb-8
         "
                 style={{ color: "white" }}
@@ -178,7 +178,7 @@ const Timeline = () => {
                              bg-gradient-to-b from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-accent-2)]
                              opacity-90 drop-shadow-[0_0_6px_rgba(30,144,255,0.35)]"
                                 />
-                                <h3 className="text-[20px] md:text-[22px] font-semibold leading-tight">
+                                <h3 className="text-[20px] md:text-[22px] font-rye leading-tight">
                                     {element.id} {element.title}
                                 </h3>
                                 <h5 className="text-white/75 text-[14px] md:text-[16px] mt-1">
