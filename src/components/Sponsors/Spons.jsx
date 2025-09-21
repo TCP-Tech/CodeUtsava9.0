@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import sponsers from "../../assets/data/sponsersData.js"; // fixed import path
 import bg_video from "../../assets/bg_video.webm";
-import bg_image from "../../assets/images/bg_image.webp";
+import bg_image from "../../assets/images/bg-part2.jpg";
 import BackgroundMedia from "../background/Background.jsx";
 import cardBlue from "../../assets/images/CU9 stuff/blue.jpg";
 import cardRed from "../../assets/images/CU9 stuff/red.jpg";
