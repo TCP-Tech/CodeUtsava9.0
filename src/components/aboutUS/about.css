@@ -1,3 +1,143 @@
-.bgcolor{
-    background-color: #00000085;
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Rye&display=swap');
+
+
+.about-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #00000080;
+  width: 100%;
+  min-height: 100vh;
+  /* border-radius: 25px; */
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  box-sizing: border-box;
+}
+
+.rye-regular {
+  font-family: "Rye", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.quicksand-regular {
+  font-family: "Quicksand", serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.about-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6) blur(2px);
+  z-index: 1;
+}
+
+.about-content {
+  position: relative;
+  z-index: 2;
+  max-width: 550px;
+  text-align: center;
+  color: #fff;
+  margin-inline: 9rem;
+}
+
+.about-3d {
+  position: relative;
+  z-index: 2;
+  /* ✅ Flexible sizing instead of a big fixed box */
+  width: 100%;
+  max-width: 550px;      /* limit width on large screens */
+  aspect-ratio: 1 / 1;   /* keeps it perfectly square */
+  margin: 1rem auto;     /* center horizontally */
+}
+
+/* ✅ Make sure it scales nicely on small screens */
+@media (max-width: 768px) {
+  .about-3d {
+    max-width: 90%;
+    aspect-ratio: 1 / 1;  /* still square but shrinks nicely */
+    margin-top: 120px;
+  }
+}
+
+
+.about-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2rem;
+  color: #00bfff;
+  text-shadow: 2px 2px #000;
+}
+
+.about-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #ff69b4;
+  text-shadow: 1px 1px #000;
+}
+
+.about-text {
+  font-size: 1.5rem;
+  background-color: #000000ac;
+  line-height: 1.6;
+  width: 140%;
+  margin-block: 3rem;
+  margin-inline: -5rem;
+  margin-top: 70px;
+  text-shadow: 1px 1px 2px #000;
+}
+
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 1.5rem;
+  }
+
+  .about-subtitle {
+    font-size: 1rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    margin-top: 90px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .about-content {
+  position: relative;
+  z-index: 2;
+  max-width: 550px;
+  text-align: center;
+  color: #fff;
+  margin-inline: 2rem;
+}
+}
+@media (max-width: 1069px) {
+  .about-title {
+    font-size: 1.5rem;
+  }
+
+  .about-subtitle {
+    font-size: 1rem;
+  }
+
+  .about-text {
+    font-size: 1.3rem;
+    text-align: center;
+    margin-top: 80px;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  .about-content {
+  position: relative;
+  z-index: 2;
+  max-width: 550px;
+  text-align: center;
+  color: #fff;
+  margin-inline: 2rem;
+}
 }
