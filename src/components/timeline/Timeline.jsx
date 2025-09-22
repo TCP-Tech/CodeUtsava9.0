@@ -103,10 +103,10 @@ const Timeline = () => {
                 TIMELINE
             </h2>
 
-            {/* Custom RAIL */}
+            {/* Custom RAIL - Responsive positioning */}
             <div
                 ref={lineRef}
-                className="codeutsava__timeline-rail absolute left-1/2 -translate-x-1/2 w-[28px] rounded-lg pointer-events-none"
+                className="codeutsava__timeline-rail absolute left-8 md:left-1/2 md:-translate-x-1/2 w-[28px] rounded-lg pointer-events-none"
                 style={{
                     top: TOP_OFFSET,
                     bottom: 50,
@@ -131,11 +131,13 @@ const Timeline = () => {
                drop-shadow-[0_0_10px_rgba(255,0,153,0.28)]"
                 />
             </div>
+            
+            {/* Cart - Responsive positioning */}
             <div
                 ref={cartRef}
                 className="
           codeutsava__timeline-cart
-          absolute left-[808px] -translate-x-1/2 z-10
+          absolute left-22 md:left-[808px] -translate-x-1/2 z-10
           transition-transform duration-75 ease-out
           pointer-events-none
         "
@@ -144,7 +146,7 @@ const Timeline = () => {
                 <img
                     src={rollerCoasterUrl}
                     alt="cart"
-                    className="h-24 w-24 md:h-20 md:w-20"
+                    className="h-20 w-20 md:h-20 md:w-20"
                 />
             </div>
 
