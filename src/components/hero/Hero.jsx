@@ -1,5 +1,5 @@
 import React from "react";
-import bg_image from "../../assets/images/bg_image.webp";
+import bg_image from "../../assets/images/bg-part2.jpg";
 import bg_video from "../../assets/bg_video.webm";
 import SocialRail from "./SocialRail.jsx";
 import RightRail from "./RightRail.jsx";
@@ -10,15 +10,15 @@ import BackgroundMedia from "../background/Background.jsx";
 export default function Hero() {
     return (
         <header
-            className="relative isolate overflow-hidden h-screen select-none"
+            className="relative overflow-hidden h-screen select-none"
             aria-label="Hero"
         >
             {/* Background should ignore cursor events */}
             <div className="absolute inset-0 pointer-events-none">
                 <BackgroundMedia
                     imageSrc={bg_image}
-                    videoSrc={bg_video}
                     darken={0.5}
+                    className="bg-right"
                 />
             </div>
 
@@ -29,11 +29,11 @@ export default function Hero() {
                 <RightRail />
 
                 <div className="flex-1 max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center">
-                    <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-arcade tracking-widest text-outline-soft text-primary">
+                    <h2 className="text-xl sm:text-4xl md:text-6xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary">
                         WELCOME TO
                     </h2>
 
-                    <h1 className="mt-4 font-arcade text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight text-white text-stroke-strong break-words px-2">
+                    <h1 className="mt-4 font-rye text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight text-[#F3A83A] text-stroke-strong break-words px-2">
                         CODEUTSAVA 9.0
                     </h1>
 

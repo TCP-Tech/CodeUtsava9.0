@@ -56,6 +56,8 @@ export default function Home({ skipIntro = false }) {
             <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
                 <SparkleLayer />
                 <Fireworks />
+                {/* to enable autolaunch for fireworks uncomment the below*/}
+                {/* <Fireworks autoLaunch/>   */}
             </div>
 
             {!revealed ? (

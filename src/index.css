@@ -1,77 +1,99 @@
+/* ============================= */
+/* 1. Google Fonts must come first */
+/* ============================= */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rye&display=swap');
+
+/* ============================= */
+/* 2. Tailwind and other imports */
+/* ============================= */
 @import "tailwindcss";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-/* === Theme Colors === */
-@theme {
-    --color-primary: #1e90ff;
-    /* blue */
-    --color-accent: #ff0099;
-    /* pink */
-    --color-accent-2: #00ff85;
-    /* neon green */
-    --color-background: #0d0d0d;
-    --color-muted: #e0e0e0;
+/* ============================= */
+/* 3. Theme Colors */
+/* ============================= */
+:root {
+    --color-primary: #802B1D;       /* blue */
+    --color-accent: #2C2B4C;        /* pink */
+    --color-accent-2: #F3A83A;      /* neon green */
+    --color-background: #0d0d0de1;
+    --color-muted: #eadccb;
+
+    --brand-grad: linear-gradient(
+        to right,
+        var(--color-primary) 0%,
+        var(--color-accent) 25%,
+        var(--color-accent-2) 100%
+    );
 }
 
-/* === Base === */
+/* ============================= */
+/* 4. Base Styles */
+/* ============================= */
 body {
     background: var(--color-background);
     color: var(--color-muted);
-    -webkit-tap-highlight-color: transparent;
-    /* mobile tap highlight */
-}
-
-/* === Navbar outline gradient === */
-:root {
-    --brand-grad: linear-gradient(
-        90deg,
-        var(--color-primary) 0%,
-        var(--color-accent) 45%,
-        var(--color-accent-2) 100%
-    );
+    -webkit-tap-highlight-color: transparent; /* mobile tap highlight */
 }
 
 body::-webkit-scrollbar {
     display: none;
 }
 
-/* === Utilities === */
+/* ============================= */
+/* 5. Fonts */
+/* ============================= */
 .font-arcade {
     font-family: "Press Start 2P", system-ui, sans-serif;
 }
 
+.font-bebas {
+    font-family: 'Bebas Neue', cursive;
+}
+
+.font-rye {
+    font-family: 'Rye', cursive;
+}
+
+/* ============================= */
+/* 6. Utilities & Layout Helpers */
+/* ============================= */
 .vertical-rl {
     writing-mode: vertical-rl;
     text-orientation: mixed;
 }
 
-/* BEM: Social rail icon */
-.social-rail__icon {
-    backdrop-filter: blur(2px);
-}
-
-/* BEM: Right rail pill */
+.social-rail__icon,
 .right-rail__pill {
     backdrop-filter: blur(2px);
 }
 
-/* === Text Contrast Helpers === */
+/* ============================= */
+/* 7. Text Contrast Helpers */
+/* ============================= */
 .text-outline-strong {
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 -1px 3px rgba(0, 0, 0, 0.85),
-        1px 0 3px rgba(0, 0, 0, 0.85), -1px 0 3px rgba(0, 0, 0, 0.85),
+    text-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.85),
+        0 -1px 3px rgba(0, 0, 0, 0.85),
+        1px 0 3px rgba(0, 0, 0, 0.85),
+        -1px 0 3px rgba(0, 0, 0, 0.85),
         0 0 12px rgba(0, 0, 0, 0.55);
 }
 
 .text-outline-soft {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65), 0 -1px 2px rgba(0, 0, 0, 0.55);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65),
+                 0 -1px 2px rgba(0, 0, 0, 0.55);
 }
 
 .text-stroke-strong {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.6);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 12px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6),
+                 0 0 12px rgba(0, 0, 0, 0.35);
 }
 
-/* === Hero Bottom scrim (transparent → dark) === */
+/* ============================= */
+/* 8. Hero Section Scrim */
+/* ============================= */
 .hero__scrim {
     background: linear-gradient(
         to top,
@@ -81,13 +103,13 @@ body::-webkit-scrollbar {
     );
 }
 
-/* === Optional bulbs (use .marquee-lights on borders) === */
+/* ============================= */
+/* 9. Optional Animations */
+/* ============================= */
 @keyframes bulbs {
-    0%,
-    100% {
+    0%, 100% {
         box-shadow: 0 0 8px var(--color-accent-2), 0 0 16px var(--color-primary);
     }
-
     50% {
         box-shadow: 0 0 6px var(--color-primary), 0 0 14px var(--color-accent);
     }
@@ -99,14 +121,11 @@ body::-webkit-scrollbar {
     border-radius: 1rem;
 }
 
-/* === Optional soft pulsing effect (used on CTA) === */
 @keyframes softPulse {
-    0%,
-    100% {
+    0%, 100% {
         opacity: 0.92;
         transform: translateY(0);
     }
-
     50% {
         opacity: 1;
         transform: translateY(-2px);
@@ -117,12 +136,12 @@ body::-webkit-scrollbar {
     animation: softPulse 2.2s ease-in-out infinite;
 }
 
-/* === Sparkle layer positioning === */
+/* ============================= */
+/* 10. Sparkle Layer */
+/* ============================= */
 canvas.sparkle-layer__canvas {
     position: absolute;
     inset: 0;
     z-index: -5;
     pointer-events: none;
 }
-
-/* (No headline shimmer — removed per your request) */
