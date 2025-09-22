@@ -4,15 +4,14 @@ export default function BottomCTAs() {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    // Select footer (make sure your Footer has <footer> tag or add id="footer")
-    const footer = document.querySelector("footer");
+    const footer = document.querySelector("footer"); // adjust selector if needed
     if (!footer) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setHidden(entry.isIntersecting); // hide when footer is visible
+        setHidden(entry.isIntersecting); // hide CTAs if footer visible
       },
-      { threshold: 0.1 } // trigger when at least 10% of footer is visible
+      { threshold: 0.1 }
     );
 
     observer.observe(footer);
