@@ -10,6 +10,7 @@ import Sponsors from "../../components/Sponsors/Spons.jsx";
 import Timeline from "../../components/timeline/Timeline.jsx";
 import GRandAN from "../../components/graphs&Analytics/GRandAN.jsx";
 import Guide from "../../components/guidelines/Guide.jsx";
+import Player from "../../components/audioPlayer/player.jsx";
 
 export default function Home({ skipIntro = false }) {
     const [revealed, setRevealed] = useState(skipIntro);
@@ -71,6 +72,9 @@ export default function Home({ skipIntro = false }) {
                     <Guide />
                     <GRandAN />
                     <Footer />
+                    <div className="fixed bottom-4 right-4">
+                        <Player />
+                    </div>
                 </>
             )}
         </>

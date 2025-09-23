@@ -1,6 +1,7 @@
 import React from "react";
 import { FiDownload as Download, FiMessageSquare as MessageSquare } from "react-icons/fi";
 import logo from "../../assets/images/codeutsava.png"; // Ensure proper import path
+import SoundButton from "../SoundBtn/soundbtn";
 
 const NavItem = ({ children, href = "#" }) => (
     <a
@@ -35,11 +36,11 @@ export default function Navbar() {
 
                             {/* center: nav */}
                             <div className="hidden md:flex items-center gap-2 bg-white/5 rounded-xl px-2 py-1">
-                                <NavItem>HOME</NavItem>
-                                <NavItem>ABOUT US</NavItem>
-                                <NavItem>FAQ</NavItem>
-                                <NavItem >CONTACT US</NavItem>
-                                <NavItem>TEAM</NavItem>
+                                <NavItem><SoundButton>HOME</SoundButton></NavItem>
+                                <NavItem><SoundButton>ABOUT US</SoundButton></NavItem>
+                                <NavItem><SoundButton>FAQ</SoundButton></NavItem>
+                                <NavItem ><SoundButton>CONTACT US</SoundButton></NavItem>
+                                <NavItem><SoundButton>TEAM</SoundButton></NavItem>
                             </div>
 
                             {/* right: actions */}
@@ -49,7 +50,7 @@ export default function Navbar() {
                                     className="flex items-center gap-2 text-white font-semibold px-4 py-2 rounded-xl transition hover:opacity-90"
                                     style={{ background: "var(--color-accent)" }}
                                 >
-                                    <MessageSquare className="shrink-0" /> FEEDBACK
+                                    <MessageSquare className="shrink-0" /> <SoundButton>FEEDBACK</SoundButton>
                                 </a>
                                 <a
                                     href="/Brochure.pdf" 

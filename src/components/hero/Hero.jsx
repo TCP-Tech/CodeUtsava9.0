@@ -6,6 +6,7 @@ import RightRail from "./RightRail.jsx";
 import BottomCTAs from "./BottomCTAs.jsx";
 import Navbar from "../navbar/Navbar.jsx";
 import BackgroundMedia from "../background/Background.jsx";
+import AudioPlayer from "../audioPlayer/player.jsx"; // new import for music
 
 export default function Hero() {
     return (
@@ -21,6 +22,9 @@ export default function Hero() {
                     className="bg-right"
                 />
             </div>
+
+            {/* Audio Player floating over Hero */}
+            <AudioPlayer />
 
             {/* Foreground gets cursor events */}
             <div className="relative z-10 pointer-events-auto h-full flex flex-col">
