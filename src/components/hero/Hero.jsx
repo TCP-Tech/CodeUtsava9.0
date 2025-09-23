@@ -10,19 +10,19 @@ import bg_image from "../../assets/images/bg-part2.jpg";
 // import bg_video from "../../assets/bg_video.webm";
 
 export default function Hero() {
-  return (
-    <header
-      className="relative isolate overflow-hidden h-screen select-none"
-      aria-label="Hero"
-    >
-      {/* Background should ignore cursor events */}
-      <div className="absolute inset-0 pointer-events-none">
-        <BackgroundMedia
-          imageSrc={bg_image}
-          darken={0.5}
-          className="bg-right"
-        />
-      </div>
+    return (
+        <header
+            className="relative overflow-hidden h-screen select-none"
+            aria-label="Hero"
+        >
+            {/* Background should ignore cursor events */}
+            <div className="absolute inset-0 pointer-events-none">
+                <BackgroundMedia
+                    imageSrc={bg_image}
+                    darken={0.5}
+                    className="bg-right"
+                />
+            </div>
 
       {/* Foreground gets cursor events */}
       <div className="relative z-10 pointer-events-auto h-full flex flex-col">
@@ -35,9 +35,9 @@ export default function Hero() {
             WELCOME TO
           </h2>
 
-          <h1 className="mt-4 font-rye text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight text-white text-stroke-strong break-words px-2">
-            CODEUTSAVA 9.0
-          </h1>
+                    <h1 className="mt-4 font-rye text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight text-[#F3A83A] text-stroke-strong break-words px-2">
+                        CODEUTSAVA 9.0
+                    </h1>
 
           <p className="mt-6 text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold tracking-wide text-white text-outline-strong">
             CODE. INNOVATE. CELEBRATE.

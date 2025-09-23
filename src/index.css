@@ -26,11 +26,16 @@ body {
 
 /* === Navbar outline gradient === */
 :root {
+    --color-primary: #802B1D;       /* blue */
+    --color-accent: #2C2B4C;        /* pink */
+    --color-accent-2: #F3A83A;      /* neon green */
+    --color-background: #0d0d0de1;
+    --color-muted: #eadccb;
 
     --brand-grad: linear-gradient(
-        90deg,
+        to right,
         var(--color-primary) 0%,
-        var(--color-accent) 45%,
+        var(--color-accent) 25%,
         var(--color-accent-2) 100%
     );
 }

@@ -1,28 +1,27 @@
 import React from "react";
-import myImage from "../../assets/images/ticket_button_final.png"; // replace with your image path
+import myImage from "../../assets/images/ticket_button_final.png";
 
 export default function TicketButton({ onClick, text, style = {} }) {
   return (
     <button
       onClick={onClick}
+      className="hidden lg:flex px-6 py-3" // visible only on large screens
       style={{
         backgroundImage: `url(${myImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         border: "none",
         borderRadius: "12px",
-        width: "160px",    // default width
-        height: "45px",    // default height
-        color: "white",    // default color
-        fontWeight: "bold",
-        fontSize: "16px",
         cursor: "pointer",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        // textShadow: "1px 1px 4px rgba(0,0,0,0.7)",
         transition: "transform 0.3s, filter 0.3s",
-        ...style,          // merge user-provided styles
+        fontFamily: "'Rye', cursive",
+        fontSize: "16px",
+        color: "#FFFFFF",
+        // fontWeight: "",
+        ...style,
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = "scale(1.05)";

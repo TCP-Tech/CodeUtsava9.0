@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { FiDownload as Download, FiMessageSquare as MessageSquare, FiMenu, FiX } from "react-icons/fi";
+import { useMediaQuery } from "react-responsive";
+import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../assets/images/codeutsava.png";
 import ImageButton from "../button/TicketButton";
 
-const NavItem = ({ children, to = "#", onClick, delay = 0 }) => (
+const NavItem = ({ children, href = "#", onClick, delay = 0 }) => (
   <motion.a
-    href={to}
+    href={href}
     onClick={onClick}
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -19,110 +20,104 @@ const NavItem = ({ children, to = "#", onClick, delay = 0 }) => (
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isLargeScreen = useMediaQuery({ minWidth: 1024 }); // lg breakpoint
 
   return (
-    <div className="fixed top-0 inset-x-0 z-50">
-      <div className="mx-auto max-w-7xl px-4">
-        <div
-          className="mt-4 p-[1px] rounded-2xl"
-          style={{ backgroundImage: "var(--brand-grad)" }}
-        >
-          <nav className="rounded-[14px] bg-black/70 border border-white/10 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,.35)]">
-            <div className="flex items-center justify-between px-4 py-3">
-              
-              {/* Left: Logo + Feedback */}
-              <div className="flex items-center gap-4">
-                <a href="#" className="font-arcade text-lg drop-shadow">
-                  <img src={logo} alt="Logo" className="h-10 w-auto" />
-                </a>
+    <div className="fixed top-0 inset-x-0 z-[9999]">
+      <div className="mx-auto w-full">
+        <nav className="bg-[#070f2f4b] px-4 md:px-20 border-b border-white/40 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,.35)]">
+          <div className="flex items-center justify-between px-4 py-3">
 
+            {/* Left group: Logo + Feedback button */}
+            <div className="flex items-center gap-4">
+              <a href="#" className="font-arcade text-lg drop-shadow">
+                <img src={logo} alt="Logo" className="h-12 w-auto" />
+              </a>
+
+              {/* Ticket Button visible only on large screens */}
+              {isLargeScreen && (
                 <ImageButton
                   text="FEEDBACK"
-                  onClick={() => alert("Feedback button clicked!")}
-                  style={{
-                    width: "160px",
-                    height: "50px",
-                    fontSize: "15px",
-                    color: "#E68B81",
-                  }}
+                  onClick={() =>
+                    window.open(
+                      "https://docs.google.com/forms/d/e/1FAIpQLSfHv8OJ7jkp9thPyPx1HrWJNPoGZ2z7FaFtIqpz7lO3dIqqgg/viewform?pli=1",
+                      "_blank"
+                    )
+                  }
+                  style={{ fontSize: "16px" }}
                 />
-              </div>
-
-              {/* Center: Nav links */}
-              <div className="hidden md:flex items-center gap-2 bg-white/5 rounded-xl px-2 py-1">
-                <NavItem to="#hero" delay={0.1}>HOME</NavItem>
-                <NavItem to="#about" delay={0.2}>ABOUT US</NavItem>
-                <NavItem to="#faq" delay={0.3}>FAQ</NavItem>
-                <NavItem to="#events" delay={0.4}>EVENTS</NavItem>
-                <NavItem to="#contact" delay={0.5}>CONTACT US</NavItem>
-                <NavItem to="#team" delay={0.6}>TEAM</NavItem>
-              </div>
-
-              {/* Right: Brochure */}
-              <ImageButton
-                text="BROCHURE"
-                onClick={() => window.open("/brochure.pdf", "_blank")}
-                style={{
-                  width: "160px",
-                  height: "50px",
-                  fontSize: "15px",
-                  color: "#E68B81",
-                }}
-              />
-
-              {/* Mobile Hamburger */}
-              <button
-                className="md:hidden text-white text-2xl ml-2"
-                onClick={() => setMobileOpen(!mobileOpen)}
-              >
-                {mobileOpen ? <FiX /> : <FiMenu />}
-              </button>
+              )}
             </div>
 
-            {/* Mobile Menu */}
-            <AnimatePresence>
-              {mobileOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex flex-col items-center gap-4 overflow-hidden md:hidden text-white font-semibold px-4 pb-4"
-                >
-                  <NavItem to="#hero" onClick={() => setMobileOpen(false)}>HOME</NavItem>
-                  <NavItem to="#about" onClick={() => setMobileOpen(false)}>ABOUT US</NavItem>
-                  <NavItem to="#faq" onClick={() => setMobileOpen(false)}>FAQ</NavItem>
-                  <NavItem to="#events" onClick={() => setMobileOpen(false)}>EVENTS</NavItem>
-                  <NavItem to="#contact" onClick={() => setMobileOpen(false)}>CONTACT US</NavItem>
-                  <NavItem to="#team" onClick={() => setMobileOpen(false)}>TEAM</NavItem>
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center gap-6 text-white font-bold">
+              <NavItem delay={0.1}>HOME</NavItem>
+              <NavItem delay={0.2}>ABOUT US</NavItem>
+              <NavItem delay={0.3}>FAQ</NavItem>
+              <NavItem delay={0.4}>CONTACT US</NavItem>
+              <NavItem delay={0.5}>TEAM</NavItem>
+            </div>
 
-                  <div className="flex justify-center gap-4 mt-2 w-full px-10">
-                    <ImageButton
-                      text="FEEDBACK"
-                      onClick={() => alert("Feedback button clicked!")}
-                      style={{
-                        width: "160px",
-                        height: "50px",
-                        fontSize: "15px",
-                        color: "#E68B81",
-                      }}
-                    />
-                    <ImageButton
-                      text="BROCHURE"
-                      onClick={() => window.open("/brochure.pdf", "_blank")}
-                      style={{
-                        width: "160px",
-                        height: "50px",
-                        fontSize: "15px",
-                        color: "#E68B81",
-                      }}
-                    />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </nav>
-        </div>
+            {/* Right group: Brochure button */}
+            {isLargeScreen && (
+              <div className="hidden md:flex">
+                <ImageButton
+                  text="BROCHURE"
+                  onClick={() => window.open("/Brochure.pdf", "_blank")}
+                  style={{ fontSize: "16px" }}
+                />
+              </div>
+            )}
+
+            {/* Mobile Hamburger */}
+            <button
+              className="md:hidden text-white text-2xl"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <FiX /> : <FiMenu />}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {mobileOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col items-center gap-4 overflow-hidden md:hidden text-white font-semibold"
+              >
+                <NavItem onClick={() => setMobileOpen(false)}>HOME</NavItem>
+                <NavItem onClick={() => setMobileOpen(false)}>ABOUT US</NavItem>
+                <NavItem onClick={() => setMobileOpen(false)}>FAQ</NavItem>
+                <NavItem onClick={() => setMobileOpen(false)}>CONTACT US</NavItem>
+                <NavItem onClick={() => setMobileOpen(false)}>TEAM</NavItem>
+
+                {/* Mobile Feedback / Brochure normal buttons */}
+                <div className="flex flex-col gap-3 mt-2 w-full px-10 pb-4">
+                  <button
+                    onClick={() =>
+                      window.open(
+                        "https://docs.google.com/forms/...",
+                        "_blank"
+                      )
+                    }
+                    className="w-full py-2 px-4 rounded bg-[#E68B81] text-white font-rye font-bold"
+                  >
+                    FEEDBACK
+                  </button>
+                  <button
+                    onClick={() => window.open("/Brochure.pdf", "_blank")}
+                    className="w-full py-2 px-4 rounded bg-[#E68B81] text-white font-rye font-bold"
+                  >
+                    BROCHURE
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
       </div>
     </div>
   );

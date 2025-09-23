@@ -13,7 +13,7 @@ function Counter({ target, label, inView }) {
     }
 
     let start = 0;
-    const duration = 2000;
+    const duration = 1500;
     const stepTime = Math.max(Math.floor(duration / target), 20);
 
     let timer = setInterval(() => {

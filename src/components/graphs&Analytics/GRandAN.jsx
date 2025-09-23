@@ -59,7 +59,7 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center py-12 px-6 bg-gradient-to-b from-stone-900 via-stone-950 to-black">
+    <div className="min-h-screen flex flex-col items-center py-12 px-6 bg-transparent">
       {/* Header */}
       <div className="text-center mb-10 relative z-10">
         <h1 className="text-4xl md:text-5xl font-extrabold text-orange-400 tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)]">
@@ -71,7 +71,7 @@ export default function AnalyticsPage() {
       {/* Graphs */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-6xl relative z-10">
         {/* Teams Graph */}
-        <div className="bg-gradient-to-br from-red-950/40 to-amber-900/20 border border-red-500/40 rounded-2xl shadow-[0_0_20px_rgba(248,113,113,0.25)] p-5 backdrop-blur-sm hover:shadow-[0_0_25px_rgba(251,146,60,0.35)] transition">
+        <div className="bg-transparent border border-red-500/40 rounded-2xl shadow-[0_0_20px_rgba(248,113,113,0.25)] p-5 backdrop-blur-sm hover:shadow-[0_0_25px_rgba(251,146,60,0.35)] transition">
           <h2 className="text-center text-orange-300 text-lg font-semibold mb-3">
             🎠 Total Number of Teams
           </h2>
@@ -101,7 +101,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Participants Graph */}
-        <div className="bg-gradient-to-br from-red-950/40 to-amber-900/20 border border-amber-500/40 rounded-2xl shadow-[0_0_20px_rgba(250,204,21,0.25)] p-5 backdrop-blur-sm hover:shadow-[0_0_25px_rgba(251,146,60,0.35)] transition">
+        <div className="bg-transparent border border-amber-500/40 rounded-2xl shadow-[0_0_20px_rgba(250,204,21,0.25)] p-5 backdrop-blur-sm hover:shadow-[0_0_25px_rgba(251,146,60,0.35)] transition">
           <h2 className="text-center text-orange-300 text-lg font-semibold mb-3">
             🎡 Total Participations
           </h2>
