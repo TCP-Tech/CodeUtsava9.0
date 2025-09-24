@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import sponsers from "../../assets/data/sponsersData.js"; // fixed import path
 import bg_video from "../../assets/bg_video.webm";
-import bg_image from "../../assets/images/bg-part2.jpg";
+import bg_image from "../../assets/images/bg.webp";
 import BackgroundMedia from "../background/Background.jsx";
 import cardBlue from "../../assets/images/CU9 stuff/blue.jpg";
 import cardRed from "../../assets/images/CU9 stuff/red.jpg";
@@ -40,7 +40,7 @@ const Spons = () => {
     const slideX = useTransform(scrollYProgress, [flipEnd, 1], ["0%", "-100%"]);
 
     /** ---------- PHASE 3 : FADE OUT WHEN NEXT SECTION ARRIVES ---------- **/
-    const fadeOut = useTransform(scrollYProgress, [0.95,1.0], [1, 0]);
+    const fadeOut = useTransform(scrollYProgress, [0.95, 1.0], [1, 0]);
 
     /** ---------- HELPERS ---------- **/
     const getRandomImage = (idx) => {
@@ -70,7 +70,7 @@ const Spons = () => {
 
                 <motion.div
                     className={`${isFixed ? "fixed top-0 w-full" : "relative"} h-screen flex flex-col items-center justify-center bg-transparent`}
-                    style={{ opacity: fadeOut}}
+                    style={{ opacity: fadeOut }}
                 >
                     <h1 className="text-6xl text-white mb-25 text-center max-md:mt-5 rye-regular">
                         Our Sponsors

@@ -1,7 +1,7 @@
 /* ============================= */
 /* 1. Google Fonts must come first */
 /* ============================= */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rye&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rye&display=swap");
 
 /* ============================= */
 /* 2. Tailwind and other imports */
@@ -26,9 +26,12 @@ body {
 
 /* === Navbar outline gradient === */
 :root {
-    --color-primary: #802B1D;       /* blue */
-    --color-accent: #2C2B4C;        /* pink */
-    --color-accent-2: #F3A83A;      /* neon green */
+    --color-primary: #802b1d;
+    /* blue */
+    --color-accent: #2c2b4c;
+    /* pink */
+    --color-accent-2: #f3a83a;
+    /* neon green */
     --color-background: #0d0d0de1;
     --color-muted: #eadccb;
 
@@ -43,10 +46,43 @@ body {
 /* ============================= */
 /* 4. Base Styles */
 /* ============================= */
-
+body {
+    background: var(--color-background);
+    color: var(--color-muted);
+    -webkit-tap-highlight-color: transparent;
+    /* mobile tap highlight */
+}
 
 body::-webkit-scrollbar {
     display: none;
+}
+
+/* Disable selection & dragging globally */
+html,
+body,
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Disable dragging of images */
+img {
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+.enable-selection-dragging * {
+    /* enable text selection and image dragging */
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+    -webkit-touch-callout: auto;
+    -webkit-user-drag: auto;
+    pointer-events: auto;
 }
 
 /* ============================= */
@@ -61,11 +97,11 @@ body::-webkit-scrollbar {
 
 
 .font-bebas {
-    font-family: 'Bebas Neue', cursive;
+    font-family: "Bebas Neue", cursive;
 }
 
 .font-rye {
-    font-family: 'Rye', cursive;
+    font-family: "Rye", cursive;
 }
 
 /* ============================= */
@@ -85,23 +121,18 @@ body::-webkit-scrollbar {
 /* 7. Text Contrast Helpers */
 /* ============================= */
 .text-outline-strong {
-    text-shadow: 
-        0 1px 3px rgba(0, 0, 0, 0.85),
-        0 -1px 3px rgba(0, 0, 0, 0.85),
-        1px 0 3px rgba(0, 0, 0, 0.85),
-        -1px 0 3px rgba(0, 0, 0, 0.85),
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 -1px 3px rgba(0, 0, 0, 0.85),
+        1px 0 3px rgba(0, 0, 0, 0.85), -1px 0 3px rgba(0, 0, 0, 0.85),
         0 0 12px rgba(0, 0, 0, 0.55);
 }
 
 .text-outline-soft {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65),
-                 0 -1px 2px rgba(0, 0, 0, 0.55);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65), 0 -1px 2px rgba(0, 0, 0, 0.55);
 }
 
 .text-stroke-strong {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.6);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6),
-                 0 0 12px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 12px rgba(0, 0, 0, 0.35);
 }
 
 /* ============================= */
@@ -120,9 +151,11 @@ body::-webkit-scrollbar {
 /* 9. Optional Animations */
 /* ============================= */
 @keyframes bulbs {
-    0%, 100% {
+    0%,
+    100% {
         box-shadow: 0 0 8px var(--color-accent-2), 0 0 16px var(--color-primary);
     }
+
     50% {
         box-shadow: 0 0 6px var(--color-primary), 0 0 14px var(--color-accent);
     }
@@ -135,10 +168,12 @@ body::-webkit-scrollbar {
 }
 
 @keyframes softPulse {
-    0%, 100% {
+    0%,
+    100% {
         opacity: 0.92;
         transform: translateY(0);
     }
+
     50% {
         opacity: 1;
         transform: translateY(-2px);
