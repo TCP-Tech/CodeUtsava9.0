@@ -1,147 +1,103 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Rye&display=swap');
+/* about.css — About Us section styles
+   Uses site tokens from index.css (colors + --brand-grad).  */
+/* Fonts: Rye matches your "Our Sponsors" heading. */
+@import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
 
-
-
-.about-container {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  background-color: #00000080;
-  width: 100%;
-  min-height: 100vh;
-  /* border-radius: 25px; */
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1rem;
-  box-sizing: border-box;
-  box-shadow: 0px -10px 10px #000000;
-  box-shadow: 0px 3px 100px #000000;
+/* ——— Utilities (match global naming) ——— */
+.font-rye {
+    font-family: "Rye", serif;
 }
 
-.rye-regular {
-  font-family: "Rye", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-.quicksand-regular {
-  font-family: "Quicksand", serif;
-  font-weight: 200;
-  font-style: normal;
-}
-
-.about-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.6) blur(2px);
-  z-index: 1;
+/* Heading styled like Sponsors: big Rye + shadow/stroke for clarity */
+.about-heading {
+    font-family: "Rye", serif;
+    font-size: clamp(2rem, 2.2rem + 2.5vw, 4.25rem);
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    text-transform: none;
+    text-shadow:
+        0 2px 0 rgba(0, 0, 0, .65),
+        0 8px 30px rgba(0, 0, 0, .45);
 }
 
-.about-content {
-  position: relative;
-  z-index: 2;
-  max-width: 550px;
-  text-align: center;
-  color: #fff;
-  margin-inline: 9rem;
+/* Thin neon divider under the heading */
+.neon-hr {
+    width: 8rem;
+    height: 2px;
+    border-radius: 9999px;
+    background-image: var(--brand-grad);
+    box-shadow:
+        0 0 22px rgba(255, 0, 153, 0.35),
+        0 0 16px rgba(30, 144, 255, 0.35),
+        0 0 10px rgba(0, 255, 133, 0.35);
 }
 
-.about-3d {
-  position: relative;
-  z-index: 2;
-  /* ✅ Flexible sizing instead of a big fixed box */
-  width: 100%;
-  max-width: 550px;      /* limit width on large screens */
-  aspect-ratio: 1 / 1;   /* keeps it perfectly square */
-  margin: 1rem auto;     /* center horizontally */
+/* Soft colored radial glow behind section (theme colors) */
+.neon-radial {
+    width: 1200px;
+    height: 1200px;
+    border-radius: 9999px;
+    filter: blur(40px);
+    opacity: 0.30;
+    background: radial-gradient(circle at 50% 50%,
+            rgba(30, 144, 255, 0.22) 0%,
+            rgba(255, 0, 153, 0.18) 45%,
+            rgba(0, 255, 133, 0.16) 65%,
+            rgba(13, 13, 13, 0) 72%);
 }
 
-/* ✅ Make sure it scales nicely on small screens */
+/* Frame glow for the 3D panel */
+.neon-frame-glow {
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 0 28px rgba(30, 144, 255, 0.25),
+        0 0 36px rgba(255, 0, 153, 0.20),
+        0 0 48px rgba(0, 255, 133, 0.18);
+    border-radius: 1rem;
+}
+
+/* Glass cards — increased opacity for stronger contrast on dark bg */
+.glass-card {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.64));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* Neon bullets */
+.neon-bullets {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.neon-bullets li {
+    position: relative;
+    padding-left: 1.6rem;
+    margin: 0.55rem 0;
+    font-size: 1rem;
+}
+
+.neon-bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.48rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: var(--brand-grad);
+    box-shadow:
+        0 0 10px rgba(0, 255, 133, 0.65),
+        0 0 8px rgba(255, 0, 153, 0.55),
+        0 0 6px rgba(30, 144, 255, 0.5);
+}
+
+/* Small-screen tweaks */
 @media (max-width: 768px) {
-  .about-3d {
-    max-width: 90%;
-    aspect-ratio: 1 / 1;  /* still square but shrinks nicely */
-    margin-top: 120px;
-  }
-}
-
-
-.about-title {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 2rem;
-  color: #00bfff;
-  text-shadow: 2px 2px #000;
-}
-
-.about-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: #ff69b4;
-  text-shadow: 1px 1px #000;
-}
-
-.about-text {
-  font-size: 1.5rem;
-  background-color: #000000ac;
-  line-height: 1.6;
-  width: 140%;
-  margin-block: 3rem;
-  color: var(--gold);
-  margin-inline: -5rem;
-  margin-top: 70px;
-  text-shadow: 1px 1px 2px #000;
-}
-
-@media (max-width: 768px) {
-  .about-title {
-    font-size: 1.5rem;
-  }
-
-  .about-subtitle {
-    font-size: 1rem;
-  }
-
-  .about-text {
-    font-size: 1rem;
-    margin-top: 90px;
-    width: 100%;
-    margin-inline: auto;
-  }
-
-  .about-content {
-  position: relative;
-  z-index: 2;
-  max-width: 550px;
-  text-align: center;
-  color: #fff;
-  margin-inline: 2rem;
-}
-}
-@media (max-width: 1069px) {
-  .about-title {
-    font-size: 1.5rem;
-  }
-
-  .about-subtitle {
-    font-size: 1rem;
-  }
-
-  .about-text {
-    font-size: 1.3rem;
-    text-align: center;
-    margin-top: 80px;
-    margin-inline: auto;
-    width: 100%;
-  }
-
-  .about-content {
-  position: relative;
-  z-index: 2;
-  max-width: 550px;
-  text-align: center;
-  color: #fff;
-  margin-inline: 2rem;
-}
+    .neon-hr {
+        width: 6rem;
+    }
 }

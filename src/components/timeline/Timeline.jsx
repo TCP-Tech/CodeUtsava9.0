@@ -5,7 +5,7 @@ import {
     VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import bg_image from "../../assets/images/bg-part2.jpg";
+import bg_image from "../../assets/images/bg.webp";
 import bg_video from "../../assets/bg_video.webm";
 import rollerCoasterUrl from "../../assets/images/rollercoaster.svg";
 import BackgroundMedia from "../background/Background.jsx";
@@ -47,9 +47,8 @@ const Timeline = () => {
             const clamped = Math.max(0, Math.min(1, raw));
 
             // Apply the transform
-            cartRef.current.style.transform = `translate(-50%, ${
-                clamped * maxY
-            }px)`;
+            cartRef.current.style.transform = `translate(-50%, ${clamped * maxY
+                }px)`;
         };
 
         const io = new IntersectionObserver(
@@ -131,7 +130,7 @@ const Timeline = () => {
                drop-shadow-[0_0_10px_rgba(255,0,153,0.28)]"
                 />
             </div>
-            
+
             {/* Cart - Responsive positioning */}
             <div
                 ref={cartRef}

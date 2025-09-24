@@ -1,5 +1,5 @@
 import React from "react";
-import bg_image from "../../assets/images/bg-part2.jpg";
+import bg_image from "../../assets/images/bg.webp";
 import bg_video from "../../assets/bg_video.webm";
 import SocialRail from "./SocialRail.jsx";
 import RightRail from "./RightRail.jsx";
