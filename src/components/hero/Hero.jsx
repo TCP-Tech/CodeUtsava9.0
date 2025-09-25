@@ -1,12 +1,15 @@
 import React from "react";
-import bg_image from "../../assets/images/bg.webp";
-import bg_video from "../../assets/bg_video.webm";
+
 import SocialRail from "./SocialRail.jsx";
 import RightRail from "./RightRail.jsx";
 import BottomCTAs from "./BottomCTAs.jsx";
 import Navbar from "../navbar/Navbar.jsx";
 import BackgroundMedia from "../background/Background.jsx";
 import AudioPlayer from "../audioPlayer/player.jsx"; // new import for music
+
+// ✅ Uncomment whichever background you want
+import bg_image from "../../assets/images/bg-part2.jpg";
+// import bg_video from "../../assets/bg_video.webm";
 
 export default function Hero() {
     return (
@@ -47,11 +50,8 @@ export default function Hero() {
 
                     <p className="mt-4 text-xs sm:text-sm md:text-base lg:text-lg tracking-wide text-white text-outline-strong px-2">
                         CENTRAL INDIA’S{" "}
-                        <span className="text-accent-2">
-                            LARGEST CODING EVENT.
-                        </span>{" "}
-                        JOIN US ON{" "}
-                        <b className="text-primary">10—11 OCTOBER.</b>
+                        <span className="text-accent-2">LARGEST CODING EVENT.</span> JOIN US
+                        ON <b className="text-primary">10—11 OCTOBER.</b>
                     </p>
                 </div>
 
@@ -60,3 +60,5 @@ export default function Hero() {
         </header>
     );
 }
+
+

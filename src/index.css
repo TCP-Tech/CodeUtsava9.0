@@ -12,6 +12,19 @@
 /* ============================= */
 /* 3. Theme Colors */
 /* ============================= */
+
+html{
+    scroll-behavior: smooth;
+}
+/* === Base === */
+body {
+    background: var(--color-background);
+    color: var(--color-muted);
+    -webkit-tap-highlight-color: transparent;
+    /* mobile tap highlight */
+}
+
+/* === Navbar outline gradient === */
 :root {
     --color-primary: #802b1d;
     /* blue */
@@ -78,6 +91,10 @@ img {
 .font-arcade {
     font-family: "Press Start 2P", system-ui, sans-serif;
 }
+.font-rye {
+    font-family: 'Rye', cursive;
+}
+
 
 .font-bebas {
     font-family: "Bebas Neue", cursive;
@@ -176,3 +193,32 @@ canvas.sparkle-layer__canvas {
     z-index: -5;
     pointer-events: none;
 }
+
+/* (No headline shimmer — removed per your request) */
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ffffff; /* pink-500 */
+  font-weight: bold;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #ec4899; /* purple-500 */
+}
+.swiper-pagination-bullet {
+  background: #e5e7eb; /* gray-200 (inactive) */
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: #ec4899; /* pink-500 (active) */
+}
+
+#analytics canvas {
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
