@@ -5,10 +5,11 @@ import RightRail from "./RightRail.jsx";
 import BottomCTAs from "./BottomCTAs.jsx";
 import Navbar from "../navbar/Navbar.jsx";
 import BackgroundMedia from "../background/Background.jsx";
-import AudioPlayer from "../audioPlayer/player.jsx"; // new import for music
+import AudioPlayer from "../audioPlayer/player.jsx"; // Audio Player
 
-// ✅ Uncomment whichever background you want
+// ✅ Use the background from src/assets for proper Vite bundling
 import bg_image from "../../assets/images/bg-part2.jpg";
+// If you want to use a video instead:
 // import bg_video from "../../assets/bg_video.webm";
 
 export default function Hero() {
@@ -20,7 +21,7 @@ export default function Hero() {
             {/* Background should ignore cursor events */}
             <div className="absolute inset-0 pointer-events-none">
                 <BackgroundMedia
-                    imageSrc={bg_image}
+                    imageSrc={bg_image} // Using imported image
                     darken={0.5}
                     className="bg-right"
                 />
@@ -29,7 +30,7 @@ export default function Hero() {
             {/* Audio Player floating over Hero */}
             <AudioPlayer />
 
-            {/* Foreground gets cursor events */}
+            {/* Foreground */}
             <div className="relative z-10 pointer-events-auto h-full flex flex-col">
                 <Navbar />
                 <SocialRail />
@@ -60,5 +61,3 @@ export default function Hero() {
         </header>
     );
 }
-
-
