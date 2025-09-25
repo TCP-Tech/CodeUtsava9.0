@@ -10,6 +10,7 @@ import Sponsors from "../../components/Sponsors/Spons.jsx";
 import Timeline from "../../components/timeline/Timeline.jsx";
 import GRandAN from "../../components/graphs&Analytics/GRandAN.jsx";
 import Guide from "../../components/guidelines/Guide.jsx";
+import FAQ from "../FAQ.jsx";
 import Cursor from "../../components/cursor/Cursor.jsx";
 
 export default function Home({ skipIntro = false }) {
@@ -72,6 +73,7 @@ export default function Home({ skipIntro = false }) {
                     <Timeline />
                     <Guide />
                     <GRandAN />
+                    <FAQ/>
                     <Footer />
                 </>
             )}
