@@ -1,0 +1,9 @@
+// turn motion OFF (no rotation/float)
+window.__CU_MOTION_ENABLED = false;
+localStorage.setItem('cu.motion', 'off');
+window.dispatchEvent(new CustomEvent('cu:motion', { detail: { enabled: false } }));
+
+// turn motion ON (rotate/float again)
+window.__CU_MOTION_ENABLED = true;
+localStorage.setItem('cu.motion', 'on');
+window.dispatchEvent(new CustomEvent('cu:motion', { detail: { enabled: true } }));
