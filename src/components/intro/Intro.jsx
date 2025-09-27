@@ -112,7 +112,7 @@ export default function FixedScrollSplit() {
     };
 
     return (
-        <div className="relative w-screen h-screen overflow-hidden bg-black">
+        <div className="relative w-screen h-screen overflow-hidden bg-black z-[1000]">
             {/* Hero behind */}
             <div className="absolute top-0 left-0 w-full h-full z-0">
                 <Hero />
