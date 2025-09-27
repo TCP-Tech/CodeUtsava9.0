@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import ticketImg from "../../assets/images/ticket.png";
-
+import ticketImg from "../assets/images/ticket.png"; // adjust path if needed
 
 function Counter({ target, label, inView }) {
   const [count, setCount] = useState(0);
@@ -13,7 +12,7 @@ function Counter({ target, label, inView }) {
     }
 
     let start = 0;
-    const duration = 1500;
+    const duration = 2000;
     const stepTime = Math.max(Math.floor(duration / target), 20);
 
     let timer = setInterval(() => {
@@ -41,16 +40,12 @@ function Counter({ target, label, inView }) {
       />
 
       {/* White box behind the counter with fixed size */}
-      <div
-  className="absolute z-10 w-45 h-27 ml-5 rounded-lg flex flex-col justify-center items-center shadow-lg"
-  style={{ backgroundColor: "#e0c8a9" }}
->
-
+      <div className="absolute z-10 bg-white/100 w-45 h-27 ml-5 rounded-lg font-semibold flex flex-col justify-center items-center shadow-lg">
         {/* w-56 and h-28 give fixed width and height */}
-        <span className="block font-['Rye'] text-red-800 text-4xl drop-shadow-md text-center">
+        <span className="block font-['Unica_One'] text-fuchsia-600 text-4xl font-bold drop-shadow-md text-center">
           {count.toLocaleString()}+
         </span>
-        <span className="uppercase text-lg mt-1 text-red-800 font-rye tracking-wide text-center">
+        <span className="uppercase text-lg mt-1 text-gray-800 tracking-wide text-center">
           {label}
         </span>
       </div>

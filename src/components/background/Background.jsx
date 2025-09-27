@@ -1,5 +1,4 @@
 import React from "react";
-
 export default function BackgroundMedia({ imageSrc, darken = 0.5, className = "" }) {
   return (
     <div
