@@ -81,19 +81,13 @@ const SimpleCarnivalCursor = ({ children }) => {
             w-15 h-15
             transition-all duration-200 ease-out
             ${isHovering ? 'animate-pulse' : 'animate-bounce'}
-            drop-shadow-[0_0_10px_rgba(255,100,255,1)]
-            drop-shadow-[0_0_20px_rgba(0,255,255,0.5)]
-            drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]
-            ${isClicking ? 'brightness-150 drop-shadow-[0_0_25px_rgba(255,200,0,0.9)]' : ''}
+            cursor-glow
           `}
                     style={{
-                        filter: `
-              drop-shadow(0 0 10px rgba(255, 100, 255, 0.7))
-              drop-shadow(0 0 20px rgba(0, 255, 255, 0.5))
-              drop-shadow(0 0 30px rgba(255, 255, 255, 0.3))
-              ${isClicking ? 'brightness(1.5) drop-shadow(0 0 25px rgba(255, 200, 0, 0.9))' : ''}
-              ${isHovering ? 'hue-rotate(30deg) saturate(1.3)' : ''}
-            `,
+                        // add state-driven effects on top of the base glow via CSS var
+                        ['--cursor-extra']: isClicking
+                            ? 'brightness(1.5) drop-shadow(0 0 25px rgba(255, 200, 0, 0.9))'
+                            : (isHovering ? 'hue-rotate(30deg) saturate(1.3)' : 'none'),
                     }}
                 />
             </div>
