@@ -72,8 +72,8 @@ const SimpleCarnivalCursor = ({ children }) => {
             <div
                 className="fixed pointer-events-none z-[9999] transition-transform duration-100 ease-out"
                 style={{
-                    left: mousePos.x - 24, // center the image
-                    top: mousePos.y - 24,
+                    left: mousePos.x - 12, // adjust for pointer tip position
+                    top: mousePos.y - 8,   // adjust for pointer tip position
                     transform: `scale(${isClicking ? 0.8 : isHovering ? 1.3 : 1}) rotate(${isClicking ? '15deg' : '0deg'})`,
                 }}
                 aria-hidden="true"
