@@ -66,7 +66,7 @@ export default function FAQ() {
     return (
         <div id="faq" className="flex justify-center py-12">
             {/* Main gradient box */}
-            <div className="max-w-7xl w-full bg-gradient-to-r from-red-500/60 via-orange-400/60 to-yellow-400/60 backdrop-blur-md rounded-2xl p-10 shadow-2xl">
+            <div className="max-w-6xl w-full bg-gradient-to-r from-red-500/60 via-orange-400/60 to-yellow-400/60 backdrop-blur-md rounded-2xl p-10 shadow-2xl">
                 {/* Header */}
                 <h1 className="text-6xl font-rye text-white drop-shadow-lg text-center mb-12 font-bold">
                     FAQs
