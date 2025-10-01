@@ -65,6 +65,7 @@ body,
     -ms-user-select: none;
     user-select: none;
     -webkit-touch-callout: none;
+    scroll-behavior: smooth;
 }
 
 /* Disable dragging of images */
