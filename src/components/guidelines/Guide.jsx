@@ -1,5 +1,6 @@
 import React from "react";
 import TicketButton from "../button/TicketButton";
+import judgementCriteriaPdf from "../../assets/pdfs/Judgement Criteria.pdf";
 
 export default function Guide() {
     return (
@@ -55,11 +56,18 @@ export default function Guide() {
 
                     {/* Download button */}
                     <div className="mt-8 flex justify-center">
-                        <TicketButton
-                            text="JUDGEMENT CRITERIA"
-                            onClick={() => window.open("/assets/judgement_criteria.pdf", "_blank")}
-                            style={{ width: "300px", height: "60px", fontSize: "16px" }}
-                        />
+                        <a
+                            href={judgementCriteriaPdf}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="…"
+                        >
+
+                            <TicketButton
+                                text="JUDGEMENT CRITERIA"
+                                style={{ width: "300px", height: "60px", fontSize: "16px" }}
+                            />
+                        </a>
                     </div>
 
                     <p className="mt-4 text-xs sm:text-sm text-white/60 text-center">
