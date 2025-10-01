@@ -1,38 +1,45 @@
-import React, { Component } from "react";
-import "./App.css";
+import { React, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Lenis from "lenis";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+// Pages
+import Home from "./pages/home/Home.jsx";
+import FAQ from "./pages/FAQ.jsx";
 
-import ScrollToTop from "./ScrollToTop";
-import HomePage from "./pages/home/HomePage";
-// import TeamTCP from "./pages/teamTcp/TeamTcp"
-// import Error404 from "./pages/Error404/Error404"
-// import ContactUs from "./pages/contactUs/ContactUs"
-// import FAQs from "./pages/faqs/FAQs"
-// import Events from "./pages/events/Events"
-// import Speakers from "./pages/speakers/Speakers"
-// import Merchandise from "./pages/merchandise/Merchandise";
-// import CountDown from "./pages/countDown/CountDown";
-// import Games from "./pages/games/Games";
+import ClickSoundProvider from "./utils/ClickSoundProvider.jsx";
 
-export default class App extends Component {
-  render() {
+export default function App() {
+    // smooth scroll using lenis
+    useEffect(() => {
+        const lenis = new Lenis({
+            duration: 1.8,          // slower than before (was ~1.2)
+            smooth: true,
+            smoothTouch: true,
+        });
+
+        // expose globally so Navbar can call scrollTo
+        window.lenis = lenis;
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        return () => {
+            if (window.lenis === lenis) window.lenis = undefined;
+            lenis.destroy();
+        };
+    }, []);
+
     return (
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          {/* <Route path="*" element={<Error404 />} /> */}
-          <Route path="/" element={<HomePage />} />
-          {/* <Route path="/team" element={<TeamTCP />} />
-            <Route path="/contactus" element={<ContactUs />} />
-            <Route path="/faqs" element={<FAQs />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/speakers" element={<Speakers />} />
-            <Route path="/merchandise" element={<Merchandise />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/countdown" element={<CountDown />} /> */}
-        </Routes>
-      </BrowserRouter>
+        <BrowserRouter>
+            <ClickSoundProvider />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                {/* keep any other routes you need */}
+                <Route path="/faq" element={<FAQ />} />
+            </Routes>
+        </BrowserRouter>
     );
-  }
 }

@@ -1,0 +1,8 @@
+:root {
+  --color-primary: #F3A83A;       /* gold used for the main sign */
+  --color-secondary: #802B1D;     /* maroon for the tent stripes */
+  --color-background: #2C2B4C;    /* deep blue of the night sky */
+  --color-accent: #37E3EF;        /* electric blue for the Ferris wheel glow */
+  --color-text-dark: #A64F1A;     /* dark orange for text/elements on a light background */
+  --color-text-light: #E4D0B6;    /* cream for text/elements on a dark background */
+}
