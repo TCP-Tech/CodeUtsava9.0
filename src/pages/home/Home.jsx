@@ -65,7 +65,7 @@ export default function Home({ skipIntro = false }) {
                 <Intro />
             ) : (
                 <>
-                    <Cursor />
+                   <Cursor/>
                     <Hero />
                     <Lastyear />
                     <AboutUS />
@@ -73,7 +73,7 @@ export default function Home({ skipIntro = false }) {
                     <Timeline />
                     <Guide />
                     <GRandAN />
-                    <FAQ />
+                    <FAQ/>
                     <Footer />
                 </>
             )}

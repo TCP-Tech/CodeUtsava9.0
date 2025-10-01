@@ -1,199 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Rye&display=swap');
 
-/* ====== Section Layout ====== */
-.cu9-spons-section {
-    /* keep below navbar (z-50) but above background */
-    z-index: 10;
-    position: relative;
-    overflow: hidden;
-}
 
-/* Gentle bottom scrim so next section doesn't "pop" */
-.cu9-bottom-fade {
-    position: absolute;
-    inset-inline: 0;
-    bottom: 0;
-    height: 40%;
-    background: linear-gradient(to bottom,
-            rgba(0, 0, 0, 0) 0%,
-            rgba(0, 0, 0, 0.35) 35%,
-            rgba(0, 0, 0, 0.70) 100%);
-}
-
-/* ====== Marquee ====== */
-/* Mask edges so entry/exit look more realistic */
-.cu9-marquee {
-    --marquee-duration: 24s;
-    /* default; rows can override inline */
-    --edge-fade: 120px;
-    overflow: hidden;
-    mask-image: linear-gradient(to right,
-            transparent 0,
-            #000 calc(var(--edge-fade) * 0.6),
-            #000 calc(100% - var(--edge-fade)),
-            transparent 100%);
-}
-
-/* The track is exactly two groups wide (200%),
-   and we translate -50% to loop seamlessly. */
-.cu9-marquee-track {
-    display: flex;
-    width: max-content;
-    /* shrink-wrap groups */
-    animation: cu9-marquee var(--marquee-duration) linear infinite;
-    will-change: transform;
-}
-
-.cu9-marquee-group {
-    display: flex;
-    gap: clamp(16px, 3vw, 28px);
-    padding-inline: 6px;
-}
-
-/* Pause on hover (desktop) */
-@media (hover: hover) and (pointer: fine) {
-    .cu9-marquee:hover .cu9-marquee-track {
-        animation-play-state: paused;
-    }
-}
-
-@keyframes cu9-marquee {
-    from {
-        transform: translateX(0%);
-    }
-
-    to {
-        transform: translateX(-50%);
-    }
-
-    /* because two groups */
-}
-
-/* ====== Cards ====== */
-.cu9-card {
-    width: clamp(112px, 15vw, 180px);
-    height: clamp(160px, 22vw, 260px);
-    border-radius: 14px;
-    perspective: 1000px;
-    position: relative;
-    /* Dark card background for better logo visibility */
-    box-shadow:
-        0 12px 32px rgba(0, 0, 0, .45),
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        0 0 18px color-mix(in srgb, var(--color-primary) 30%, transparent);
-    background: rgba(15, 23, 42, 0.85);
-    /* Dark slate background */
-    overflow: visible;
-}
-
-.cu9-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 14px;
-    animation: cu9-flip var(--marquee-duration) linear infinite;
-    animation-delay: var(--flip-delay, 0s);
-}
-
-/* 3D faces */
-.cu9-card-face {
-    position: absolute;
-    inset: 0;
-    border-radius: 14px;
-    background-size: cover;
-    background-position: center;
-}
-
-/* back is visible first */
-.cu9-card-back {
-    transform: rotateY(0deg);
-}
-
-/* front becomes visible after the flip */
-.cu9-card-front {
-    transform: rotateY(180deg);
-    background: rgba(15, 23, 42, 0.95);
-    /* Dark background for sponsor logos */
-}
-
-.cu9-card-front__content {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    height: 100%;
-    backdrop-filter: brightness(1.1) saturate(1.1);
-    background: rgba(30, 41, 59, 0.9);
-    /* Darker background for better logo contrast */
-    border-radius: 14px;
-}
-
-/* Sponsor logo & text */
-.cu9-logo {
-    height: clamp(44px, 6vw, 64px);
-    object-fit: contain;
-    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, .35)) brightness(1.2) saturate(1.1);
-    margin-bottom: 8px;
-}
-
-.cu9-name {
-    margin: 0;
-    font: 700 clamp(10px, 1.8vw, 14px)/1.2 Quicksand, system-ui, sans-serif;
-    color: #ffffff;
-    /* White text for better visibility on dark background */
-    text-align: center;
-    padding-inline: 6px;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Flip timing:
-   - Hold back (face-down) for ~20% of loop,
-   - Flip to front quickly,
-   - Stay front for the remainder.
-   The per-card animation-delay (set inline) syncs flip with arrival. */
-@keyframes cu9-flip {
-
-    0%,
-    18% {
-        transform: rotateY(0deg);
-    }
-
-    22%,
-    100% {
-        transform: rotateY(180deg);
-    }
-}
-
-/* ====== Typography ====== */
-.rye-regular {
-    font-family: "Rye", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-/* ====== Shadows from your earlier file (kept for reuse) ====== */
 .topshadow {
-    box-shadow:
-        inset 0 10px 15px rgb(0, 0, 0),
-        inset 0 -10px 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 
+    inset 0 10px 15px rgb(0, 0, 0),
+    inset 0 -10px 15px rgba(0, 0, 0, 0.6); 
     background-color: rgba(0, 0, 0, 0.456);
 }
 
 .shadowUD {
-    box-shadow:
-        0 10px 50px rgba(0, 0, 0, 0.632),
-        0 -10px 50px rgba(0, 0, 0, 0.493);
+  box-shadow: 
+    0 10px 50px rgba(0, 0, 0, 0.632),   /* top shadow */
+    0 -10px 50px rgba(0, 0, 0, 0.493);  /* bottom shadow */
 }
 
-.shadowbg {
+.shadowbg{
     background: radial-gradient(circle at center, rgba(0, 0, 0, 0.303), rgba(0, 0, 0, 0.868));
 }
 
-/* ====== Motion Accessibility ====== */
-@media (prefers-reduced-motion: reduce) {
-
-    .cu9-marquee-track,
-    .cu9-card-inner {
-        animation: none !important;
-    }
+.rye-regular {
+  font-family: "Rye", serif;
+  font-weight: 400;
+  font-style: normal;
 }
