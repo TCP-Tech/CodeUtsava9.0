@@ -4,6 +4,19 @@ import RegistrationInstructions from "../../assets/pdfs/ResgistrationInstruction
 export default function BottomCTAs() {
     const [hidden, setHidden] = useState(false);
 
+    // load Devfolio SDK script when component mounts
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.src = "https://apply.devfolio.co/v2/sdk.js";
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
     useEffect(() => {
         const footer = document.querySelector("footer");
         if (!footer) return;
@@ -20,22 +33,18 @@ export default function BottomCTAs() {
     return (
         <div
             className={`pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 z-40 
-         flex flex-col md:flex-row gap-4 px-4 
-         transition-opacity duration-500 
-         ${hidden ? "opacity-0" : "opacity-100"}`}
+        flex flex-col md:flex-row gap-4 px-4 
+        transition-opacity duration-500 
+        ${hidden ? "opacity-0" : "opacity-100"}`}
         >
-            <a
-                href="https://codeutsava-9.devfolio.co/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pointer-events-auto px-5 py-3 rounded-xl shadow-lg font-semibold transition hover:opacity-95 animate-soft-pulse"
-                style={{
-                    background: "var(--color-muted)",
-                    color: "var(--color-background)",
-                }}
-            >
-                Apply with Devfolio
-            </a>
+            {/* Devfolio integrate button */}
+
+            <div
+                className="apply-button"
+                data-hackathon-slug="codeutsava-9"
+                data-button-theme="light"
+            ></div>
+
 
             <a
                 href={RegistrationInstructions}
