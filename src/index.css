@@ -239,7 +239,60 @@ canvas.sparkle-layer__canvas {
 }
 
 /* ============================= */
-/* 12. Hero Social Rail Styles */
+/* 12. Hero Scroll down */
+/* ============================= */
+
+.scroll-down-section {
+  color: #fff;
+  position: absolute;
+  bottom: 6rem;
+  right: 3rem;
+  transform-origin: right top 0;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: 4s 2s infinite bounce;
+}
+
+.scroll-down-section a {
+  display: inline-block;
+  /* font-family: var(--font-family); */
+  text-shadow: 2.85px 2.85px 0.532px black;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+  color: #fff;
+  writing-mode: vertical-lr;
+  background: 0 0;
+  position: relative;
+  margin-bottom: 0.6rem;
+}
+
+.scroll-down-section a:hover {
+  color: var(--secondary-c);
+  transition: 0.2s ease-in-out;
+}
+
+
+@keyframes bounce {
+  0%,
+  100%,
+  20%,
+  50%,
+  80% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+/* ============================= */
+/* 13. Hero Social Rail Styles */
 /* ============================= */
 .codeutsava__hero-social-rail {
     position: absolute;
@@ -343,3 +396,4 @@ canvas.sparkle-layer__canvas {
         transform: translateY(0);
     }
 }
+
