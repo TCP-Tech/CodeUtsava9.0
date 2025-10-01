@@ -13,9 +13,10 @@
 /* 3. Theme Colors */
 /* ============================= */
 
-html{
+html {
     scroll-behavior: smooth;
 }
+
 /* === Base === */
 body {
     background: var(--color-background);
@@ -35,12 +36,10 @@ body {
     --color-background: #0d0d0de1;
     --color-muted: #eadccb;
 
-    --brand-grad: linear-gradient(
-        to right,
-        var(--color-primary) 0%,
-        var(--color-accent) 25%,
-        var(--color-accent-2) 100%
-    );
+    --brand-grad: linear-gradient(to right,
+            var(--color-primary) 0%,
+            var(--color-accent) 25%,
+            var(--color-accent-2) 100%);
 }
 
 /* ============================= */
@@ -66,6 +65,7 @@ body,
     -ms-user-select: none;
     user-select: none;
     -webkit-touch-callout: none;
+    scroll-behavior: smooth;
 }
 
 /* Disable dragging of images */
@@ -91,6 +91,7 @@ img {
 .font-arcade {
     font-family: "Press Start 2P", system-ui, sans-serif;
 }
+
 .font-rye {
     font-family: 'Rye', cursive;
 }
@@ -139,18 +140,17 @@ img {
 /* 8. Hero Section Scrim */
 /* ============================= */
 .hero__scrim {
-    background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.8) 0%,
-        rgba(0, 0, 0, 0.45) 40%,
-        rgba(0, 0, 0, 0) 100%
-    );
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.8) 0%,
+            rgba(0, 0, 0, 0.45) 40%,
+            rgba(0, 0, 0, 0) 100%);
 }
 
 /* ============================= */
 /* 9. Optional Animations */
 /* ============================= */
 @keyframes bulbs {
+
     0%,
     100% {
         box-shadow: 0 0 8px var(--color-accent-2), 0 0 16px var(--color-primary);
@@ -168,6 +168,7 @@ img {
 }
 
 @keyframes softPulse {
+
     0%,
     100% {
         opacity: 0.92;
@@ -198,27 +199,41 @@ canvas.sparkle-layer__canvas {
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: #ffffff; /* pink-500 */
-  font-weight: bold;
+    color: #ffffff;
+    /* pink-500 */
+    font-weight: bold;
 }
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  color: #ec4899; /* purple-500 */
+    color: #ec4899;
+    /* purple-500 */
 }
+
 .swiper-pagination-bullet {
-  background: #e5e7eb; /* gray-200 (inactive) */
-  opacity: 1;
+    background: #e5e7eb;
+    /* gray-200 (inactive) */
+    opacity: 1;
 }
 
 .swiper-pagination-bullet-active {
-  background: #ec4899; /* pink-500 (active) */
+    background: #ec4899;
+    /* pink-500 (active) */
 }
 
 #analytics canvas {
-  width: 100% !important;
-  height: 100% !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
+/* ============================= */
+/* 11. Cursor utilities */
+/* ============================= */
+/* Combine multiple drop-shadows into one class to avoid Tailwind cssConflict.
+   Extra state effects (click/hover) can be appended via the CSS var below. */
+.cursor-glow {
+    filter:
+        drop-shadow(0 0 10px rgba(255, 100, 255, 0.7)) drop-shadow(0 0 20px rgba(0, 255, 255, 0.5)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.3)) var(--cursor-extra, none);
+}
