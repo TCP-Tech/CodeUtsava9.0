@@ -5,10 +5,34 @@ import NIT from "../../assets/images/NIT.webp";
 import tcpName from "../../assets/images/tcpName.png";
 import codeutsava from "../../assets/images/codeutsava.png";
 
+// Smooth scroll helper, uses Lenis if available
+function smoothScrollTo(targetSelector) {
+    const nav = document.querySelector("nav");
+    const offset = nav ? nav.offsetHeight : 0;
+
+    let destinationY = 0;
+    if (!targetSelector || targetSelector === "#") {
+        destinationY = 0;
+    } else {
+        const el = document.querySelector(targetSelector);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        destinationY = window.scrollY + rect.top - offset - 8;
+    }
+
+    if (window.lenis && typeof window.lenis.scrollTo === "function") {
+        window.lenis.scrollTo(destinationY);
+    } else {
+        window.scrollTo({ top: destinationY, behavior: "smooth" });
+    }
+}
+
+const CONTACT_FORM_URL =
+    "https://docs.google.com/forms/d/e/1FAIpQLSfHv8OJ7jkp9thPyPx1HrWJNPoGZ2z7FaFtIqpz7lO3dIqqgg/viewform?pli=1";
+
 const Footer = () => {
     return (
         <footer className="w-full relative backdrop-blur-lg bg-black/40 text-gray-300 px-6 sm:px-12 lg:px-20 py-12 border-t border-white/10">
-
             {/* Top Section */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 {/* Logos */}
@@ -30,6 +54,7 @@ const Footer = () => {
                 {/* Social Links */}
                 <div className="flex flex-col items-center gap-3">
                     <div className="flex gap-4 md:gap-5 flex-wrap justify-center">
+                        {/* social icons unchanged */}
                         <a href="https://www.facebook.com/codeutsava/" target="_blank" rel="noreferrer" aria-label="Facebook"
                             className="transition hover:scale-110 hover:text-blue-400 hover:drop-shadow-[0_0_8px_#3b82f6]">
                             <i className="fab fa-facebook text-2xl"></i>
@@ -87,22 +112,39 @@ const Footer = () => {
 
                 {/* Quick Links */}
                 <div className="flex flex-col gap-4 md:items-end font-rye text-white">
-                    <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                        className="hover:text-blue-400 transition hover:drop-shadow-[0_0_6px_#3b82f6]">
+                    <button
+                        onClick={() => smoothScrollTo("#")}
+                        className="hover:text-blue-400 transition hover:drop-shadow-[0_0_6px_#3b82f6] text-left"
+                    >
                         Home
-                    </Link>
-                    <Link to="/events" className="hover:text-pink-400 transition hover:drop-shadow-[0_0_6px_#ec4899]">
+                    </button>
+                    <Link
+                        to="/events"
+                        className="hover:text-pink-400 transition hover:drop-shadow-[0_0_6px_#ec4899]"
+                    >
                         Events
                     </Link>
-                    <Link to="/speakers" className="hover:text-green-400 transition hover:drop-shadow-[0_0_6px_#22c55e]">
+                    <Link
+                        to="/speakers"
+                        className="hover:text-green-400 transition hover:drop-shadow-[0_0_6px_#22c55e]"
+                    >
                         Speakers
                     </Link>
-                    <Link to="/faqs" className="hover:text-blue-300 transition hover:drop-shadow-[0_0_6px_#60a5fa]">
+                    <button
+                        onClick={() => smoothScrollTo("#faq")}
+                        className="hover:text-blue-300 transition hover:drop-shadow-[0_0_6px_#60a5fa] text-left"
+                    >
                         FAQ
-                    </Link>
-                    <Link to="/contactus" className="hover:text-pink-300 transition hover:drop-shadow-[0_0_6px_#f472b6]">
+                    </button>
+                    {/* updated Contact Us */}
+                    <a
+                        href={CONTACT_FORM_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:text-pink-300 transition hover:drop-shadow-[0_0_6px_#f472b6]"
+                    >
                         Contact Us
-                    </Link>
+                    </a>
                 </div>
             </div>
 
@@ -110,20 +152,28 @@ const Footer = () => {
             <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4 text-sm font-light">
                 <div className="text-center md:text-left">
                     Architected with <span className="text-pink-400">❤️</span> by{" "}
-                    <Link to="/team" className="hover:text-green-400 hover:drop-shadow-[0_0_6px_#22c55e] transition">
+                    <Link
+                        to="/team"
+                        className="hover:text-green-400 hover:drop-shadow-[0_0_6px_#22c55e] transition"
+                    >
                         TCP Team
                     </Link>
                 </div>
 
-                <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    className="flex items-center justify-center hover:text-blue-400 hover:drop-shadow-[0_0_6px_#3b82f6] transition mt-2 md:mt-0">
+                <button
+                    onClick={() => smoothScrollTo("#")}
+                    className="flex items-center justify-center hover:text-blue-400 hover:drop-shadow-[0_0_6px_#3b82f6] transition mt-2 md:mt-0"
+                >
                     Back to Top
                     <i className="fas fa-arrow-up ml-2"></i>
                 </button>
 
-                <a href="https://www.google.com/maps/place/NIT+Raipur"
-                    target="_blank" rel="noreferrer"
-                    className="flex items-center justify-center hover:text-green-400 hover:drop-shadow-[0_0_6px_#22c55e] transition mt-2 md:mt-0">
+                <a
+                    href="https://www.google.com/maps/place/NIT+Raipur"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-center hover:text-green-400 hover:drop-shadow-[0_0_6px_#22c55e] transition mt-2 md:mt-0"
+                >
                     <i className="fas fa-map-marker-alt mr-2"></i>
                     View Map Location
                 </a>
