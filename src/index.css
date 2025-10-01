@@ -46,7 +46,7 @@ body {
 /* 4. Base Styles */
 /* ============================= */
 body {
-    background: var(--color-background);
+    /* Removed background so fixed background image can show through */
     color: var(--color-muted);
     -webkit-tap-highlight-color: transparent;
     /* mobile tap highlight */
@@ -339,6 +339,61 @@ canvas.sparkle-layer__canvas {
 @media screen and (max-width: 1000px) {
     .codeutsava__hero-social-rail {
         display: none;
+    }
+}
+
+/* ============================= */
+/* 13. Hero Animation Styles */
+/* ============================= */
+
+/* Initial state - hidden */
+.hero-animations-active {
+    animation: heroFadeIn 1.5s ease-out forwards;
+}
+
+.hero-animations-active h1,
+.hero-animations-active h2,
+.hero-animations-active p {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroTextSlideIn 1s ease-out forwards;
+}
+
+.hero-animations-active h2 {
+    animation-delay: 0.2s;
+}
+
+.hero-animations-active h1 {
+    animation-delay: 0.4s;
+}
+
+.hero-animations-active p:first-of-type {
+    animation-delay: 0.6s;
+}
+
+.hero-animations-active p:last-of-type {
+    animation-delay: 0.8s;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0.7;
+        filter: blur(2px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes heroTextSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 

@@ -3,7 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Candy from "../../assets/images/fireworks.svg";
 
 const SimpleCarnivalCursor = ({ children }) => {
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    // Initialize cursor at center of screen
+    const [mousePos, setMousePos] = useState({ 
+        x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0, 
+        y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0 
+    });
     const [isHovering, setIsHovering] = useState(false);
     const [isClicking, setIsClicking] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -68,8 +72,8 @@ const SimpleCarnivalCursor = ({ children }) => {
             <div
                 className="fixed pointer-events-none z-[9999] transition-transform duration-100 ease-out"
                 style={{
-                    left: mousePos.x - 24, // center the image
-                    top: mousePos.y - 24,
+                    left: mousePos.x - 12, // adjust for pointer tip position
+                    top: mousePos.y - 8,   // adjust for pointer tip position
                     transform: `scale(${isClicking ? 0.8 : isHovering ? 1.3 : 1}) rotate(${isClicking ? '15deg' : '0deg'})`,
                 }}
                 aria-hidden="true"
