@@ -66,7 +66,6 @@ const Spons = () => {
     return (
         <>
             <section ref={containerRef} className="static h-[300vh] overflow-x-hidden">
-                <BackgroundMedia imageSrc={bg_image} videoSrc={bg_video} darken={0.5} />
 
                 <motion.div
                     className={`${isFixed ? "fixed top-0 w-full" : "relative"} h-screen flex flex-col items-center justify-center bg-transparent`}
