@@ -12,12 +12,29 @@ import GRandAN from "../../components/graphs&Analytics/GRandAN.jsx";
 import Guide from "../../components/guidelines/Guide.jsx";
 import FAQ from "../FAQ.jsx";
 import Cursor from "../../components/cursor/Cursor.jsx";
+import BackgroundMedia from "../../components/background/Background.jsx";
+import bg_image from "../../assets/images/bg-part2.jpg";
 
 export default function Home({ skipIntro = false }) {
     const [revealed, setRevealed] = useState(skipIntro);
+    const [curtainProgress, setCurtainProgress] = useState(0);
+    const [heroAnimationsStarted, setHeroAnimationsStarted] = useState(skipIntro);
     const MAX = 100;
     const progRef = useRef(0);
     const touchStartYRef = useRef(0);
+
+    // Handle curtain progress from Intro component
+    const handleCurtainProgress = (progress) => {
+        setCurtainProgress(progress);
+        // Start hero animations when curtain is halfway open
+        if (progress >= 0.5 && !heroAnimationsStarted) {
+            setHeroAnimationsStarted(true);
+        }
+        // Fully reveal when curtain is completely open
+        if (progress >= 1) {
+            setRevealed(true);
+        }
+    };
 
     useEffect(() => {
         if (revealed) return;
@@ -53,6 +70,13 @@ export default function Home({ skipIntro = false }) {
 
     return (
         <>
+            {/* Global fixed background for entire page */}
+            <BackgroundMedia
+                imageSrc={bg_image}
+                darken={0.5}
+                className="bg-right"
+            />
+            
             {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
                 <SparkleLayer />
@@ -62,11 +86,15 @@ export default function Home({ skipIntro = false }) {
             </div>
 
             {!revealed ? (
-                <Intro />
+                <>
+                    <Intro onCurtainProgress={handleCurtainProgress} />
+                    {/* Load cursor and start hero animations when curtain is halfway open */}
+                    {heroAnimationsStarted && <Cursor/>}
+                </>
             ) : (
                 <>
                    <Cursor/>
-                    <Hero />
+                    <Hero animationsStarted={heroAnimationsStarted} />
                     <Lastyear />
                     <AboutUS />
                     <Sponsors />
