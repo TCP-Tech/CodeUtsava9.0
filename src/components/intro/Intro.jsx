@@ -3,7 +3,7 @@ import { useSpring, animated } from "@react-spring/web";
 import Hero from "../hero/Hero.jsx";
 import ropeImg from "../../assets/images/rope.png";
 
-export default function FixedScrollSplit() {
+export default function FixedScrollSplit({ onCurtainProgress }) {
 
     // Curtain state: 0 = fully closed, 1 = fully open
     // Curtain state: 0 = fully closed, 1 = fully open
@@ -46,7 +46,14 @@ export default function FixedScrollSplit() {
         let delta = clientY - dragStartY.current;
         let newY = Math.max(0, Math.min(maxRopePull, ropeStartY.current + delta));
         setRopeY(newY);
-        setCurtain(newY / maxRopePull);
+        const newCurtainValue = newY / maxRopePull;
+        setCurtain(newCurtainValue);
+        
+        // Notify parent about curtain progress
+        if (onCurtainProgress) {
+            onCurtainProgress(newCurtainValue);
+        }
+        
         if (newY >= maxRopePull) {
             curtainLocked.current = true;
         }
@@ -112,7 +119,7 @@ export default function FixedScrollSplit() {
     };
 
     return (
-        <div className="relative w-screen h-screen overflow-hidden bg-black">
+        <div className="relative w-screen h-screen overflow-hidden bg-black z-[1000]">
             {/* Hero behind */}
             <div className="absolute top-0 left-0 w-full h-full z-0">
                 <Hero />

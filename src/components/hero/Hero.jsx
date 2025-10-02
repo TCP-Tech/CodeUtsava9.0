@@ -8,25 +8,16 @@ import BackgroundMedia from "../background/Background.jsx";
 import AudioPlayer from "../audioPlayer/player.jsx";
 
 // ✅ Import background from src/assets for proper Vite build
-import bg_image from "../../assets/images/bg.webp";
 
-export default function Hero() {
+export default function Hero({ animationsStarted = false }) {
     return (
         <header
-            className="relative overflow-hidden h-screen select-none"
+            className={`relative overflow-hidden h-screen select-none ${animationsStarted ? 'hero-animations-active' : ''}`}
             aria-label="Hero"
         >
-            {/* Background */}
-            <div className="absolute inset-0 pointer-events-none">
-                <BackgroundMedia
-                    imageSrc={bg_image} // Use imported variable
-                    darken={0.5}
-                    className="bg-right"
-                />
-            </div>
 
             {/* Audio Player */}
-            <AudioPlayer />
+            {/* <AudioPlayer /> */}
 
             {/* Foreground content */}
             <div className="relative z-10 pointer-events-auto h-full flex flex-col">
