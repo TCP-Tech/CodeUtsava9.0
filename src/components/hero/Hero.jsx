@@ -5,12 +5,10 @@ import RightRail from "./RightRail.jsx";
 import BottomCTAs from "./BottomCTAs.jsx";
 import Navbar from "../navbar/Navbar.jsx";
 import BackgroundMedia from "../background/Background.jsx";
-import AudioPlayer from "../audioPlayer/player.jsx"; // Audio Player
+import AudioPlayer from "../audioPlayer/player.jsx";
 
-// ✅ Use the background from src/assets for proper Vite bundling
-import bg_image from "../../assets/images/bg-part2.jpg";
-// If you want to use a video instead:
-// import bg_video from "../../assets/bg_video.webm";
+// ✅ Import background from src/assets for proper Vite build
+import bg_image from "../../assets/images/bg.webp";
 
 export default function Hero() {
     return (
@@ -18,19 +16,19 @@ export default function Hero() {
             className="relative overflow-hidden h-screen select-none"
             aria-label="Hero"
         >
-            {/* Background should ignore cursor events */}
+            {/* Background */}
             <div className="absolute inset-0 pointer-events-none">
                 <BackgroundMedia
-                    imageSrc={bg_image} // Using imported image
+                    imageSrc={bg_image} // Use imported variable
                     darken={0.5}
                     className="bg-right"
                 />
             </div>
 
-            {/* Audio Player floating over Hero */}
+            {/* Audio Player */}
             <AudioPlayer />
 
-            {/* Foreground */}
+            {/* Foreground content */}
             <div className="relative z-10 pointer-events-auto h-full flex flex-col">
                 <Navbar />
                 <SocialRail />

@@ -23,10 +23,11 @@ export default function Navbar() {
   const isLargeScreen = useMediaQuery({ minWidth: 1024 }); // lg breakpoint
 
   return (
-    <div className="fixed top-0 inset-x-0 z-[28]">
-      <div className="mx-auto w-full">
-        <nav className="bg-[#070f2f4b] px-4 md:px-20 border-b border-white/40 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,.35)]">
-          <div className="flex items-center justify-between px-4 py-3">
+    <>
+      {/* Navbar */}
+      <header className="fixed top-0 left-0 w-full z-[9999]">
+        <nav className="relative bg-[#070f2f4b] backdrop-blur-sm border-b border-white/40 shadow-[0_8px_24px_rgba(0,0,0,.35)]">
+          <div className="mx-auto flex items-center justify-between px-4 md:px-20 py-3">
 
             {/* Left group: Logo + Feedback button */}
             <div className="flex items-center gap-4">
@@ -34,7 +35,7 @@ export default function Navbar() {
                 <img src={logo} alt="Logo" className="h-12 w-auto" />
               </a>
 
-              {/* Ticket Button visible only on large screens */}
+              {/* Feedback Button on large screens */}
               {isLargeScreen && (
                 <ImageButton
                   text="FEEDBACK"
@@ -58,7 +59,7 @@ export default function Navbar() {
               <NavItem delay={0.5}>TEAM</NavItem>
             </div>
 
-            {/* Right group: Brochure button */}
+            {/* Brochure button */}
             {isLargeScreen && (
               <div className="hidden md:flex">
                 <ImageButton
@@ -86,7 +87,7 @@ export default function Navbar() {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="flex flex-col items-center gap-4 overflow-hidden md:hidden text-white font-semibold"
+                className="md:hidden overflow-hidden text-white font-semibold flex flex-col items-center gap-4 px-6 pb-6"
               >
                 <NavItem onClick={() => setMobileOpen(false)}>HOME</NavItem>
                 <NavItem onClick={() => setMobileOpen(false)}>ABOUT US</NavItem>
@@ -94,12 +95,12 @@ export default function Navbar() {
                 <NavItem onClick={() => setMobileOpen(false)}>CONTACT US</NavItem>
                 <NavItem onClick={() => setMobileOpen(false)}>TEAM</NavItem>
 
-                {/* Mobile Feedback / Brochure normal buttons */}
-                <div className="flex flex-col gap-3 mt-2 w-full px-10 pb-4">
+                {/* Mobile Feedback / Brochure buttons */}
+                <div className="flex flex-col gap-3 mt-4 w-full">
                   <button
                     onClick={() =>
                       window.open(
-                        "https://docs.google.com/forms/...",
+                        "https://docs.google.com/forms/... ",
                         "_blank"
                       )
                     }
@@ -118,7 +119,10 @@ export default function Navbar() {
             )}
           </AnimatePresence>
         </nav>
-      </div>
-    </div>
+      </header>
+
+      {/* Spacer so content does not go under navbar */}
+      <div className="h-20 md:h-24" />
+    </>
   );
 }
