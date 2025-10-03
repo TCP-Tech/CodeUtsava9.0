@@ -4,12 +4,12 @@ import Hero from "../hero/Hero.jsx";
 
 export default function FixedScrollSplit({ onCurtainProgress }) {
 
-    // Curtain state: 0 = fully closed, 1 = fully open
-    const [curtain, setCurtain] = useState(0);
+    // Curtain state: -1 = no curtains (hidden), 0 = closed (covering screen), 1 = open (off-screen)
+    const [curtain, setCurtain] = useState(-1);
     const [isAnimating, setIsAnimating] = useState(false);
     const [showButton, setShowButton] = useState(true);
     const [isMobile, setIsMobile] = useState(false);
-    const curtainLocked = useRef(false); // lock after fully open
+    const curtainLocked = useRef(false);
 
     // Handle responsive sizing
     useEffect(() => {
@@ -17,78 +17,112 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
             setIsMobile(window.innerWidth < 768);
         };
         
-        handleResize(); // Initial check
+        handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Button click handler to start curtain animation
+    // Button click handler: bring curtains in to close, then open to reveal hero
     const handleEnterClick = () => {
         if (isAnimating || curtainLocked.current) return;
         
         setIsAnimating(true);
         setShowButton(false);
         
-        // Animate curtain opening over 2 seconds
-        const duration = 2000; // 2 seconds
-        const startTime = Date.now();
+        // Phase 1: Curtains come in and close (-1 to 0)
+        const closeDuration = 1000; 
+        const closeStartTime = Date.now();
         
-        const animate = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
+        const animateClose = () => {
+            const elapsed = Date.now() - closeStartTime;
+            const progress = Math.min(elapsed / closeDuration, 1);
             
-            setCurtain(progress);
-            
-            // Call progress callback
-            if (onCurtainProgress) {
-                onCurtainProgress(progress);
-            }
+            setCurtain(-1 + progress); // -1 to 0 (no curtains to closed)
             
             if (progress < 1) {
-                requestAnimationFrame(animate);
+                requestAnimationFrame(animateClose);
             } else {
-                curtainLocked.current = true;
-                setIsAnimating(false);
+                // Phase 2: Curtains open (0 to 1)
+                setTimeout(() => {
+                    const openDuration = 2000;
+                    const openStartTime = Date.now();
+                    
+                    const animateOpen = () => {
+                        const elapsed = Date.now() - openStartTime;
+                        const progress = Math.min(elapsed / openDuration, 1);
+                        
+                        setCurtain(progress); // 0 to 1 (closed to open)
+                        
+                        if (onCurtainProgress) {
+                            onCurtainProgress(progress);
+                        }
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(animateOpen);
+                        } else {
+                            curtainLocked.current = true;
+                            setIsAnimating(false);
+                        }
+                    };
+                    
+                    requestAnimationFrame(animateOpen);
+                }, 200);
             }
         };
         
-        requestAnimationFrame(animate);
+        requestAnimationFrame(animateClose);
     };
 
 
 
-    // Curtain animation: left and right panels slide out horizontally
-    // Responsive sway effect: smaller sway on mobile devices
+    // Curtain animation with three states:
+    // -1: No curtains (hidden off-screen)
+    // 0: Curtains closed (at center, covering screen)
+    // 1: Curtains open (off-screen on opposite sides)
+    
     const swayAmplitude = isMobile ? 24 : 48;
     const swayFrequency = 3;
-    const sway = Math.sin(curtain * Math.PI * swayFrequency) * swayAmplitude * (1 - curtain);
+    
+    // Calculate positions based on curtain state
+    let leftPos, rightPos;
+    
+    if (curtain < 0) {
+        // State -1 to 0: Curtains coming in from off-screen to center
+        const progress = curtain + 1; // 0 to 1
+        leftPos = -100 + (progress * 270); 
+        rightPos = 100 - (progress * 270);  
+    } else {
+        // State 0 to 1: Curtains opening from center to off-screen
+        leftPos = -(curtain * 100); // 0vw to -100vw
+        rightPos = curtain * 100;    // 0vw to 100vw
+    }
+    
+    const sway = Math.sin(Math.abs(curtain) * Math.PI * swayFrequency) * swayAmplitude * (curtain >= 0 ? (1 - curtain) : (curtain + 1));
     
     // Responsive border width and radius
     const borderWidth = isMobile ? "4px" : "8px";
     const borderRadius = isMobile ? "40px" : "80px";
 
-    // Uniform speed (linear), curtains move fully off-screen (100vw)
     const leftCurtainSpring = useSpring({
         to: {
-            transform: `translateX(-${curtain * 100}vw) skewY(${sway / 16}deg)`
+            transform: `translateX(${leftPos}vw) skewY(${sway / 16}deg)`
         },
-        config: { duration: 1000, easing: t => t }, // linear, slowed by 50%
+        config: { duration: 1000, easing: t => t },
     });
     const rightCurtainSpring = useSpring({
         to: {
-            transform: `translateX(${curtain * 100}vw) skewY(-${sway / 16}deg)`
+            transform: `translateX(${rightPos}vw) skewY(-${sway / 16}deg)`
         },
-        config: { duration: 1000, easing: t => t }, // linear, slowed by 50%
+        config: { duration: 1000, easing: t => t },
     });
 
-    // Fade out intro text as curtain opens
+    // Fade title/button - visible only when curtain = -1 (no curtains visible)
     const textSpring = useSpring({
-        opacity: 1 - curtain * 1.2,
-        transform: `scale(${1 - curtain * 0.1}) translateY(-${curtain * 30}px)`,
+        opacity: (curtain === -1 && showButton) ? 1 : 0,
+        transform: `scale(${(curtain === -1 && showButton) ? 1 : 0.9}) translateY(${(curtain === -1 && showButton) ? 0 : -30}px)`,
         config: { tension: 120, friction: 20 },
     });
 
-    // Responsive curtain styling - smaller radius and border on mobile
     const curtainBase = {
         background: `
       linear-gradient(90deg, #7a0d0d 0%, #A11515 10%, #7a0d0d 20%, #A11515 30%, #7a0d0d 40%, #A11515 50%, #7a0d0d 60%, #A11515 70%, #7a0d0d 80%, #A11515 90%, #7a0d0d 100%),
@@ -97,7 +131,7 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
       linear-gradient(60deg, #fff2 5%, transparent 60%)
     `,
         backgroundBlendMode: 'multiply, multiply, lighten, lighten',
-        boxShadow: curtain < 1 ? "0 0 40px 10px #6a0d0d88 inset, 0 0 32px 0 #7a1a1a" : "none",
+        boxShadow: (curtain >= 0 && curtain < 1) ? "0 0 40px 10px #6a0d0d88 inset, 0 0 32px 0 #7a1a1a" : "none",
         borderTopLeftRadius: `0 0 ${borderRadius} ${borderRadius}`,
         borderBottomLeftRadius: `${borderRadius} ${borderRadius} 0 0`,
         borderTopRightRadius: `0 0 ${borderRadius} ${borderRadius}`,
@@ -108,7 +142,10 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
         width: "50vw",
         zIndex: 30,
         overflow: "hidden",
-        transition: "box-shadow 0.3s",
+        transition: "box-shadow 0.3s, opacity 0.3s",
+        // Hide curtains initially when curtain = -1
+        opacity: curtain === -1 ? 0 : 1,
+        pointerEvents: curtain === -1 ? 'none' : 'auto',
     };
 
     return (
@@ -216,7 +253,7 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                     borderBottomLeftRadius: `${borderRadius} ${borderRadius} 0 0`,
                     borderTopRightRadius: 0,
                     borderBottomRightRadius: 0,
-                    boxShadow: curtain < 1 ? `${isMobile ? "4px" : "8px"} 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset` : "none",
+                    boxShadow: (curtain >= 0 && curtain < 1) ? `${isMobile ? "4px" : "8px"} 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset` : "none",
                     // Sway edge with clip-path
                     clipPath: `polygon(0 0, calc(100% - ${Math.abs(sway)}px) 0, 100% 50%, calc(100% - ${Math.abs(sway)}px) 100%, 0 100%)`,
                 }}
@@ -247,7 +284,7 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                     borderBottomRightRadius: `${borderRadius} ${borderRadius} 0 0`,
                     borderTopLeftRadius: 0,
                     borderBottomLeftRadius: 0,
-                    boxShadow: curtain < 1 ? `${isMobile ? "-4px" : "-8px"} 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset` : "none",
+                    boxShadow: (curtain >= 0 && curtain < 1) ? `${isMobile ? "-4px" : "-8px"} 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset` : "none",
                     // Sway edge with clip-path
                     clipPath: `polygon(${Math.abs(sway)}px 0, 100% 0, 100% 100%, ${Math.abs(sway)}px 100%, 0 50%)`,
                 }}
