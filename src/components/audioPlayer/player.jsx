@@ -3,7 +3,7 @@ import carnivalIntro from "../../assets/audio/carnival_hero.mp3";
 
 const AudioPlayer = () => {
   const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const togglePlay = () => {
     if (isPlaying) {
@@ -52,7 +52,7 @@ const AudioPlayer = () => {
           </svg>
         )}
       </button>
-      <audio ref={audioRef} src={carnivalIntro} loop />
+      <audio ref={audioRef} src={carnivalIntro} loop  autoPlay/>
     </div>
   );
 };
