@@ -23,7 +23,7 @@ export default function Navbar() {
   const isLargeScreen = useMediaQuery({ minWidth: 1024 }); // lg breakpoint
 
   return (
-    <div className="fixed top-0 inset-x-0 z-[28]">
+    <div className="fixed top-0 inset-x-0 z-[99999]">
       <div className="mx-auto w-full">
         <nav className="bg-[#070f2f4b] px-4 md:px-20 border-b border-white/40 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,.35)]">
           <div className="flex items-center justify-between px-4 py-3">

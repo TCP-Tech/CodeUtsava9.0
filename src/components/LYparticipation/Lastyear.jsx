@@ -30,7 +30,7 @@ function Counter({ target, label, inView }) {
 
   return (
     <motion.div
-      className="relative w-72 h-40 flex justify-center items-center"
+      className="relative w-72 h-40 flex justify-center items-center z-"
       whileHover={{ scale: 1.05 }}
     >
       {/* Ticket image */}
@@ -42,7 +42,7 @@ function Counter({ target, label, inView }) {
 
       {/* White box behind the counter with fixed size */}
       <div
-  className="absolute z-10 w-45 h-27 ml-5 rounded-lg flex flex-col justify-center items-center shadow-lg"
+  className="absolute z-5 w-45 h-27 ml-5 rounded-lg flex flex-col justify-center items-center shadow-lg"
   style={{ backgroundColor: "#e0c8a9" }}
 >
 

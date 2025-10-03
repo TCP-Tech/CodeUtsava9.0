@@ -136,7 +136,7 @@ const Timeline = () => {
                 ref={cartRef}
                 className="
           codeutsava__timeline-cart
-          absolute left-22 md:left-[808px] -translate-x-1/2 z-10
+          absolute left-22 md:left-[808px] -translate-x-1/2 z-5
           transition-transform duration-75 ease-out
           pointer-events-none
         "
