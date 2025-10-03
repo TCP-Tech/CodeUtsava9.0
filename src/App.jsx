@@ -1,3 +1,4 @@
+// src/App.jsx
 import { React, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Lenis from "lenis";
@@ -8,17 +9,15 @@ import EventsPage from "./pages/Events.jsx";
 import FAQ from "./pages/FAQ.jsx";
 
 import ClickSoundProvider from "./utils/ClickSoundProvider.jsx";
+import ScrollToTop from "./utils/ScrollToTop.jsx";
 
 export default function App() {
-    // smooth scroll using lenis
     useEffect(() => {
         const lenis = new Lenis({
-            duration: 1.8,          // slower than before (was ~1.2)
+            duration: 1.8,
             smooth: true,
             smoothTouch: true,
         });
-
-        // expose globally so Navbar can call scrollTo
         window.lenis = lenis;
 
         function raf(time) {
@@ -35,11 +34,11 @@ export default function App() {
 
     return (
         <BrowserRouter>
+            <ScrollToTop />
             <ClickSoundProvider />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/events" element={<EventsPage />} />
-                {/* keep any other routes you need */}
                 <Route path="/faq" element={<FAQ />} />
             </Routes>
         </BrowserRouter>

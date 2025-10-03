@@ -1,11 +1,12 @@
+// src/components/footer/Footer.jsx
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import NIT from "../../assets/images/NIT.webp";
 import tcpName from "../../assets/images/tcpName.png";
 import codeutsava from "../../assets/images/codeutsava.png";
 
-// Smooth scroll helper, uses Lenis if available
+// Smooth scroll helper (same behavior as Navbar)
 function smoothScrollTo(targetSelector) {
     const nav = document.querySelector("nav");
     const offset = nav ? nav.offsetHeight : 0;
@@ -30,7 +31,20 @@ function smoothScrollTo(targetSelector) {
 const CONTACT_FORM_URL =
     "https://docs.google.com/forms/d/e/1FAIpQLSfHv8OJ7jkp9thPyPx1HrWJNPoGZ2z7FaFtIqpz7lO3dIqqgg/viewform?pli=1";
 
-const Footer = () => {
+export default function Footer() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const goToAnchorOrHome = (anchor) => {
+        if (currentPath === "/") {
+            smoothScrollTo(anchor);
+        } else {
+            // pass state so Home can scroll after it's rendered/revealed
+            navigate("/", { state: { scrollTo: anchor } });
+        }
+    };
+
     return (
         <footer className="w-full relative backdrop-blur-lg bg-black/40 text-gray-300 px-6 sm:px-12 lg:px-20 py-12 border-t border-white/10">
             {/* Top Section */}
@@ -54,29 +68,58 @@ const Footer = () => {
                 {/* Social Links */}
                 <div className="flex flex-col items-center gap-3">
                     <div className="flex gap-4 md:gap-5 flex-wrap justify-center">
-                        {/* social icons unchanged */}
-                        <a href="https://www.facebook.com/codeutsava/" target="_blank" rel="noreferrer" aria-label="Facebook"
-                            className="transition hover:scale-110 hover:text-blue-400 hover:drop-shadow-[0_0_8px_#3b82f6]">
+                        <a
+                            href="https://www.facebook.com/codeutsava/"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="Facebook"
+                            className="transition hover:scale-110 hover:text-blue-400 hover:drop-shadow-[0_0_8px_#3b82f6]"
+                        >
                             <i className="fab fa-facebook text-2xl"></i>
                         </a>
-                        <a href="https://www.instagram.com/codeutsavanitrr/" target="_blank" rel="noreferrer" aria-label="Instagram"
-                            className="transition hover:scale-110 hover:text-pink-400 hover:drop-shadow-[0_0_8px_#ec4899]">
+                        <a
+                            href="https://www.instagram.com/codeutsavanitrr/"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="Instagram"
+                            className="transition hover:scale-110 hover:text-pink-400 hover:drop-shadow-[0_0_8px_#ec4899]"
+                        >
                             <i className="fab fa-instagram text-2xl"></i>
                         </a>
-                        <a href="https://github.com/TCP-Tech" target="_blank" rel="noreferrer" aria-label="GitHub"
-                            className="transition hover:scale-110 hover:text-gray-300 hover:drop-shadow-[0_0_8px_#d1d5db]">
+                        <a
+                            href="https://github.com/TCP-Tech"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="GitHub"
+                            className="transition hover:scale-110 hover:text-gray-300 hover:drop-shadow-[0_0_8px_#d1d5db]"
+                        >
                             <i className="fab fa-github text-2xl"></i>
                         </a>
-                        <a href="https://twitter.com/codeutsavanitrr?lang=en" target="_blank" rel="noreferrer" aria-label="Twitter"
-                            className="transition hover:scale-110 hover:text-blue-300 hover:drop-shadow-[0_0_8px_#60a5fa]">
+                        <a
+                            href="https://twitter.com/codeutsavanitrr?lang=en"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="Twitter"
+                            className="transition hover:scale-110 hover:text-blue-300 hover:drop-shadow-[0_0_8px_#60a5fa]"
+                        >
                             <i className="fab fa-twitter text-2xl"></i>
                         </a>
-                        <a href="https://www.linkedin.com/company/codeutsava/" target="_blank" rel="noreferrer" aria-label="LinkedIn"
-                            className="transition hover:scale-110 hover:text-blue-400 hover:drop-shadow-[0_0_8px_#3b82f6]">
+                        <a
+                            href="https://www.linkedin.com/company/codeutsava/"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="LinkedIn"
+                            className="transition hover:scale-110 hover:text-blue-400 hover:drop-shadow-[0_0_8px_#3b82f6]"
+                        >
                             <i className="fab fa-linkedin text-2xl"></i>
                         </a>
-                        <a href="https://discord.gg/sxfvDKhEgQ" target="_blank" rel="noreferrer" aria-label="Discord"
-                            className="transition hover:scale-110 hover:text-indigo-400 hover:drop-shadow-[0_0_8px_#6366f1]">
+                        <a
+                            href="https://discord.gg/sxfvDKhEgQ"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="Discord"
+                            className="transition hover:scale-110 hover:text-indigo-400 hover:drop-shadow-[0_0_8px_#6366f1]"
+                        >
                             <i className="fab fa-discord text-2xl"></i>
                         </a>
                     </div>
@@ -113,30 +156,37 @@ const Footer = () => {
                 {/* Quick Links */}
                 <div className="flex flex-col gap-4 md:items-end font-rye text-white">
                     <button
-                        onClick={() => smoothScrollTo("#")}
+                        onClick={() => {
+                            if (currentPath === "/") smoothScrollTo("#");
+                            else navigate("/");
+                        }}
                         className="hover:text-blue-400 transition hover:drop-shadow-[0_0_6px_#3b82f6] text-left"
                     >
                         Home
                     </button>
+
                     <Link
-                        to="/events"
+                        to="/events#events"
                         className="hover:text-pink-400 transition hover:drop-shadow-[0_0_6px_#ec4899]"
                     >
                         Events
                     </Link>
+
                     <Link
                         to="/speakers"
                         className="hover:text-green-400 transition hover:drop-shadow-[0_0_6px_#22c55e]"
                     >
                         Speakers
                     </Link>
+
                     <button
-                        onClick={() => smoothScrollTo("#faq")}
+                        onClick={() => goToAnchorOrHome("#faq")}
                         className="hover:text-blue-300 transition hover:drop-shadow-[0_0_6px_#60a5fa] text-left"
                     >
                         FAQ
                     </button>
-                    {/* updated Contact Us */}
+
+                    {/* Contact Us */}
                     <a
                         href={CONTACT_FORM_URL}
                         target="_blank"
@@ -161,7 +211,10 @@ const Footer = () => {
                 </div>
 
                 <button
-                    onClick={() => smoothScrollTo("#")}
+                    onClick={() => {
+                        if (currentPath === "/") smoothScrollTo("#");
+                        else navigate("/");
+                    }}
                     className="flex items-center justify-center hover:text-blue-400 hover:drop-shadow-[0_0_6px_#3b82f6] transition mt-2 md:mt-0"
                 >
                     Back to Top
@@ -180,6 +233,4 @@ const Footer = () => {
             </div>
         </footer>
     );
-};
-
-export default Footer;
+}
