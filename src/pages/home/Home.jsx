@@ -26,12 +26,9 @@ export default function Home({ skipIntro = false }) {
     // Handle curtain progress from Intro component
     const handleCurtainProgress = (progress) => {
         setCurtainProgress(progress);
-        // Start hero animations when curtain is halfway open
-        if (progress >= 0.5 && !heroAnimationsStarted) {
+        // Start hero animations and reveal only when curtain is completely open
+        if (progress >= 0.9 && !heroAnimationsStarted) {
             setHeroAnimationsStarted(true);
-        }
-        // Fully reveal when curtain is completely open
-        if (progress >= 1) {
             setRevealed(true);
         }
     };
@@ -85,6 +82,9 @@ export default function Home({ skipIntro = false }) {
                 {/* <Fireworks autoLaunch/>   */}
             </div>
 
+            {/* Always render Hero for background visibility */}
+            <Hero animationsStarted={heroAnimationsStarted} />
+            
             {!revealed ? (
                 <>
                     <Intro onCurtainProgress={handleCurtainProgress} />
@@ -94,7 +94,6 @@ export default function Home({ skipIntro = false }) {
             ) : (
                 <>
                    <Cursor/>
-                    <Hero animationsStarted={heroAnimationsStarted} />
                     <Lastyear />
                     <AboutUS />
                     <Sponsors />
