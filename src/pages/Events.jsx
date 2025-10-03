@@ -29,11 +29,9 @@ export default function EventsPage() {
             </div>
 
             {/* Foreground content */}
-            <Navbar />
             <main className="relative z-20 pt-32">
                 <Events />
             </main>
-            <Footer />
         </>
     );
 }
