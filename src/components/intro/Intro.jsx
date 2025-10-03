@@ -8,7 +8,19 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
     const [curtain, setCurtain] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
     const [showButton, setShowButton] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
     const curtainLocked = useRef(false); // lock after fully open
+
+    // Handle responsive sizing
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        
+        handleResize(); // Initial check
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Button click handler to start curtain animation
     const handleEnterClick = () => {
@@ -46,10 +58,14 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
 
 
     // Curtain animation: left and right panels slide out horizontally
-    // Sway effect: edge of curtain sways as it opens
-    const swayAmplitude = 48;
+    // Responsive sway effect: smaller sway on mobile devices
+    const swayAmplitude = isMobile ? 24 : 48;
     const swayFrequency = 3;
     const sway = Math.sin(curtain * Math.PI * swayFrequency) * swayAmplitude * (1 - curtain);
+    
+    // Responsive border width and radius
+    const borderWidth = isMobile ? "4px" : "8px";
+    const borderRadius = isMobile ? "40px" : "80px";
 
     // Uniform speed (linear), curtains move fully off-screen (100vw)
     const leftCurtainSpring = useSpring({
@@ -72,6 +88,7 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
         config: { tension: 120, friction: 20 },
     });
 
+    // Responsive curtain styling - smaller radius and border on mobile
     const curtainBase = {
         background: `
       linear-gradient(90deg, #7a0d0d 0%, #A11515 10%, #7a0d0d 20%, #A11515 30%, #7a0d0d 40%, #A11515 50%, #7a0d0d 60%, #A11515 70%, #7a0d0d 80%, #A11515 90%, #7a0d0d 100%),
@@ -81,10 +98,10 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
     `,
         backgroundBlendMode: 'multiply, multiply, lighten, lighten',
         boxShadow: curtain < 1 ? "0 0 40px 10px #6a0d0d88 inset, 0 0 32px 0 #7a1a1a" : "none",
-        borderTopLeftRadius: "0 0 80px 80px",
-        borderBottomLeftRadius: "80px 80px 0 0",
-        borderTopRightRadius: "0 0 80px 80px",
-        borderBottomRightRadius: "80px 80px 0 0",
+        borderTopLeftRadius: `0 0 ${borderRadius} ${borderRadius}`,
+        borderBottomLeftRadius: `${borderRadius} ${borderRadius} 0 0`,
+        borderTopRightRadius: `0 0 ${borderRadius} ${borderRadius}`,
+        borderBottomRightRadius: `${borderRadius} ${borderRadius} 0 0`,
         position: "fixed",
         top: 0,
         height: "100%",
@@ -108,9 +125,9 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
 
                 {/* Title and Enter Button */}
                 {showButton && (
-                    <div className="flex flex-col items-center space-y-8 z-50">
+                    <div className="flex flex-col items-center space-y-4 md:space-y-8 z-50">
                         {/* Title */}
-                        <h1 className="text-6xl md:text-8xl font-rye text-white text-center tracking-wide text-stroke-strong">
+                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-rye text-white text-center tracking-wide text-stroke-strong px-4">
                             CODEUTSAVA 9.0
                         </h1>
                         
@@ -118,11 +135,11 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                         <button
                             onClick={handleEnterClick}
                             disabled={isAnimating}
-                            className="relative group px-12 py-6 text-white font-rye text-2xl font-bold rounded-2xl 
+                            className="relative group px-8 py-4 md:px-12 md:py-6 text-white font-rye text-lg md:text-2xl font-bold rounded-2xl 
                                      transform transition-all duration-500 ease-out
                                      hover:scale-110 hover:rotate-1 active:scale-95
                                      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:rotate-0
-                                     overflow-hidden border-4 border-yellow-400"
+                                     overflow-hidden border-2 md:border-4 border-yellow-400"
                             style={{
                                 background: `linear-gradient(135deg, 
                                     #ff6b35 0%, #ff8c42 15%, #ff6b35 30%, 
@@ -166,13 +183,13 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                                 {isAnimating ? (
                                     <>
                                         <span className="animate-spin">🎪</span>
-                                        <span>ENTERING THE CARNIVAL...</span>
+                                        <span>ENTERING...</span>
                                         <span className="animate-bounce">🎭</span>
                                     </>
                                 ) : (
                                     <>
                                         <span className="animate-pulse">🎪</span>
-                                        <span>ENTER THE CARNIVAL</span>
+                                        <span>ENTER</span>
                                         <span className="animate-bounce">🎭</span>
                                     </>
                                 )}
@@ -194,12 +211,12 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                     ...curtainBase,
                     ...leftCurtainSpring,
                     left: 0,
-                    borderRight: "8px solid gold",
-                    borderTopLeftRadius: "0 0 80px 80px",
-                    borderBottomLeftRadius: "80px 80px 0 0",
+                    borderRight: `${borderWidth} solid gold`,
+                    borderTopLeftRadius: `0 0 ${borderRadius} ${borderRadius}`,
+                    borderBottomLeftRadius: `${borderRadius} ${borderRadius} 0 0`,
                     borderTopRightRadius: 0,
                     borderBottomRightRadius: 0,
-                    boxShadow: curtain < 1 ? "8px 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset" : "none",
+                    boxShadow: curtain < 1 ? `${isMobile ? "4px" : "8px"} 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset` : "none",
                     // Sway edge with clip-path
                     clipPath: `polygon(0 0, calc(100% - ${Math.abs(sway)}px) 0, 100% 50%, calc(100% - ${Math.abs(sway)}px) 100%, 0 100%)`,
                 }}
@@ -225,12 +242,12 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                     ...rightCurtainSpring,
                     right: 0,
                     left: "auto",
-                    borderLeft: "8px solid gold",
-                    borderTopRightRadius: "0 0 80px 80px",
-                    borderBottomRightRadius: "80px 80px 0 0",
+                    borderLeft: `${borderWidth} solid gold`,
+                    borderTopRightRadius: `0 0 ${borderRadius} ${borderRadius}`,
+                    borderBottomRightRadius: `${borderRadius} ${borderRadius} 0 0`,
                     borderTopLeftRadius: 0,
                     borderBottomLeftRadius: 0,
-                    boxShadow: curtain < 1 ? "-8px 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset" : "none",
+                    boxShadow: curtain < 1 ? `${isMobile ? "-4px" : "-8px"} 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset` : "none",
                     // Sway edge with clip-path
                     clipPath: `polygon(${Math.abs(sway)}px 0, 100% 0, 100% 100%, ${Math.abs(sway)}px 100%, 0 50%)`,
                 }}
