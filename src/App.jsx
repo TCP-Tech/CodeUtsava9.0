@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Lenis from "lenis";
 
 // Pages
-import Home from "./pages/home/Home.jsx";
+import Home from "./pages/Home.jsx";
+import EventsPage from "./pages/Events.jsx";
 import FAQ from "./pages/FAQ.jsx";
 
 import ClickSoundProvider from "./utils/ClickSoundProvider.jsx";
@@ -37,6 +38,7 @@ export default function App() {
             <ClickSoundProvider />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/events" element={<EventsPage />} />
                 {/* keep any other routes you need */}
                 <Route path="/faq" element={<FAQ />} />
             </Routes>

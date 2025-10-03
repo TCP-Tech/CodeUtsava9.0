@@ -1,0 +1,134 @@
+/* Import the Rye font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
+
+/* --- Section Layout --- */
+.events-section {
+    width: 100%;
+    position: relative;
+    padding: 4rem 1rem;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.events-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+/* --- Heading Styling (Font and Padding Fix) --- */
+.events-heading {
+    font-family: "Rye", serif;
+    color: #ffffff;
+    font-size: clamp(2.5rem, 2.2rem + 2.5vw, 4.5rem);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.65),
+        0 8px 30px rgba(0, 0, 0, 0.45);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+.neon-hr {
+    margin: 0 auto;
+    width: 8rem;
+    height: 2px;
+    border-radius: 9999px;
+    background-image: linear-gradient(to right, #ff0099, #1e90ff, #00ff85);
+    box-shadow:
+        0 0 22px rgba(255, 0, 153, 0.35),
+        0 0 16px rgba(30, 144, 255, 0.35),
+        0 0 10px rgba(0, 255, 133, 0.35);
+}
+
+/* --- Card Grid Layout --- */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2.5rem;
+}
+
+/* --- Improved Event Card Design with Image --- */
+.event-card {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom, rgba(20, 20, 35, 0.85), rgba(10, 10, 20, 0.75));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    /* CRUCIAL: Makes the image respect the card's border radius */
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(30, 144, 255, 0.25);
+}
+
+/* --- Card Image Styling --- */
+.card-image-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    /* Sets a consistent banner-like shape */
+    background-color: #1a1a2e;
+    /* Fallback color while image loads */
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensures image covers the container without distortion */
+    display: block;
+}
+
+/* --- Card Content --- */
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    /* Makes all cards in a row have the same height */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffc800;
+    /* Gold highlight color */
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+.card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    flex-grow: 1;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1rem;
+}
+
+.card-guidelines {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.7);
+}
