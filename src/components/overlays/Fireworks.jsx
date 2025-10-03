@@ -1,4 +1,6 @@
 import React, { useRef, useEffect } from "react";
+import launchSoundFile from "../../assets/audio/firework-launch.mp3";
+import burstSoundFile from "../../assets/audio/firework-burst.mp3";
 
 const Fireworks = ({ autoLaunch = false }) => {
   const canvasRef = useRef(null);
@@ -7,6 +9,18 @@ const Fireworks = ({ autoLaunch = false }) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
+    // 🎵 Load sounds
+    const launchSound = new Audio(launchSoundFile);
+    const burstSound = new Audio(burstSoundFile);
+
+    // prevent overlapping playback (clone for multiple)
+    const playSound = (soundFile) => {
+      const sound = new Audio(soundFile);
+      sound.volume = 0.5; // adjust volume if needed
+      sound.play().catch(() => {}); // prevent errors on autoplay restrictions
+    };
+
+    // === Firework settings ===
     const FIREWORK_MIN_VY = -12;
     const FIREWORK_RANDOM_VY = 3;
     const FIREWORK_GRAVITY = 0.2;
@@ -35,7 +49,7 @@ const Fireworks = ({ autoLaunch = false }) => {
 
     let fireworks = [];
     let particles = [];
-    let interval = null; // store interval in variable
+    let interval = null;
 
     class Firework {
       constructor(x) {
@@ -47,6 +61,9 @@ const Fireworks = ({ autoLaunch = false }) => {
         this.exploded = false;
         this.targetY =
           Math.random() * (canvas.height * 0.5) + canvas.height * 0.2;
+
+        // 🎵 Play launch sound
+        // playSound(launchSoundFile);
       }
 
       update() {
@@ -65,6 +82,10 @@ const Fireworks = ({ autoLaunch = false }) => {
 
       explode() {
         this.exploded = true;
+
+        // 🎵 Play burst sound
+        playSound(burstSoundFile);
+
         const count =
           PARTICLE_MIN_COUNT + Math.random() * PARTICLE_RANDOM_COUNT;
         for (let i = 0; i < count; i++) {
@@ -169,7 +190,6 @@ const Fireworks = ({ autoLaunch = false }) => {
     };
     window.addEventListener("click", handleClick);
 
-    // 🔹 Auto-launch only if enabled
     if (autoLaunch) {
       interval = setInterval(() => {
         fireworks.push(new Firework(Math.random() * canvas.width));

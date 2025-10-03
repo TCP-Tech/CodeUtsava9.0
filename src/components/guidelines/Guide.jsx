@@ -9,7 +9,7 @@ export default function Guide() {
         relative z-[1] pt-28 md:pt-32 scroll-mt-32
         min-h-screen w-full bg-[url('/background.jpg')] bg-center bg-cover
         flex items-center justify-center
-        p-4 sm:p-6 md:p-10 overflow-hidden
+        p-4 sm:p-6 md:p-10 overflow-x-hidden
       "
         >
             <div className="w-full max-w-6xl mx-auto">

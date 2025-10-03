@@ -43,7 +43,21 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.12",
     "@vitejs/plugin-react": "^5.0.2",
+    "rollup": "^4.52.4",
     "tailwindcss": "^4.1.0",
     "vite": "^7.1.4"
-  }
+  },
+  "description": "[![Starware](https://img.shields.io/badge/Starware-⭐-black?labelColor=f9b00d)](https://github.com/zepfietje/starware)",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShouryaGit023/CodeUtsava9.0.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShouryaGit023/CodeUtsava9.0/issues"
+  },
+  "homepage": "https://github.com/ShouryaGit023/CodeUtsava9.0#readme"
 }
