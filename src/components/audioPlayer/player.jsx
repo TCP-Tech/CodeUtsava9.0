@@ -21,7 +21,7 @@ const AudioPlayer = () => {
       style={{ zIndex: 2147483647 }} // max safe z-index
     >
       {/* Wrapper for gradient and shadow */}
-      <div className="rounded-full bg-gradient-to-tr from-blue-900 via-blue-800 to-blue-900 shadow-md p-0.5">
+      <div className="rounded-full bg-gradient-to-tr from-yellow-600 via-yellow-700 to-yellow-700 shadow-md p-0.5">
         {/* Actual button without any backdrop-blur or filter */}
         <button
           onClick={togglePlay}

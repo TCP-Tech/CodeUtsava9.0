@@ -15,6 +15,7 @@ import FAQ from "./FAQ.jsx";
 import Cursor from "../components/cursor/Cursor.jsx";
 import BackgroundMedia from "../components/background/Background.jsx";
 import bg_image from "../assets/images/bg-part2.jpg";
+import Navbar from "../components/navbar/Navbar.jsx";
 
 export default function Home({ skipIntro = false }) {
     const [revealed, setRevealed] = useState(skipIntro);
@@ -70,7 +71,13 @@ export default function Home({ skipIntro = false }) {
             />
 
             {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
+            {/* <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+                <Navbar />
+            </div> */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+            <div className="fixed inset-0 pointer-events-auto overflow-hidden" style={{ zIndex: 15 }}>
+                <Navbar />
+            </div>
                 <SparkleLayer />
                 <Fireworks />
                 {/* to enable autolaunch for fireworks uncomment the below*/}

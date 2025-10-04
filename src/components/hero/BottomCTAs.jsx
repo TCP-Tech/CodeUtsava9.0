@@ -34,13 +34,13 @@ export default function BottomCTAs() {
         <div
             className={`pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 z-40 
         flex flex-col md:flex-row gap-4 px-4 
-        transition-opacity duration-500 
+        transition-opacity duration-2000 
         ${hidden ? "opacity-0" : "opacity-100"}`}
         >
             {/* Devfolio integrate button */}
 
             <div
-                className="apply-button"
+                className="apply-button "
                 data-hackathon-slug="codeutsava-9"
                 data-button-theme="light"
             ></div>
