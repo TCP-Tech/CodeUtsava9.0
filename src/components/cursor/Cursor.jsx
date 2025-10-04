@@ -1,94 +1,115 @@
-import React, { useState, useEffect } from 'react';
-import Candy from "../../assets/images/fireworks.svg";
+import React, { useEffect, useRef, useState } from 'react';
 
-const SimpleCarnivalCursor = ({ children }) => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Check if it's a mobile device
-    setIsMobile('ontouchstart' in window);
-    
-    if (isMobile) return;
-
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleMouseOver = (e) => {
-      const isInteractive = e.target.closest('button, a, input, textarea, select, [role="button"]');
-      setIsHovering(!!isInteractive);
-    };
-
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseover', handleMouseOver);
-      document.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isMobile]);
-
-  if (isMobile) {
-    return <div>{children}</div>;
+class Spark {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.vx = (Math.random() - 0.5) * 1.5;
+    this.vy = Math.random() * 2 + 1;
+    this.alpha = 1;
+    this.size = Math.random() * 2 + 2;
+    this.hue = Math.random() * 40 + 20;
   }
 
-  return (
-    <>
-      {/* Hide default cursor completely */}
-      <style jsx>{`
-        *, *::before, *::after {
-          cursor: none !important;
-        }
-      `}</style>
-      
-      <div className="cursor-none">
-        {children}
-      </div>
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.alpha -= 0.02;
+  }
 
-      {/* Custom animated candy cursor - made bigger */}
-      <div
-        className="fixed pointer-events-none z-[9999] transition-transform duration-100 ease-out"
-        style={{
-          left: mousePos.x - 24, // Center the bigger cursor
-          top: mousePos.y - 24,
-          transform: `scale(${isClicking ? 0.8 : isHovering ? 1.3 : 1}) rotate(${isClicking ? '15deg' : '0deg'})`,
-        }}
-      >
-        <img
-          src={Candy}
-          alt=""
-          className={`
-            w-15 h-15 
-            transition-all duration-200 ease-out
-            ${isHovering ? 'animate-pulse' : 'animate-bounce'}
-            drop-shadow-[0_0_10px_rgba(255,100,255,1.0)]
-            drop-shadow-[0_0_20px_rgba(0,255,255,0.5)]
-            drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]
-            ${isClicking ? 'brightness-150 drop-shadow-[0_0_25px_rgba(255,200,0,0.9)]' : ''}
-          `}
-          style={{
-            filter: `
-              drop-shadow(0 0 10px rgba(255, 100, 255, 0.7))
-              drop-shadow(0 0 20px rgba(0, 255, 255, 0.5))
-              drop-shadow(0 0 30px rgba(255, 255, 255, 0.3))
-              ${isClicking ? 'brightness(1.5) drop-shadow(0 0 25px rgba(255, 200, 0, 0.9))' : ''}
-              ${isHovering ? 'hue-rotate(30deg) saturate(1.3)' : ''}
-            `
-          }}
-        />
-      </div>
-    </>
+  draw(ctx) {
+    ctx.globalAlpha = this.alpha;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `hsl(${this.hue}, 100%, 60%)`;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = `hsl(${this.hue}, 100%, 60%)`;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 1;
+  }
+}
+
+const SparkCursor = () => {
+  const canvasRef = useRef(null);
+  const animationRef = useRef();
+  const sparksRef = useRef([]);
+  const mouseRef = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    const handleMouseMove = (e) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Add sparks near cursor
+      sparksRef.current.push(new Spark(mouseRef.current.x, mouseRef.current.y));
+
+      // Draw main cursor spark
+      ctx.beginPath();
+      ctx.arc(mouseRef.current.x, mouseRef.current.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = "white";
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = "yellow";
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Update & draw sparks
+      for (let i = sparksRef.current.length - 1; i >= 0; i--) {
+        const spark = sparksRef.current[i];
+        spark.update();
+        spark.draw(ctx);
+        if (spark.alpha <= 0) {
+          sparksRef.current.splice(i, 1);
+        }
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    // Initialize
+    resize();
+    mouseRef.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+    // Event listeners
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    // Start animation
+    animate();
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 w-full h-fullnoverflow-hidden cursor-none">
+      <canvas
+        ref={canvasRef}
+        className="block w-full h-full"
+      />
+      
+
+    </div>
   );
 };
 
-export default SimpleCarnivalCursor;
+export default SparkCursor;
