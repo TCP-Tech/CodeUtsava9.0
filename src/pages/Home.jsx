@@ -37,11 +37,7 @@ export default function Home({ skipIntro = false }) {
     useEffect(() => {
         if (revealed) return;
 
-        const onWheel = (e) => {
-            const next = Math.min(Math.max(progRef.current + e.deltaY * 0.5, 0), MAX);
-            progRef.current = next;
-            if (next >= MAX) setRevealed(true);
-        };
+        
         const onTouchStart = (e) => {
             const t = e.touches && e.touches[0];
             touchStartYRef.current = t ? t.clientY : 0;
@@ -56,11 +52,9 @@ export default function Home({ skipIntro = false }) {
             if (next >= MAX) setRevealed(true);
         };
 
-        window.addEventListener("wheel", onWheel, { passive: true });
         window.addEventListener("touchstart", onTouchStart, { passive: true });
         window.addEventListener("touchmove", onTouchMove, { passive: true });
         return () => {
-            window.removeEventListener("wheel", onWheel);
             window.removeEventListener("touchstart", onTouchStart);
             window.removeEventListener("touchmove", onTouchMove);
         };
