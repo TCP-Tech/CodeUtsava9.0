@@ -196,6 +196,14 @@ const Spons = () => {
                                             borderRadius: "0.75rem",
                                         }}
                                     />
+                                    {/* Dark overlay for better logo visibility */}
+                                    <div 
+                                        className="absolute inset-0 bg-black/20"
+                                        style={{
+                                            margin: "2px",
+                                            borderRadius: "0.75rem",
+                                        }}
+                                    />
                                     <div className="relative z-10 flex flex-col items-center">
                                         <img
                                             src={sponsor.img}
