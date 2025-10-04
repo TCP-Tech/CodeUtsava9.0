@@ -1,91 +1,125 @@
 import { useState, useRef, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import Hero from "../hero/Hero.jsx";
-import ropeImg from "../../assets/images/rope.png";
 
-export default function FixedScrollSplit() {
+export default function FixedScrollSplit({ onCurtainProgress }) {
 
-    // Curtain state: 0 = fully closed, 1 = fully open
-    // Curtain state: 0 = fully closed, 1 = fully open
-    const [curtain, setCurtain] = useState(0);
-    const maxCurtain = 1;
-    const minCurtain = 0;
-    const curtainLocked = useRef(false); // lock after fully open
+    // Curtain state: -1 = no curtains (hidden), 0 = closed (covering screen), 1 = open (off-screen)
+    const [curtain, setCurtain] = useState(-1);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [showButton, setShowButton] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
+    const curtainLocked = useRef(false);
 
-    // Rope drag state
-    const [ropeY, setRopeY] = useState(0); // px from top
-    const ropeStartY = useRef(null);
-    const dragStartY = useRef(null);
-    const maxRopePull = 300; // px to fully open
-    const curtainStep = 0.04; // how much to open per scroll event
-    const touchStartY = useRef(0);
+    // Handle responsive sizing
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
-    // Drag handlers for the rope
-    const handleRopeDragStart = (e) => {
-        if (curtainLocked.current) return;
-        if (e.type === "touchstart") {
-            dragStartY.current = e.touches[0].clientY;
-        } else {
-            dragStartY.current = e.clientY;
-        }
-        ropeStartY.current = ropeY;
-        document.addEventListener("mousemove", handleRopeDragMove);
-        document.addEventListener("mouseup", handleRopeDragEnd);
-        document.addEventListener("touchmove", handleRopeDragMove, { passive: false });
-        document.addEventListener("touchend", handleRopeDragEnd);
+    // Button click handler: bring curtains in to close, then open to reveal hero
+    const handleEnterClick = () => {
+        if (isAnimating || curtainLocked.current) return;
+        
+        setIsAnimating(true);
+        setShowButton(false);
+        
+        // Phase 1: Curtains come in and close (-1 to 0)
+        const closeDuration = 1000; 
+        const closeStartTime = Date.now();
+        
+        const animateClose = () => {
+            const elapsed = Date.now() - closeStartTime;
+            const progress = Math.min(elapsed / closeDuration, 1);
+            
+            setCurtain(-1 + progress); // -1 to 0 (no curtains to closed)
+            
+            if (progress < 1) {
+                requestAnimationFrame(animateClose);
+            } else {
+                // Phase 2: Curtains open (0 to 1)
+                setTimeout(() => {
+                    const openDuration = 2000;
+                    const openStartTime = Date.now();
+                    
+                    const animateOpen = () => {
+                        const elapsed = Date.now() - openStartTime;
+                        const progress = Math.min(elapsed / openDuration, 1);
+                        
+                        setCurtain(progress); // 0 to 1 (closed to open)
+                        
+                        if (onCurtainProgress) {
+                            onCurtainProgress(progress);
+                        }
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(animateOpen);
+                        } else {
+                            curtainLocked.current = true;
+                            setIsAnimating(false);
+                        }
+                    };
+                    
+                    requestAnimationFrame(animateOpen);
+                }, 200);
+            }
+        };
+        
+        requestAnimationFrame(animateClose);
     };
 
-    const handleRopeDragMove = (e) => {
-        if (curtainLocked.current) return;
-        let clientY;
-        if (e.type === "touchmove") {
-            clientY = e.touches[0].clientY;
-        } else {
-            clientY = e.clientY;
-        }
-        let delta = clientY - dragStartY.current;
-        let newY = Math.max(0, Math.min(maxRopePull, ropeStartY.current + delta));
-        setRopeY(newY);
-        setCurtain(newY / maxRopePull);
-        if (newY >= maxRopePull) {
-            curtainLocked.current = true;
-        }
-        e.preventDefault && e.preventDefault();
-    };
 
-    const handleRopeDragEnd = () => {
-        document.removeEventListener("mousemove", handleRopeDragMove);
-        document.removeEventListener("mouseup", handleRopeDragEnd);
-        document.removeEventListener("touchmove", handleRopeDragMove);
-        document.removeEventListener("touchend", handleRopeDragEnd);
-        // Snap rope to bottom if fully open
-        if (ropeY >= maxRopePull) setRopeY(maxRopePull);
-    };
 
-    // Curtain animation: left and right panels slide out horizontally
-    // Sway effect: edge of curtain sways as it opens
-    const swayAmplitude = 48;
+    // Curtain animation with three states:
+    // -1: No curtains (hidden off-screen)
+    // 0: Curtains closed (at center, covering screen)
+    // 1: Curtains open (off-screen on opposite sides)
+    
+    const swayAmplitude = isMobile ? 24 : 48;
     const swayFrequency = 3;
-    const sway = Math.sin(curtain * Math.PI * swayFrequency) * swayAmplitude * (1 - curtain);
+    
+    // Calculate positions based on curtain state
+    let leftPos, rightPos;
+    
+    if (curtain < 0) {
+        // State -1 to 0: Curtains coming in from off-screen to center
+        const progress = curtain + 1; // 0 to 1
+        leftPos = -100 + (progress * 270); 
+        rightPos = 100 - (progress * 270);  
+    } else {
+        // State 0 to 1: Curtains opening from center to off-screen
+        leftPos = -(curtain * 100); // 0vw to -100vw
+        rightPos = curtain * 100;    // 0vw to 100vw
+    }
+    
+    const sway = Math.sin(Math.abs(curtain) * Math.PI * swayFrequency) * swayAmplitude * (curtain >= 0 ? (1 - curtain) : (curtain + 1));
+    
+    // Responsive border width and radius
+    const borderWidth = isMobile ? "4px" : "8px";
+    const borderRadius = isMobile ? "40px" : "80px";
 
-    // Uniform speed (linear), curtains move fully off-screen (100vw)
     const leftCurtainSpring = useSpring({
         to: {
-            transform: `translateX(-${curtain * 100}vw) skewY(${sway / 16}deg)`
+            transform: `translateX(${leftPos}vw) skewY(${sway / 16}deg)`
         },
-        config: { duration: 1000, easing: t => t }, // linear, slowed by 50%
+        config: { duration: 1000, easing: t => t },
     });
     const rightCurtainSpring = useSpring({
         to: {
-            transform: `translateX(${curtain * 100}vw) skewY(-${sway / 16}deg)`
+            transform: `translateX(${rightPos}vw) skewY(-${sway / 16}deg)`
         },
-        config: { duration: 1000, easing: t => t }, // linear, slowed by 50%
+        config: { duration: 1000, easing: t => t },
     });
 
-    // Fade out intro text as curtain opens
+    // Fade title/button - visible only when curtain = -1 (no curtains visible)
     const textSpring = useSpring({
-        opacity: 1 - curtain * 1.2,
-        transform: `scale(${1 - curtain * 0.1}) translateY(-${curtain * 30}px)`,
+        opacity: (curtain === -1 && showButton) ? 1 : 0,
+        transform: `scale(${(curtain === -1 && showButton) ? 1 : 0.9}) translateY(${(curtain === -1 && showButton) ? 0 : -30}px)`,
         config: { tension: 120, friction: 20 },
     });
 
@@ -97,22 +131,25 @@ export default function FixedScrollSplit() {
       linear-gradient(60deg, #fff2 5%, transparent 60%)
     `,
         backgroundBlendMode: 'multiply, multiply, lighten, lighten',
-        boxShadow: curtain < 1 ? "0 0 40px 10px #6a0d0d88 inset, 0 0 32px 0 #7a1a1a" : "none",
-        borderTopLeftRadius: "0 0 80px 80px",
-        borderBottomLeftRadius: "80px 80px 0 0",
-        borderTopRightRadius: "0 0 80px 80px",
-        borderBottomRightRadius: "80px 80px 0 0",
+        boxShadow: (curtain >= 0 && curtain < 1) ? "0 0 40px 10px #6a0d0d88 inset, 0 0 32px 0 #7a1a1a" : "none",
+        borderTopLeftRadius: `0 0 ${borderRadius} ${borderRadius}`,
+        borderBottomLeftRadius: `${borderRadius} ${borderRadius} 0 0`,
+        borderTopRightRadius: `0 0 ${borderRadius} ${borderRadius}`,
+        borderBottomRightRadius: `${borderRadius} ${borderRadius} 0 0`,
         position: "fixed",
         top: 0,
         height: "100%",
         width: "50vw",
         zIndex: 30,
         overflow: "hidden",
-        transition: "box-shadow 0.3s",
+        transition: "box-shadow 0.3s, opacity 0.3s",
+        // Hide curtains initially when curtain = -1
+        opacity: curtain === -1 ? 0 : 1,
+        pointerEvents: curtain === -1 ? 'none' : 'auto',
     };
 
     return (
-        <div className="relative w-screen h-screen overflow-hidden bg-black">
+        <div className="relative w-screen h-screen overflow-hidden bg-black z-[1000]">
             {/* Hero behind */}
             <div className="absolute top-0 left-0 w-full h-full z-0">
                 <Hero />
@@ -123,47 +160,84 @@ export default function FixedScrollSplit() {
                 style={textSpring}
             >
 
-                {/* Rope puller */}
-                <div
-                    style={{
-                        position: "relative",
-                        width: 64,
-                        height: maxRopePull + 80,
-                        marginTop: -600,
-                        userSelect: "none",
-                        zIndex: 50,
-                    }}
-                    className="enable-selection-dragging"
-                >
-                    <img
-                        src={ropeImg}
-                        alt="Pull the rope to open the curtain"
-                        className="rope-img"
-                        draggable={false}
-                        style={{
-                            position: "absolute",
-                            left: "50%",                         // always start in the center
-                            transform: "translateX(-50%) scale(8)", // keep scaling here
-                            top: ropeY,
-                            width: 64,
-                            height: 80,
-                            cursor: curtainLocked.current ? "default" : "grab",
-                            transition: curtainLocked.current ? "top 0.3s" : "none",
-                            zIndex: 51,
-                            filter: curtainLocked.current ? "grayscale(0.7)" : "none",
-                        }}
-                        onMouseDown={handleRopeDragStart}
-                        onTouchStart={handleRopeDragStart}
-                    />
-
-                </div>
-                <div
-                    className="text-black text-3xl font-arcade italic uppercase tracking-wider select-none text-gradient bg-clip-text text-transparent transition-opacity duration-300 ease-in-out"
-                    style={{ opacity: curtainLocked.current ? 0 : 1, WebkitTextStroke: '1px black', position: 'relative', top: '180px', left: '20px' }}
-                >
-                    Pull the rope to open
-                    <style>{`.text-gradient{background-image:linear-gradient(90deg,#FFD54F,#FF8F00);background-size:200% 100%;animation:shimmer 3s linear infinite}@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}`}</style>
-                </div>
+                {/* Title and Enter Button */}
+                {showButton && (
+                    <div className="flex flex-col items-center space-y-4 md:space-y-8 z-50">
+                        {/* Title */}
+                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-rye text-white text-center tracking-wide text-stroke-strong px-4">
+                            CODEUTSAVA 9.0
+                        </h1>
+                        
+                        {/* Enhanced Carnival Enter Button */}
+                        <button
+                            onClick={handleEnterClick}
+                            disabled={isAnimating}
+                            className="relative group px-8 py-4 md:px-12 md:py-6 text-white font-rye text-lg md:text-2xl font-bold rounded-2xl 
+                                     transform transition-all duration-500 ease-out
+                                     hover:scale-110 hover:rotate-1 active:scale-95
+                                     disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:rotate-0
+                                     overflow-hidden border-2 md:border-4 border-yellow-400"
+                            style={{
+                                background: `linear-gradient(135deg, 
+                                    #ff6b35 0%, #ff8c42 15%, #ff6b35 30%, 
+                                    #e74c3c 45%, #d63031 60%, #ff6b35 75%, 
+                                    #ff8c42 90%, #ff6b35 100%)`,
+                                backgroundSize: '300% 300%',
+                                animation: isAnimating ? 'carnivalShimmer 2s ease-in-out infinite' : 'carnivalShimmer 4s ease-in-out infinite',
+                                boxShadow: `
+                                    0 0 30px rgba(255, 107, 53, 0.6),
+                                    0 0 60px rgba(255, 140, 66, 0.4),
+                                    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                                    inset 0 -2px 0 rgba(0, 0, 0, 0.3)
+                                `,
+                                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)',
+                            }}
+                        >
+                            {/* Ticket perforations effect */}
+                            <div className="absolute top-0 left-0 w-full h-2 bg-repeat-x opacity-30"
+                                 style={{
+                                     backgroundImage: `radial-gradient(circle, transparent 2px, rgba(255,255,255,0.3) 2px)`,
+                                     backgroundSize: '8px 8px'
+                                 }} />
+                            <div className="absolute bottom-0 left-0 w-full h-2 bg-repeat-x opacity-30"
+                                 style={{
+                                     backgroundImage: `radial-gradient(circle, transparent 2px, rgba(255,255,255,0.3) 2px)`,
+                                     backgroundSize: '8px 8px'
+                                 }} />
+                            
+                            {/* Sparkle effects */}
+                            <div className="absolute inset-0 opacity-20">
+                                <div className="absolute top-2 left-4 w-2 h-2 bg-yellow-300 rounded-full animate-pulse" />
+                                <div className="absolute top-6 right-6 w-1 h-1 bg-white rounded-full animate-ping" />
+                                <div className="absolute bottom-3 left-8 w-1.5 h-1.5 bg-yellow-200 rounded-full animate-pulse" 
+                                     style={{ animationDelay: '1s' }} />
+                                <div className="absolute bottom-4 right-4 w-1 h-1 bg-orange-200 rounded-full animate-ping" 
+                                     style={{ animationDelay: '0.5s' }} />
+                            </div>
+                            
+                            {/* Button text with carnival styling */}
+                            <span className="relative z-10 flex items-center justify-center space-x-2">
+                                {isAnimating ? (
+                                    <>
+                                        <span className="animate-spin">🎪</span>
+                                        <span>ENTERING...</span>
+                                        <span className="animate-bounce">🎭</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="animate-pulse">🎪</span>
+                                        <span>ENTER</span>
+                                        <span className="animate-bounce">🎭</span>
+                                    </>
+                                )}
+                            </span>
+                            
+                            {/* Hover glow effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 
+                                          group-hover:opacity-20 group-hover:animate-sweep transition-opacity duration-300" />
+                        </button>
+                    </div>
+                )}
 
             </animated.div>
 
@@ -174,12 +248,12 @@ export default function FixedScrollSplit() {
                     ...curtainBase,
                     ...leftCurtainSpring,
                     left: 0,
-                    borderRight: "8px solid gold",
-                    borderTopLeftRadius: "0 0 80px 80px",
-                    borderBottomLeftRadius: "80px 80px 0 0",
+                    borderRight: `${borderWidth} solid gold`,
+                    borderTopLeftRadius: `0 0 ${borderRadius} ${borderRadius}`,
+                    borderBottomLeftRadius: `${borderRadius} ${borderRadius} 0 0`,
                     borderTopRightRadius: 0,
                     borderBottomRightRadius: 0,
-                    boxShadow: curtain < 1 ? "8px 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset" : "none",
+                    boxShadow: (curtain >= 0 && curtain < 1) ? `${isMobile ? "4px" : "8px"} 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset` : "none",
                     // Sway edge with clip-path
                     clipPath: `polygon(0 0, calc(100% - ${Math.abs(sway)}px) 0, 100% 50%, calc(100% - ${Math.abs(sway)}px) 100%, 0 100%)`,
                 }}
@@ -205,12 +279,12 @@ export default function FixedScrollSplit() {
                     ...rightCurtainSpring,
                     right: 0,
                     left: "auto",
-                    borderLeft: "8px solid gold",
-                    borderTopRightRadius: "0 0 80px 80px",
-                    borderBottomRightRadius: "80px 80px 0 0",
+                    borderLeft: `${borderWidth} solid gold`,
+                    borderTopRightRadius: `0 0 ${borderRadius} ${borderRadius}`,
+                    borderBottomRightRadius: `${borderRadius} ${borderRadius} 0 0`,
                     borderTopLeftRadius: 0,
                     borderBottomLeftRadius: 0,
-                    boxShadow: curtain < 1 ? "-8px 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset" : "none",
+                    boxShadow: (curtain >= 0 && curtain < 1) ? `${isMobile ? "-4px" : "-8px"} 0 32px 0 #7a1a1a, 0 0 40px 10px #6a0d0d88 inset` : "none",
                     // Sway edge with clip-path
                     clipPath: `polygon(${Math.abs(sway)}px 0, 100% 0, 100% 100%, ${Math.abs(sway)}px 100%, 0 50%)`,
                 }}
@@ -241,39 +315,7 @@ export default function FixedScrollSplit() {
                     background: "radial-gradient(ellipse at center, #000 0%, transparent 80%)"
                 }}
             />
-            <style>{`
-        /* 📱 Mobile overrides */
-        @media (max-width: 768px) {
-            .rope-img {
-            left: 50% !important;
-            margin-top:90px;
-            transform: translateX(-50%) scale(7) !important;
-            width: 48px !important;
-            height: 64px !important;
-            }
-            .text-gradient {
-            position: relative !important;
-            top: 180px !important;
-            left: 0 !important;
-            text-align: center !important;
-            width: 100% !important;
-            font-size: 1.25rem !important;
-            }
-        }
 
-        @media (max-width: 480px) {
-            .rope-img {
-            top: 80px !important;
-            transform: translateX(-50%) scale(3.2) !important;
-            width: 40px !important;
-            height: 54px !important;
-            }
-            .text-gradient {
-            font-size: 1rem !important;
-            top: 150px !important;
-            }
-        }
-        `}</style>
         </div>
     );
 }

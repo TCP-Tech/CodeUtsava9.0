@@ -10,26 +10,26 @@ import BackgroundMedia from "../background/Background.jsx";
 import bg_image from "../../assets/images/bg-part2.jpg";
 // import bg_video from "../../assets/bg_video.webm";
 
-export default function Hero() {
+export default function Hero({ animationsStarted = false }) {
     return (
-        <header
-            className="relative overflow-hidden h-screen select-none"
-            aria-label="Hero"
-        >
-            {/* Background should ignore cursor events */}
-            <div className="absolute inset-0 pointer-events-none">
-                <BackgroundMedia
-                    imageSrc={bg_image}
-                    darken={0.5}
-                    className="bg-right"
-                />
-            </div>
-
-      {/* Foreground gets cursor events */}
-      <div className="relative z-10 pointer-events-auto h-full flex flex-col">
-        <Navbar />
-        <SocialRail />
-        <RightRail />
+        <div className={`${animationsStarted ? 'relative' : 'fixed inset-0 -z-10'}`}>
+            {/* Background is always visible */}
+            <BackgroundMedia
+                imageSrc={bg_image}
+                darken={0.5}
+                className="bg-right"
+            />
+            
+            {/* Only show Hero content after animations start */}
+            {animationsStarted && (
+                <header
+                    className={`relative overflow-hidden h-screen select-none hero-animations-active`}
+                    aria-label="Hero"
+                >
+                    <div className="relative z-10 pointer-events-auto h-full flex flex-col">
+                        <Navbar />
+                        <SocialRail />
+                        <RightRail />
 
         <div className="flex-1 max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center">
           <h2 className="text-xl sm:text-4xl md:text-6xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary">
@@ -51,8 +51,10 @@ export default function Hero() {
           </p>
         </div>
 
-        <BottomCTAs />
-      </div>
-    </header>
-  );
+                        <BottomCTAs />
+                    </div>
+                </header>
+            )}
+        </div>
+    );
 }

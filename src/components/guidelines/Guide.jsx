@@ -1,22 +1,31 @@
 import React from "react";
 import TicketButton from "../button/TicketButton";
+import Judgement_Criteria from "../../assets/pdfs/Judgement Criteria.pdf";
 
 export default function Guide() {
   return (
-    <div className="min-h-screen w-full bg-[url('/background.jpg')] bg-center bg-cover flex items-center justify-center p-4 sm:p-6 md:p-10">
+    <div className="min-h-screen w-full bg-[url('/background.jpg')] bg-center bg-cover flex flex-col items-center justify-center p-4 sm:p-6 md:p-10">
+      <div className="w-full max-w-6xl mx-auto text-center mb-8">
+        {/* Guidelines heading OUTSIDE */}
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-5">
+          Guidelines 
+        </h1>
+      </div>
+
       <div className="w-full max-w-6xl mx-auto">
         {/* Gradient border wrapper */}
-        <div className="relative rounded-3xl p-[1px] 
+        <div
+          className="relative rounded-3xl p-[1px] 
           bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-accent-2)] 
-          shadow-[0_10px_28px_rgba(0,0,0,0.45)]">
-          
+          shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
+        >
           {/* Inner backdrop-blur card */}
           <div className="backdrop-blur-lg bg-[color:var(--color-background)]/85 border-4 border-transparent rounded-[inherit] p-6 sm:p-8 md:p-12 lg:p-16">
             
-            {/* Heading */}
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center mb-6 sm:mb-8 font-rye">
-              Guidelines
-            </h2>
+            {/* Inside heading */}
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 font-rye pb-5">
+              Team Formation
+            </h3>
 
             {/* Body text */}
             <div className="text-white/90 space-y-4 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed font-sans">
@@ -61,7 +70,7 @@ export default function Guide() {
               <TicketButton
                 text="JUDGEMENT CRITERIA"
                 onClick={() =>
-                  window.open("/assets/judgement_criteria.pdf", "_blank")
+                  window.open(Judgement_Criteria, "_blank")
                 }
                 style={{
                   width: "300px",
@@ -77,6 +86,6 @@ export default function Guide() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>
+  );
 }

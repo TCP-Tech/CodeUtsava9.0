@@ -10,14 +10,29 @@ import Sponsors from "../../components/Sponsors/Spons.jsx";
 import Timeline from "../../components/timeline/Timeline.jsx";
 import GRandAN from "../../components/graphs&Analytics/GRandAN.jsx";
 import Guide from "../../components/guidelines/Guide.jsx";
-import FAQ from "../FAQ.jsx";
+import Player from "../../components/audioPlayer/player.jsx";
+import FAQ from "../faq/FAQ.jsx";
 import Cursor from "../../components/cursor/Cursor.jsx";
+import BackgroundMedia from "../../components/background/Background.jsx";
+import bg_image from "../../assets/images/bg-part2.jpg";
 
 export default function Home({ skipIntro = false }) {
     const [revealed, setRevealed] = useState(skipIntro);
+    const [curtainProgress, setCurtainProgress] = useState(0);
+    const [heroAnimationsStarted, setHeroAnimationsStarted] = useState(skipIntro);
     const MAX = 100;
     const progRef = useRef(0);
     const touchStartYRef = useRef(0);
+
+    // Handle curtain progress from Intro component
+    const handleCurtainProgress = (progress) => {
+        setCurtainProgress(progress);
+        // Start hero animations and reveal only when curtain is completely open
+        if (progress >= 0.9 && !heroAnimationsStarted) {
+            setHeroAnimationsStarted(true);
+            setRevealed(true);
+        }
+    };
 
     useEffect(() => {
         if (revealed) return;
@@ -53,6 +68,13 @@ export default function Home({ skipIntro = false }) {
 
     return (
         <>
+            {/* Global fixed background for entire page */}
+            <BackgroundMedia
+                imageSrc={bg_image}
+                darken={0.5}
+                className="bg-right"
+            />
+            
             {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
                 <SparkleLayer />
@@ -61,20 +83,29 @@ export default function Home({ skipIntro = false }) {
                 {/* <Fireworks autoLaunch/>   */}
             </div>
 
+            {/* Always render Hero for background visibility */}
+            <Hero animationsStarted={heroAnimationsStarted} />
+            
             {!revealed ? (
-                <Intro />
+                <>
+                    <Intro onCurtainProgress={handleCurtainProgress} />
+                    {/* Load cursor and start hero animations when curtain is halfway open */}
+                    {heroAnimationsStarted && <Cursor/>}
+                </>
             ) : (
                 <>
                    <Cursor/>
-                    <Hero />
                     <Lastyear />
                     <AboutUS />
                     <Sponsors />
                     <Timeline />
                     <Guide />
                     <GRandAN />
-                    <FAQ/>
+                    {/* <FAQ/> */}
                     <Footer />
+                    <div className="fixed bottom-4 right-4">
+                        <Player />
+                    </div>
                 </>
             )}
         </>

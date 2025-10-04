@@ -1,26 +1,22 @@
-/* about.css — About Us section styles
-   Uses site tokens from index.css (colors + --brand-grad).  */
-/* Fonts: Rye matches your "Our Sponsors" heading. */
+/* about.css — About Us section (with clean accent colors and timeline-style card) */
 @import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
 
-/* ——— Utilities (match global naming) ——— */
 .font-rye {
     font-family: "Rye", serif;
 }
 
-/* Heading styled like Sponsors: big Rye + shadow/stroke for clarity */
+/* Heading styling */
 .about-heading {
     font-family: "Rye", serif;
     font-size: clamp(2rem, 2.2rem + 2.5vw, 4.25rem);
     letter-spacing: 0.04em;
     line-height: 1.1;
-    text-transform: none;
     text-shadow:
-        0 2px 0 rgba(0, 0, 0, .65),
-        0 8px 30px rgba(0, 0, 0, .45);
+        0 2px 0 rgba(0, 0, 0, 0.65),
+        0 8px 30px rgba(0, 0, 0, 0.45);
 }
 
-/* Thin neon divider under the heading */
+/* Divider under heading */
 .neon-hr {
     width: 8rem;
     height: 2px;
@@ -32,7 +28,7 @@
         0 0 10px rgba(0, 255, 133, 0.35);
 }
 
-/* Soft colored radial glow behind section (theme colors) */
+/* Soft glowing radial background behind section */
 .neon-radial {
     width: 1200px;
     height: 1200px;
@@ -46,7 +42,29 @@
             rgba(13, 13, 13, 0) 72%);
 }
 
-/* Frame glow for the 3D panel */
+/* ===== 3D viewer card with same style as timeline cards ===== */
+.about-card {
+    background-image: linear-gradient(to right,
+            var(--color-primary),
+            var(--color-accent),
+            var(--color-accent-2));
+    border-radius: 1rem;
+    padding: 1px;
+    /* outer border frame */
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+.about-card__inner {
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--color-background) 90%, black 10%);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    /* Optional ring outline */
+    ring: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Glow around the frame of the 3D card */
 .neon-frame-glow {
     box-shadow:
         inset 0 0 0 1px rgba(255, 255, 255, 0.08),
@@ -56,9 +74,9 @@
     border-radius: 1rem;
 }
 
-/* Glass cards — increased opacity for stronger contrast on dark bg */
+/* Glass-card style for text sections */
 .glass-card {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.64));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.64));
     border: 1px solid rgba(255, 255, 255, 0.12);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
@@ -66,36 +84,61 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
-/* Neon bullets */
+/* ===== Highlight styles (color + bold only, no yellow) ===== */
+.hl-codeutsava {
+    color: #ff0099;
+    /* neon magenta */
+    font-weight: 700;
+}
+
+.hl-33l {
+    color: #1e90ff;
+    /* electric blue */
+    font-weight: 700;
+}
+
+.hl-amount {
+    color: #00ff85;
+    /* mint neon */
+    font-weight: 700;
+}
+
+.hl-event {
+    color: #1e90ff;
+    /* reuse the blue accent */
+    font-weight: 700;
+}
+
+/* ===== Bullets / lists styling ===== */
 .neon-bullets {
     list-style: none;
     padding-left: 0;
     margin: 0;
+    color: #ffffff;
+    font-size: 0.95rem;
 }
 
 .neon-bullets li {
     position: relative;
-    padding-left: 1.6rem;
+    padding-left: 1.35rem;
     margin: 0.55rem 0;
-    font-size: 1rem;
 }
 
 .neon-bullets li::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 0.48rem;
+    top: 0.55rem;
     width: 10px;
     height: 10px;
     border-radius: 9999px;
-    background: var(--brand-grad);
-    box-shadow:
-        0 0 10px rgba(0, 255, 133, 0.65),
-        0 0 8px rgba(255, 0, 153, 0.55),
-        0 0 6px rgba(30, 144, 255, 0.5);
+    background: #1e90ff;
+    /* blue bullet dot */
+    outline: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: none;
 }
 
-/* Small-screen tweaks */
+/* Smaller screen adjustments */
 @media (max-width: 768px) {
     .neon-hr {
         width: 6rem;

@@ -66,13 +66,12 @@ const Spons = () => {
     return (
         <>
             <section ref={containerRef} className="static h-[300vh] overflow-x-hidden">
-                <BackgroundMedia imageSrc={bg_image} videoSrc={bg_video} darken={0.5} />
 
                 <motion.div
                     className={`${isFixed ? "fixed top-0 w-full" : "relative"} h-screen flex flex-col items-center justify-center bg-transparent`}
                     style={{ opacity: fadeOut }}
                 >
-                    <h1 className="text-6xl text-white mb-25 text-center max-md:mt-5 rye-regular">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-12">
                         Our Sponsors
                     </h1>
 
