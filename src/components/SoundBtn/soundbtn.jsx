@@ -27,7 +27,6 @@ const AutoPlaySound = () => {
     <button onClick={enableSound} className="p-2 bg-blue-500 text-white rounded">
       Enable Sound
     </button>
-    
   );
 };
 

@@ -23,7 +23,7 @@ export default function Guide() {
           <div className="backdrop-blur-lg bg-[color:var(--color-background)]/85 border-4 border-transparent rounded-[inherit] p-6 sm:p-8 md:p-12 lg:p-16">
             
             {/* Inside heading */}
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-6 font-rye pb-5">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl  text-white text-center mb-6 font-rye pb-5">
               Team Formation
             </h3>
 

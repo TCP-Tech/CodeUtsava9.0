@@ -8,6 +8,7 @@ import ImageButton from "../button/TicketButton";
 // Define the URLs for page navigation
 const FAQ_PAGE_URL = "/faq";
 const CONTACT_PAGE_URL = "/contact-us";
+const EVENTS_PAGE_URL="/events";
 
 // Define the external form URL (used only for the 'FEEDBACK' button)
 const CONTACT_FORM_URL =
@@ -145,9 +146,10 @@ export default function Navbar() {
                             {/* PAGE NAVIGATION LINKS */}
                             <NavItem href={FAQ_PAGE_URL} delay={0.3}>FAQ</NavItem>
                             <NavItem href={CONTACT_PAGE_URL} delay={0.4}>CONTACT US</NavItem>
+                            <NavItem href={EVENTS_PAGE_URL} delay={0.5}>EVENTS</NavItem>
                             
                             {/* DISABLED LINK */}
-                            <NavItem disabled delay={0.5}>TEAM</NavItem>
+                            <NavItem disabled delay={0.6}>TEAM</NavItem>
                         </div>
 
                         {/* Right: Brochure Button */}

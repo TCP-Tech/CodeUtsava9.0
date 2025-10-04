@@ -1,9 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import sponsers from "../../assets/data/sponsersData.js"; // fixed import path
-import bg_video from "../../assets/bg_video.webm";
-import bg_image from "../../assets/images/bg.webp";
-import BackgroundMedia from "../background/Background.jsx";
+import React, { useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import sponsers from "../../assets/data/sponsersData.js";
 import cardBlue from "../../assets/images/CU9 stuff/blue.jpg";
 import cardRed from "../../assets/images/CU9 stuff/red.jpg";
 import BDace from "../../assets/images/CU9 stuff/BDace.jpg";
@@ -14,7 +11,7 @@ import "./spons.css";
 
 const Spons = () => {
     const containerRef = useRef(null);
-    const [isFixed, setIsFixed] = useState(false);
+    const trackRef = useRef(null);
 
     const allSponsors = [
         ...sponsers.platinum,
@@ -22,146 +19,208 @@ const Spons = () => {
         ...sponsers.partners,
     ];
 
-    /** ---------- SCROLL PROGRESS ---------- **/
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"],
-    });
+    // Create enough duplicates for seamless infinite scroll
+    const duplicatedSponsors = [];
+    for (let i = 0; i < 5; i++) {
+        duplicatedSponsors.push(...allSponsors);
+    }
 
-    /** ---------- PHASE 1 : CARD FLIPS ---------- **/
-    const flipEnd = 0.4;
-    const rotations = allSponsors.map((_, idx) => {
-        const start = (idx / allSponsors.length) * flipEnd;
-        const end = ((idx + 1) / allSponsors.length) * flipEnd;
-        return useTransform(scrollYProgress, [start, end], ["0deg", "180deg"]);
-    });
-
-    /** ---------- PHASE 2 : SLIDE LEFT ---------- **/
-    const slideX = useTransform(scrollYProgress, [flipEnd, 1], ["0%", "-100%"]);
-
-    /** ---------- PHASE 3 : FADE OUT WHEN NEXT SECTION ARRIVES ---------- **/
-    const fadeOut = useTransform(scrollYProgress, [0.95, 1.0], [1, 0]);
-
-    /** ---------- HELPERS ---------- **/
     const getRandomImage = (idx) => {
         const images = [BDace, Bace, Dace, Hace];
         return images[idx % images.length];
     };
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (!containerRef.current) return;
-            const rect = containerRef.current.getBoundingClientRect();
-            setIsFixed(rect.top <= 0 && rect.bottom > 0);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+        const track = trackRef.current;
+        const cards = track.querySelectorAll('.sponsor-card');
 
-    /** Split sponsors into two halves for mobile rows **/
-    const half = Math.ceil(allSponsors.length / 2);
-    const firstRow = allSponsors.slice(0, half);
-    const secondRow = allSponsors.slice(half);
+        // Responsive card width based on screen size
+        const getCardWidth = () => {
+            if (window.innerWidth < 640) return 140; // Mobile: increased spacing
+            if (window.innerWidth < 1024) return 180; // Tablet: increased spacing
+            return 220; // Desktop: increased spacing
+        };
+
+        const cardWidth = getCardWidth();
+
+        // Set initial positions - fill screen width from start
+        const screenWidth = window.innerWidth;
+        const cardsToShow = Math.ceil(screenWidth / cardWidth) + 2; // Extra cards for seamless scroll
+
+        gsap.set(cards, {
+            x: (i) => (i % cardsToShow) * cardWidth - cardWidth, // Start one card width to the left
+        });
+
+        // Set initial card rotation (back side visible)
+        cards.forEach((card) => {
+            const cardInner = card.querySelector('.card-inner');
+            gsap.set(cardInner, { rotateY: 0 });
+        });
+
+        // Create truly infinite horizontal scroll animation
+        const animateCards = () => {
+            cards.forEach((card) => {
+                gsap.to(card, {
+                    x: `-=${cardWidth}`,
+                    duration: 2,
+                    ease: "none",
+                    onComplete: () => {
+                        // When a card moves completely off-screen to the left,
+                        // move it to the right side to continue the loop
+                        const currentX = gsap.getProperty(card, "x");
+                        if (currentX <= -cardWidth) {
+                            gsap.set(card, { x: currentX + (cardsToShow * cardWidth) });
+                        }
+                    }
+                });
+            });
+        };
+
+        // Start the animation and repeat continuously
+        const interval = setInterval(animateCards, 2000);
+
+        // Card flip animations based on viewport position
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const cardInner = entry.target.querySelector('.card-inner');
+
+                if (entry.isIntersecting) {
+                    // Card is in viewport - show front (sponsor logo)
+                    gsap.to(cardInner, {
+                        rotateY: 180,
+                        duration: 0.6,
+                        ease: "power2.inOut"
+                    });
+                } else {
+                    // Card is out of viewport - show back
+                    gsap.to(cardInner, {
+                        rotateY: 0,
+                        duration: 0.6,
+                        ease: "power2.inOut"
+                    });
+                }
+            });
+        }, {
+            threshold: 0.5, // Flip when 50% of card is visible
+            rootMargin: '0px'
+        });
+
+        // Observe all cards
+        cards.forEach(card => observer.observe(card));
+
+        // Handle window resize
+        const handleResize = () => {
+            const newCardWidth = getCardWidth();
+            const newCardsToShow = Math.ceil(window.innerWidth / newCardWidth) + 2;
+
+            // Reposition cards based on new dimensions
+            gsap.set(cards, {
+                x: (i) => (i % newCardsToShow) * newCardWidth - newCardWidth,
+            });
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup
+        return () => {
+            clearInterval(interval);
+            observer.disconnect();
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [allSponsors.length]);
 
     return (
-        <>
-            <section ref={containerRef} className="static h-[300vh] overflow-x-hidden">
+        <section
+            ref={containerRef}
+            className="relative h-screen overflow-hidden bg-transparent"
+            style={{ zIndex: 5 }}
+        >
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-12">
+                    Our Sponsors
+                </h1>
 
-                <motion.div
-                    className={`${isFixed ? "fixed top-0 w-full" : "relative"} h-screen flex flex-col items-center justify-center bg-transparent`}
-                    style={{ opacity: fadeOut }}
+                {/* Infinite scrolling track */}
+                <div
+                    ref={trackRef}
+                    className="relative w-full h-48 sm:h-64 md:h-80 overflow-visible"
                 >
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-12">
-                        Our Sponsors
-                    </h1>
-
-                    {/* ---------- HORIZONTAL TRACK / MOBILE TWO ROWS ---------- */}
-                    <motion.div
-                        className="w-full mt-10 px-6 will-change-transform"
-                        style={{ x: slideX }}
-                    >
-                        {/* Mobile view: stacked rows, Desktop: single row */}
-                        <div className="flex flex-col sm:flex-row gap-6">
-                            {[firstRow, secondRow].map((rowSponsors, rowIdx) => (
-                                <div key={rowIdx} className="flex justify-center gap-10 mb-6">
-                                    {rowSponsors.map((s, idx) => (
-                                        <motion.div
-                                            key={idx}
-                                            className="w-28 h-40 sm:w-32 sm:h-48 md:w-40 md:h-60 shrink-0"
-                                            style={{ perspective: "1000px" }}
-                                            initial={{ opacity: 0, y: 80 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true, amount: 0.2 }}
-                                            transition={{
-                                                type: "spring",
-                                                stiffness: 120,
-                                                damping: 12,
-                                                mass: 0.6,
-                                                delay: idx * 0.1,
-                                            }}
-                                        >
-                                            <motion.div
-                                                className="relative w-full h-full"
-                                                style={{
-                                                    transformStyle: "preserve-3d",
-                                                    rotateY: rotations[idx],
-                                                    rotateZ: idx % 2 === 0 ? "-10deg" : "20deg",
-                                                }}
-                                            >
-                                                {/* Back */}
-                                                <div
-                                                    className={`absolute w-full h-full ${idx % 2 === 0 ? "mx-2" : "mx-5"
-                                                        } rounded-xl overflow-hidden`}
-                                                    style={{ backfaceVisibility: "hidden" }}
-                                                >
-                                                    <img
-                                                        src={idx % 2 === 0 ? cardBlue : cardRed}
-                                                        alt="Card Back"
-                                                        className="w-full h-full object-cover"
-                                                    />
-                                                </div>
-
-                                                {/* Front */}
-                                                <div
-                                                    className={`absolute w-full h-full ${idx % 2 === 0 ? "mx-2" : "mx-5"
-                                                        } rounded-xl flex flex-col items-center justify-center p-3 overflow-hidden`}
-                                                    style={{
-                                                        transform: "rotateY(180deg)",
-                                                        backfaceVisibility: "hidden",
-                                                        position: "relative",
-                                                    }}
-                                                >
-                                                    <div
-                                                        className="absolute inset-0"
-                                                        style={{
-                                                            backgroundImage: `url(${getRandomImage(idx)})`,
-                                                            backgroundSize: "cover",
-                                                            backgroundPosition: "center",
-                                                            margin: "2px",
-                                                            borderRadius: "0.75rem",
-                                                        }}
-                                                    />
-                                                    <div className="relative z-10">
-                                                        <img
-                                                            src={s.img}
-                                                            alt={s.alt || `Sponsor ${idx + 1}`}
-                                                            className="h-12 sm:h-14 md:h-16 object-contain mb-2"
-                                                        />
-                                                        <p className="text-black text-xs sm:text-sm font-bold text-center">
-                                                            {s.alt || "Sponsor"}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </motion.div>
-                                        </motion.div>
-                                    ))}
+                    {duplicatedSponsors.map((sponsor, idx) => (
+                        <div
+                            key={`${sponsor.alt}-${idx}`}
+                            className="sponsor-card absolute w-24 h-36 sm:w-32 sm:h-48 md:w-40 md:h-60 shrink-0"
+                            style={{
+                                perspective: "1000px",
+                                top: "50%",
+                                transform: "translateY(-50%)"
+                            }}
+                        >
+                            <div
+                                className="card-inner relative w-full h-full"
+                                style={{
+                                    transformStyle: "preserve-3d",
+                                    transform: `rotateZ(${idx % 2 === 0 ? '-10deg' : '20deg'})`
+                                }}
+                            >
+                                {/* Back of card (shows initially) */}
+                                <div
+                                    className="absolute w-full h-full rounded-xl overflow-hidden"
+                                    style={{
+                                        backfaceVisibility: "hidden",
+                                        transform: "rotateY(0deg)"
+                                    }}
+                                >
+                                    <img
+                                        src={idx % 2 === 0 ? cardBlue : cardRed}
+                                        alt="Card Back"
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
-                            ))}
+
+                                {/* Front of card (shows sponsor) */}
+                                <div
+                                    className="absolute w-full h-full rounded-xl flex flex-col items-center justify-center p-3 overflow-hidden"
+                                    style={{
+                                        transform: "rotateY(180deg)",
+                                        backfaceVisibility: "hidden",
+                                        position: "relative",
+                                    }}
+                                >
+                                    <div
+                                        className="absolute inset-0"
+                                        style={{
+                                            backgroundImage: `url(${getRandomImage(idx)})`,
+                                            backgroundSize: "cover",
+                                            backgroundPosition: "center",
+                                            margin: "2px",
+                                            borderRadius: "0.75rem",
+                                        }}
+                                    />
+                                    {/* Dark overlay for better logo visibility */}
+                                    <div 
+                                        className="absolute inset-0 bg-black/20"
+                                        style={{
+                                            margin: "2px",
+                                            borderRadius: "0.75rem",
+                                        }}
+                                    />
+                                    <div className="relative z-10 flex flex-col items-center">
+                                        <img
+                                            src={sponsor.img}
+                                            alt={sponsor.alt || `Sponsor ${idx + 1}`}
+                                            className="h-8 sm:h-12 md:h-16 object-contain mb-1 sm:mb-2 filter drop-shadow-lg"
+                                        />
+                                        <p className="text-white text-xs sm:text-sm font-bold text-center drop-shadow-lg">
+                                            {sponsor.alt || "Sponsor"}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </motion.div>
-                </motion.div>
-            </section>
-        </>
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 };
 
