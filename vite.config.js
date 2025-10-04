@@ -4,8 +4,10 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
     plugins: [react(), tailwindcss()],
-     resolve: { dedupe: ['react', 'react-dom', 'react/jsx-runtime'] },
-  optimizeDeps: {
-    include: ['lenis'],        // helps Vite pre-bundle it
-  },
+    resolve: { dedupe: ['react', 'react-dom', 'react/jsx-runtime'] },
+    optimizeDeps: {
+        include: ['lenis'],        // helps Vite pre-bundle it
+    },
+    server: { allowedHosts: true },
+
 });

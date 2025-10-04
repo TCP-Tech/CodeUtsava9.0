@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import hackathonData from "../../assets/data/hackathonData.js";
 import {
-    VerticalTimeline,
-    VerticalTimelineElement,
+  VerticalTimeline,
+  VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import bg_image from "../../assets/images/bg.webp";
@@ -10,191 +10,359 @@ import bg_video from "../../assets/bg_video.webm";
 import rollerCoasterUrl from "../../assets/images/rollercoaster.svg";
 import BackgroundMedia from "../background/Background.jsx";
 
-let TOP_OFFSET = 150;
+// Custom hook to detect visibility
+const useInView = (options = {}) => {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      options
+    );
+
+    const el = ref.current;
+    if (el) observer.observe(el);
+
+    return () => observer.disconnect();
+  }, [options]);
+
+  return [ref, isVisible];
+};
 
 const Timeline = () => {
-    const cartRef = useRef(null);
-    const lineRef = useRef(null);
-    const bgRef = useRef(null);
-    const overlayRef = useRef(null);
-    const rafRef = useRef(0);
+  const cartRef = useRef(null);
+  const lineRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
-    useEffect(() => {
-        let active = false;
+  // Detect screen size (mobile/tablet/desktop)
+  useEffect(() => {
+    const checkBreakpoints = () => {
+      const w = window.innerWidth;
+      setIsMobile(w < 768);
+      setIsTablet(w >= 768 && w < 1024);
+    };
 
-        const handleScroll = () => {
-            if (!active) return;
-            if (!cartRef.current || !lineRef.current) return;
+    checkBreakpoints();
+    window.addEventListener("resize", checkBreakpoints, { passive: true });
+    return () => window.removeEventListener("resize", checkBreakpoints);
+  }, []);
 
-            const railRect = lineRef.current.getBoundingClientRect();
-            const railTop = railRect.top + window.scrollY; // document coords
-            const railHeight = railRect.height;
+  useEffect(() => {
+    let active = false;
 
-            const cartH = cartRef.current.offsetHeight || 0;
-            const maxY = Math.max(0, railHeight - cartH);
+    const handleScroll = () => {
+      if (!active) return;
+      if (!cartRef.current || !lineRef.current) return;
 
-            const vh = window.innerHeight;
-            const scrollY = window.scrollY;
+      const railRect = lineRef.current.getBoundingClientRect();
+      const railTop = railRect.top + window.scrollY;
+      const railHeight = railRect.height;
 
-            // Start when viewport bottom meets rail top
-            const start = railTop - vh + TOP_OFFSET;
-            // End when we've scrolled enough for the cart to reach the bottom
-            const end = railTop + railHeight - vh + TOP_OFFSET;
+      const cartH = cartRef.current.offsetHeight || 0;
+      const maxY = Math.max(0, railHeight - cartH);
 
-            // Calculate progress based on scroll position
-            const scrollRange = Math.max(1, end - start);
-            const raw = (scrollY - start) / scrollRange;
-            const clamped = Math.max(0, Math.min(1, raw));
+      const vh = window.innerHeight;
+      const scrollY = window.scrollY;
 
-            // Apply the transform
-            cartRef.current.style.transform = `translate(-50%, ${clamped * maxY
-                }px)`;
-        };
+      // TOP_OFFSET responsive: smaller on mobile/tablet
+      const TOP_OFFSET = isMobile ? 100 : isTablet ? 120 : 150;
 
-        const io = new IntersectionObserver(
-            (entries) => {
-                const anyVisible = entries.some((e) => e.isIntersecting);
-                active = anyVisible;
-                handleScroll()
-            },
-            { threshold: 0.1 }
-        );
+      const start = railTop - vh + TOP_OFFSET;
+      const end = railTop + railHeight - vh + TOP_OFFSET;
 
-        // Observe the timeline section instead of individual cards for better performance
-        const timelineSection = document.getElementById('timeline');
-        if (timelineSection) {
-            io.observe(timelineSection);
-        }
+      const scrollRange = Math.max(1, end - start);
+      const raw = (scrollY - start) / scrollRange;
+      const clamped = Math.max(0, Math.min(1, raw));
 
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        window.addEventListener("resize", handleScroll, { passive: true });
+      // transform only Y (X handled by CSS classes)
+      cartRef.current.style.transform = `translate(-50%, ${clamped * maxY}px)`;
+    };
 
-        const img = cartRef.current?.querySelector("img");
-        if (img && !img.complete) img.addEventListener("load", handleScroll);
-
-        // Initial call
+    const io = new IntersectionObserver(
+      (entries) => {
+        const anyVisible = entries.some((e) => e.isIntersecting);
+        active = anyVisible;
         handleScroll();
+      },
+      { threshold: 0.12 }
+    );
 
-        return () => {
-            io.disconnect();
-            window.removeEventListener("scroll", handleScroll);
-            window.removeEventListener("resize", handleScroll);
-            if (img) img.removeEventListener("load", handleScroll);
-        };
-    }, []);
+    const timelineSection = document.getElementById("timeline");
+    if (timelineSection) {
+      io.observe(timelineSection);
+    }
 
-    return (
-        <section
-            id="timeline"
-            className="relative w-full min-h-screen -mt-px pt-0 md:pt-0 pb-0 overflow-hidden"
-            aria-label="Timeline"
-        >
-            {/* Background */}
-            <BackgroundMedia imageSrc={bg_image} videoSrc={bg_video} darken={0.5} />
-            <h2
-                className="
-          codeutsava__timeline-header
-          text-3xl sm:texxt-4xl md:text-5xl lg:text-6xl text-center font-rye tracking-widest
-          mt-10 mb-8
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+
+    const img = cartRef.current?.querySelector("img");
+    if (img && !img.complete) img.addEventListener("load", handleScroll);
+
+    // initial call
+    handleScroll();
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      if (img) img.removeEventListener("load", handleScroll);
+    };
+  }, [isMobile, isTablet]); // re-run when breakpoints change
+
+  // Calculate responsive positions (use state booleans instead of window checks)
+  const getTopOffset = () => {
+    if (isMobile) return 100;
+    if (isTablet) return 120;
+    return 150;
+  };
+
+  const getCartPositionClass = () => {
+    // mobile: pinned left, tablet: slightly left, desktop: centered
+    if (isMobile) return "left-[52px] -translate-x-0"; // we already offset translateX in transform: translate(-50%, ...)
+    if (isTablet) return "left-[calc(50%_-_28px)] md:-translate-x-1/2"; // slight offset so not exactly center
+    return "left-1/2 md:-translate-x-1/2";
+  };
+
+  const getRailPositionClass = () => {
+    if (isMobile) return "left-6";
+    if (isTablet) return "left-[48%] md:-translate-x-1/2";
+    return "left-1/2 md:-translate-x-1/2";
+  };
+
+  return (
+    <section
+      id="timeline"
+      className="relative w-full min-h-screen pb-12 sm:pb-16 md:pb-20 overflow-hidden"
+      aria-label="Timeline"
+    >
+      {/* Background */}
+      <BackgroundMedia imageSrc={bg_image} videoSrc={bg_video} darken={0.5} />
+
+      <h2
+        className="
+          text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl 
+          text-center font-rye tracking-wide sm:tracking-wider md:tracking-widest
+          pt-6 sm:pt-8 md:pt-10 pb-4 sm:pb-6 md:pb-8 
+          px-4
         "
-                style={{ color: "white" }}
-            >
-                TIMELINE
-            </h2>
+        style={{ color: "white" }}
+      >
+        TIMELINE
+      </h2>
 
-            {/* Custom RAIL - Responsive positioning */}
-            <div
-                ref={lineRef}
-                className="codeutsava__timeline-rail absolute left-8 md:left-1/2 md:-translate-x-1/2 w-[28px] rounded-lg pointer-events-none"
-                style={{
-                    top: TOP_OFFSET,
-                    bottom: 50,
-                    backgroundImage:
-                        "repeating-linear-gradient(to bottom, transparent 0 28px, rgba(255,255,255,0.18) 28px 32px)",
-                }}
-            >
-                {/* left neon rail */}
-                <span
-                    aria-hidden="true"
-                    className="absolute inset-y-0 left-0 w-[6px] rounded-full
+      {/* Custom RAIL - Responsive positioning */}
+      <div
+        ref={lineRef}
+        className={`
+          absolute ${getRailPositionClass()} 
+          w-[20px] sm:w-[24px] md:w-[28px] 
+          rounded-lg pointer-events-none
+        `}
+        style={{
+          top: getTopOffset(),
+          bottom: 50,
+          backgroundImage:
+            "repeating-linear-gradient(to bottom, transparent 0 28px, rgba(255,255,255,0.18) 28px 32px)",
+        }}
+      >
+        {/* Left neon rail */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-y-0 left-0 
+               w-[4px] sm:w-[5px] md:w-[6px] 
+               rounded-full
                bg-gradient-to-b from-[var(--color-primary)]
                via-[var(--color-accent)] to-[var(--color-accent-2)]
-               drop-shadow-[0_0_10px_rgba(30,144,255,0.35)]"
-                />
-                {/* right neon rail */}
-                <span
-                    aria-hidden="true"
-                    className="absolute inset-y-0 right-0 w-[6px] rounded-full
+               drop-shadow-[0_0_8px_rgba(30,144,255,0.35)]
+               md:drop-shadow-[0_0_10px_rgba(30,144,255,0.35)]"
+        />
+        {/* Right neon rail */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-y-0 right-0 
+               w-[4px] sm:w-[5px] md:w-[6px] 
+               rounded-full
                bg-gradient-to-b from-[var(--color-primary)]
                via-[var(--color-accent)] to-[var(--color-accent-2)]
-               drop-shadow-[0_0_10px_rgba(255,0,153,0.28)]"
-                />
-            </div>
+               drop-shadow-[0_0_8px_rgba(255,0,153,0.28)]
+               md:drop-shadow-[0_0_10px_rgba(255,0,153,0.28)]"
+        />
+      </div>
 
-            {/* Cart - Responsive positioning */}
-            <div
-                ref={cartRef}
-                className="
-          codeutsava__timeline-cart
-          absolute left-22 md:left-[808px] -translate-x-1/2 z-10
+      {/* Cart - Responsive size and position */}
+      <div
+        ref={cartRef}
+        className={`
+          absolute ${getCartPositionClass()} 
+          z-[2]
           transition-transform duration-75 ease-out
           pointer-events-none
-        "
-                style={{ top: TOP_OFFSET, transform: "translate(-50%, 0px)" }}
-            >
-                <img
-                    src={rollerCoasterUrl}
-                    alt="cart"
-                    className="h-20 w-20 md:h-20 md:w-20"
-                />
-            </div>
+        `}
+        style={{
+          top: getTopOffset(),
+          // keep transform X consistent: we'll let CSS handle X; Y transform set in scroll handler
+          transform: "translate(-50%, 0px)",
+        }}
+      >
+        <img
+          src={rollerCoasterUrl}
+          alt="cart"
+          className="
+            h-12 w-12 
+            xs:h-14 xs:w-14 
+            sm:h-16 sm:w-16 
+            md:h-20 md:w-20
+            drop-shadow-lg
+          "
+        />
+      </div>
 
-            <VerticalTimeline
-                className="codeutsava__timeline-container"
-                animate
-                lineColor="transparent"
+      <VerticalTimeline
+        className="codeutsava__timeline-container !px-2 sm:!px-4 md:!px-6"
+        animate
+        lineColor="transparent"
+      >
+        {hackathonData.map((element, index) => {
+          const [cardRef, visible] = useInView({ threshold: 0.15 });
+
+          return (
+            <VerticalTimelineElement
+              key={index}
+              iconStyle={{ display: "none" }}
+              contentStyle={{
+                background: "transparent",
+                boxShadow: "none",
+                padding: 0,
+                border: "none",
+                marginTop: isMobile ? 40 : 70,
+              }}
+              contentClassName="!p-0 !bg-transparent !shadow-none"
+              date={element.date}
+              dateClassName="
+                !text-white/95 
+                !text-xs xs:!text-sm sm:!text-base md:!text-lg lg:!text-xl 
+                !font-semibold
+                !pl-2 sm:!pl-0
+              "
+              className="codeutsava__timeline-item"
             >
-                {hackathonData.map((element, index) => (
-                    <VerticalTimelineElement
-                        key={index}
-                        iconStyle={{ display: "none" }}
-                        icon={<span />}
-                        contentStyle={{
-                            background: "transparent",
-                            boxShadow: "none",
-                            padding: 0,
-                            border: "none",
-                            marginTop: 70,
-                        }}
-                        contentClassName="!p-0 !bg-transparent !shadow-none"
-                        date={element.date}
-                        dateClassName="!text-white/95 !text-[16px] md:!text-[18px] lg:!text-[20px] !leading-tight tracking-wide font-semibold"
-                        className="codeutsava__timeline-item"
+              <div
+                ref={cardRef}
+                className={`
+                  transition-all duration-700 ease-out transform
+                  ${
+                    visible
+                      ? "opacity-100 translate-x-0"
+                      : isMobile
+                      ? "opacity-0 translate-x-10"
+                      : index % 2 === 0
+                      ? "opacity-0 -translate-x-20"
+                      : "opacity-0 translate-x-20"
+                  }
+                `}
+              >
+                <div
+                  className="
+                    relative rounded-xl sm:rounded-2xl 
+                    p-[1px] 
+                    bg-gradient-to-r from-[var(--color-primary)] 
+                    via-[var(--color-accent)] to-[var(--color-accent-2)] 
+                    shadow-lg sm:shadow-xl md:shadow-[0_10px_28px_rgba(0,0,0,0.45)]
+                  "
+                >
+                  <div
+                    className="
+                      relative rounded-[inherit] 
+                      bg-[color:var(--color-background)]/85 
+                      backdrop-blur-md 
+                      ring-1 ring-white/10 
+                      px-4 py-4 
+                      xs:px-5 xs:py-4
+                      sm:px-6 sm:py-5 
+                      md:px-8 md:py-6 
+                      text-white
+                    "
+                  >
+                    <h3
+                      className="
+                        text-base xs:text-lg sm:text-xl md:text-2xl 
+                        font-rye 
+                        leading-tight
+                        break-words
+                      "
                     >
-                        <div className="codeutsava__timeline-card relative rounded-2xl p-[1px] bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-accent-2)] shadow-[0_10px_28px_rgba(0,0,0,0.45)]">
-                            <div className="relative rounded-[inherit] bg-[color:var(--color-background)]/85 backdrop-blur-md ring-1 ring-white/10 px-6 py-5 md:px-8 md:py-6 text-white overflow-hidden transition-transform duration-200 hover:-translate-y-0.5">
-                                <span
-                                    aria-hidden="true"
-                                    className="absolute left-[-12px] top-4 bottom-4 w-[6px] rounded-full
-                             bg-gradient-to-b from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-accent-2)]
-                             opacity-90 drop-shadow-[0_0_6px_rgba(30,144,255,0.35)]"
-                                />
-                                <h3 className="text-[20px] md:text-[22px] font-rye leading-tight">
-                                    {element.id} {element.title}
-                                </h3>
-                                <h5 className="text-white/75 text-[14px] md:text-[16px] mt-1">
-                                    {element.location}
-                                </h5>
-                                <p className="text-white/85 mt-4 md:mt-6 mb-6 md:mb-8 text-[15px] md:text-[16px] leading-relaxed">
-                                    {element.description}
-                                </p>
-                            </div>
-                        </div>
-                    </VerticalTimelineElement>
-                ))}
-            </VerticalTimeline>
-        </section>
-    );
+                      {element.id} {element.title}
+                    </h3>
+                    <h5
+                      className="
+                        text-white/75 
+                        text-xs xs:text-sm sm:text-base 
+                        mt-1 sm:mt-1.5
+                        break-words
+                      "
+                    >
+                      {element.location}
+                    </h5>
+                    <p
+                      className="
+                        text-white/85 
+                        mt-3 sm:mt-4 md:mt-6 
+                        mb-4 sm:mb-6 md:mb-8 
+                        text-xs xs:text-sm sm:text-base 
+                        leading-relaxed
+                        break-words
+                      "
+                    >
+                      {element.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </VerticalTimelineElement>
+          );
+        })}
+      </VerticalTimeline>
+
+      {/* Add custom styles for very small screens */}
+      <style jsx>{`
+        @media (max-width: 767px) {
+          .vertical-timeline::before {
+            left: 24px !important;
+          }
+          .vertical-timeline-element-content {
+            margin-left: 60px !important;
+          }
+          .vertical-timeline-element-date {
+            left: auto !important;
+            right: auto !important;
+            text-align: left !important;
+            margin-left: 60px !important;
+            margin-top: -10px !important;
+            position: relative !important;
+          }
+        }
+
+        @media (max-width: 1080px) {
+          .vertical-timeline::before {
+            left: 20px !important;
+          }
+          .vertical-timeline-element-content {
+            margin-left: 50px !important;
+          }
+          .vertical-timeline-element-date {
+            margin-left: 50px !important;
+          }
+        }
+      `}</style>
+    </section>
+  );
 };
 
 export default Timeline;

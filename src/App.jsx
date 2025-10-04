@@ -1,51 +1,46 @@
 import { React, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import Intro from "./components/intro/Intro.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Lenis from "lenis";
-// import Home from "./pages/home/Home.jsx"
-import Navbar from "./components/navbar/Navbar.jsx";
-import Hero from "./components/hero/Hero.jsx";
-import Footer from "./components/footer/Footer.jsx";
-import BottomCTAs from "./components/hero/BottomCTAs.jsx";
-import RightRail from "./components/hero/RightRail.jsx";
-import SocialRail from "./components/hero/SocialRail.jsx";
-import ClickSoundProvider from "./utils/ClickSoundProvider.jsx";
 
 // Pages
-import Home from "./pages/home/Home.jsx";
+import Home from "./pages/Home.jsx";
+import EventsPage from "./pages/Events.jsx";
 import FAQ from "./pages/FAQ.jsx";
-// import Contact from "./pages/Contact.jsx";
-// import Team from "./pages/Team.jsx";
 
-// Components
-// import Navbar from "./components/navbar/Navbar.jsx";
-// import Footer from "./components/footer/Footer.jsx";
+import ClickSoundProvider from "./utils/ClickSoundProvider.jsx";
 
 export default function App() {
-
-
-    //smooth scroll using lenis
+    // smooth scroll using lenis
     useEffect(() => {
         const lenis = new Lenis({
-            duration: 1.2,
+            duration: 1.8,          // slower than before (was ~1.2)
             smooth: true,
-            smoothTouch: true, // enable smooth scroll on touchpads/laptops
+            smoothTouch: true,
         });
+
+        // expose globally so Navbar can call scrollTo
+        window.lenis = lenis;
 
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
         }
-
         requestAnimationFrame(raf);
 
-        return () => lenis.destroy();
+        return () => {
+            if (window.lenis === lenis) window.lenis = undefined;
+            lenis.destroy();
+        };
     }, []);
+
     return (
         <BrowserRouter>
             <ClickSoundProvider />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/events" element={<EventsPage />} />
+                {/* keep any other routes you need */}
+                <Route path="/faq" element={<FAQ />} />
             </Routes>
         </BrowserRouter>
     );

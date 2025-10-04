@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Rye&display=swap");
+
+/* --- Section Layout --- */
+.events-section {
+    width: 100%;
+    position: relative;
+    padding: 4rem 1rem;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.events-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+/* --- Heading Styling --- */
+.events-heading {
+    font-family: "Rye", serif;
+    color: var(--color-text-light, #eadccb);
+    font-size: clamp(2.5rem, 2.2rem + 2.5vw, 4.5rem);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.65),
+        0 8px 30px rgba(0, 0, 0, 0.45);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+/* Horizontal accent line using theme gradient */
+.neon-hr {
+    margin: 0 auto;
+    width: 8rem;
+    height: 2px;
+    border-radius: 9999px;
+    background-image: var(--brand-grad);
+    box-shadow:
+        0 0 16px rgba(var(--color-accent-2-rgb, 243, 168, 58), 0.4),
+        0 0 24px rgba(var(--color-primary-rgb, 128, 43, 29), 0.3);
+}
+
+/* --- Grid Layout --- */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+/* --- Card --- */
+.event-card {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom,
+            rgba(10, 10, 15, 0.85),
+            rgba(5, 5, 10, 0.75));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.event-card:hover {
+    transform: translateY(-8px);
+    box-shadow:
+        0 12px 36px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(var(--color-accent-2-rgb, 243, 168, 58), 0.3);
+}
+
+/* Theme-matching gradient border */
+.event-card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: var(--brand-grad);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.event-card:hover::before {
+    opacity: 1;
+}
+
+/* --- Card Image --- */
+.card-image-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #1a1a2e;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- Card Content --- */
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-accent-2, #f3a83a);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+.card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    font-size: 0.9rem;
+    color: rgba(var(--color-muted-rgb, 234, 220, 203), 0.8);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.meta-icon {
+    color: var(--color-accent-2, #f3a83a);
+    filter: drop-shadow(0 0 6px rgba(var(--color-accent-2-rgb, 243, 168, 58), 0.7));
+}
+
+/* Description */
+.card-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    flex-grow: 1;
+    color: rgba(var(--color-muted-rgb, 234, 220, 203), 0.9);
+    margin-bottom: 1rem;
+}
+
+/* Guidelines */
+.card-guidelines {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(var(--color-muted-rgb, 234, 220, 203), 0.7);
+    margin-bottom: 1rem;
+}
+
+/* Register Button */
+.register-btn {
+    display: inline-block;
+    text-align: center;
+    font-weight: 600;
+    padding: 0.7rem 1.2rem;
+    border-radius: 0.75rem;
+    background: var(--brand-grad);
+    color: var(--color-background, #0d0d0de1);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow:
+        0 0 12px rgba(var(--color-accent-2-rgb, 243, 168, 58), 0.3),
+        0 0 16px rgba(var(--color-primary-rgb, 128, 43, 29), 0.2);
+}
+
+.register-btn:hover {
+    transform: scale(1.05);
+    box-shadow:
+        0 0 20px rgba(var(--color-accent-2-rgb, 243, 168, 58), 0.6),
+        0 0 30px rgba(var(--color-primary-rgb, 128, 43, 29), 0.4);
+}
+
+/* Center the button in the card nicely */
+.register-wrapper {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+/* Optionally override anchor’s default styling */
+.register-wrapper a {
+    text-decoration: none;
+}
