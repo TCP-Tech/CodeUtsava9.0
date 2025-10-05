@@ -70,11 +70,14 @@ const SimpleCarnivalCursor = ({ children }) => {
 
             {/* Custom animated candy cursor */}
             <div
-                className="fixed pointer-events-none z-[9999] transition-transform duration-100 ease-out"
+                className="fixed pointer-events-none transition-transform duration-100 ease-out"
                 style={{
                     left: mousePos.x - 12, // adjust for pointer tip position
                     top: mousePos.y - 8,   // adjust for pointer tip position
                     transform: `scale(${isClicking ? 0.8 : isHovering ? 1.3 : 1}) rotate(${isClicking ? '15deg' : '0deg'})`,
+                    zIndex: 999999999, // Extremely high z-index to ensure it's always on top
+                    position: 'fixed', // Ensure it's always in the viewport
+                    isolation: 'isolate', // Create new stacking context
                 }}
                 aria-hidden="true"
             >

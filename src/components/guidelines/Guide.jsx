@@ -13,11 +13,11 @@ export default function Guide() {
       "
         >
             <div className="w-full max-w-6xl mx-auto">
-                <div className="backdrop-blur-lg bg-white/10 border-4 border-blue-900 rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 shadow-lg">
                     {/* Heading */}
                     <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center mb-6 sm:mb-8 font-rye">
                         Guidelines
                     </h2>
+                <div className="backdrop-blur-lg bg-white/10 border-4 border-blue-900 rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 shadow-lg">
 
                     {/* Body */}
                     <div className="text-white/90 space-y-4 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed font-sans">

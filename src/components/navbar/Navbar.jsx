@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../../assets/images/codeutsava.png";
+import logo from "../../assets/2.png";
 import ImageButton from "../button/TicketButton";
 
 const CONTACT_FORM_URL =
@@ -78,86 +78,109 @@ export default function Navbar() {
     const isLargeScreen = useMediaQuery({ minWidth: 1024 }); // lg
     const closeMobile = () => setMobileOpen(false);
 
+    // Close mobile menu when switching to large screens
+    useEffect(() => {
+        if (isLargeScreen && mobileOpen) setMobileOpen(false);
+    }, [isLargeScreen, mobileOpen]);
+
+    // Prevent body scroll when mobile menu is open
+    useEffect(() => {
+        if (mobileOpen) {
+            const prev = document.body.style.overflow;
+            document.body.style.overflow = "hidden";
+            return () => { document.body.style.overflow = prev; };
+        }
+    }, [mobileOpen]);
+
     return (
-        // ⬇️ unchanged container: keeps your original z-index behavior
-        <div className="fixed top-0 inset-x-0 z-[9999]">
+        <nav
+            className="fixed top-0 left-0 right-0 bg-[#070f2f]/90 px-4 md:px-20 border-b border-white/40 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,.35)]"
+            role="navigation"
+            aria-label="Main navigation"
+        >
             <div className="mx-auto w-full">
-                <nav className="bg-[#070f2f]/90 px-4 md:px-20 border-b border-white/40 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,.35)]">
-                    <div className="flex items-center justify-between px-4 py-3">
-                        {/* Left: Logo + Feedback */}
-                        <div className="flex items-center gap-4">
-                            <a
-                                href="#"
-                                className="font-arcade text-lg drop-shadow"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    smoothScrollTo("#");
-                                }}
-                            >
-                                <img src={logo} alt="Logo" className="h-12 w-auto" />
-                            </a>
-
-                            {isLargeScreen && (
-                                <ImageButton
-                                    text="FEEDBACK"
-                                    onClick={() => window.open(CONTACT_FORM_URL, "_blank")}
-                                    style={{ fontSize: "16px" }}
-                                />
-                            )}
-                        </div>
-
-                        {/* Desktop Nav */}
-                        <div className="hidden md:flex items-center gap-6 text-white font-bold">
-                            <NavItem href="#" delay={0.1}>HOME</NavItem>
-                            <NavItem href="#about" delay={0.2}>ABOUT US</NavItem>
-                            <NavItem href="#faq" delay={0.3}>FAQ</NavItem>
-                            <motion.a
-                                href={CONTACT_FORM_URL}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    window.open(CONTACT_FORM_URL, "_blank", "noopener,noreferrer");
-                                }}
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.4 }}
-                                className="px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition hover:text-[#E4D0B6] cursor-pointer"
-                            >
-                                CONTACT US
-                            </motion.a>
-                            <NavItem disabled delay={0.5}>TEAM</NavItem>
-                        </div>
-
-                        {/* Right: Brochure */}
-                        {isLargeScreen && (
-                            <div className="hidden md:flex">
-                                <ImageButton
-                                    text="BROCHURE"
-                                    onClick={() => window.open("/Brochure.pdf", "_blank")}
-                                    style={{ fontSize: "16px" }}
-                                />
-                            </div>
-                        )}
-
-                        {/* Mobile Hamburger */}
-                        <button
-                            className="md:hidden text-white text-2xl"
-                            onClick={() => setMobileOpen(!mobileOpen)}
-                            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                <div className="flex items-center justify-between px-4 py-3">
+                    {/* Left: Logo + Feedback */}
+                    <div className="flex items-center gap-4">
+                        <a
+                            href="#"
+                            className="font-arcade text-lg drop-shadow"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                smoothScrollTo("#");
+                                // Close mobile if open
+                                if (mobileOpen) setMobileOpen(false);
+                            }}
                         >
-                            {mobileOpen ? <FiX /> : <FiMenu />}
-                        </button>
+                            <img src={logo} alt="Logo" className="h-12 scale-150 pr-5 w-auto" />
+                        </a>
+
+                        {isLargeScreen && (
+                            <ImageButton
+                                text="FEEDBACK"
+                                onClick={() => window.open(CONTACT_FORM_URL, "_blank")}
+                                style={{ fontSize: "16px" }}
+                            />
+                        )}
                     </div>
 
-                    {/* Mobile Menu */}
-                    <AnimatePresence>
-                        {mobileOpen && (
-                            <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="flex flex-col items-center gap-4 overflow-hidden md:hidden text-white font-semibold"
-                            >
+                    {/* Desktop Nav */}
+                    <div className="hidden md:flex items-center gap-6 text-white font-bold">
+                        <NavItem href="#" delay={0.1}>HOME</NavItem>
+                        <NavItem href="#about" delay={0.2}>ABOUT US</NavItem>
+                        <NavItem href="#faq" delay={0.3}>FAQ</NavItem>
+                        <motion.a
+                            href={CONTACT_FORM_URL}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.open(CONTACT_FORM_URL, "_blank", "noopener,noreferrer");
+                            }}
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.4 }}
+                            className="px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition hover:text-[#E4D0B6] cursor-pointer"
+                        >
+                            CONTACT US
+                        </motion.a>
+                        <NavItem disabled delay={0.5}>TEAM</NavItem>
+                    </div>
+
+                    {/* Right: Brochure */}
+                    {isLargeScreen && (
+                        <div className="hidden md:flex">
+                            <ImageButton
+                                text="BROCHURE"
+                                onClick={() => window.open("/Brochure.pdf", "_blank")}
+                                style={{ fontSize: "16px" }}
+                            />
+                        </div>
+                    )}
+
+                    {/* Mobile Hamburger */}
+                    <button
+                        className="md:hidden text-white text-2xl"
+                        onClick={() => setMobileOpen((s) => !s)}
+                        aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                        aria-expanded={mobileOpen}
+                        aria-controls="mobile-menu"
+                    >
+                        {mobileOpen ? <FiX /> : <FiMenu />}
+                    </button>
+                </div>
+
+                {/* Mobile Menu (drops below the nav) */}
+                <AnimatePresence initial={false}>
+                    {mobileOpen && (
+                        <motion.div
+                            id="mobile-menu"
+                            key="mobile-menu"
+                            initial={{ opacity: 0, y: -8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.18 }}
+                            className="md:hidden absolute left-0 right-0 top-full bg-[#070f2f]/95 border-t border-white/10 shadow-lg"
+                        >
+                            <div className="flex flex-col items-center gap-4 py-4 text-white font-semibold">
                                 <a
                                     href="#"
                                     onClick={(e) => {
@@ -205,11 +228,11 @@ export default function Navbar() {
                                 <span className="px-4 py-2 text-[1.1rem] rye-regular tracking-wide opacity-50 cursor-not-allowed">
                                     TEAM
                                 </span>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </nav>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
-        </div>
+        </nav>
     );
 }

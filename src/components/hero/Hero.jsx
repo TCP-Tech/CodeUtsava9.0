@@ -27,7 +27,6 @@ export default function Hero({ animationsStarted = false }) {
                     aria-label="Hero"
                 >
                     <div className="relative z-10 pointer-events-auto h-full flex flex-col">
-                        <Navbar />
                         <SocialRail />
                         <RightRail />
 

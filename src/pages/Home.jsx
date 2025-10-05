@@ -15,6 +15,7 @@ import FAQ from "./FAQ.jsx";
 import Cursor from "../components/cursor/Cursor.jsx";
 import BackgroundMedia from "../components/background/Background.jsx";
 import bg_image from "../assets/images/bg-part2.jpg";
+import Navbar from "../components/navbar/Navbar.jsx";
 import PrizesSection from "../components/prizes/Prizes.jsx";
 
 export default function Home({ skipIntro = false }) {
@@ -38,11 +39,7 @@ export default function Home({ skipIntro = false }) {
     useEffect(() => {
         if (revealed) return;
 
-        const onWheel = (e) => {
-            const next = Math.min(Math.max(progRef.current + e.deltaY * 0.5, 0), MAX);
-            progRef.current = next;
-            if (next >= MAX) setRevealed(true);
-        };
+        
         const onTouchStart = (e) => {
             const t = e.touches && e.touches[0];
             touchStartYRef.current = t ? t.clientY : 0;
@@ -57,11 +54,9 @@ export default function Home({ skipIntro = false }) {
             if (next >= MAX) setRevealed(true);
         };
 
-        window.addEventListener("wheel", onWheel, { passive: true });
         window.addEventListener("touchstart", onTouchStart, { passive: true });
         window.addEventListener("touchmove", onTouchMove, { passive: true });
         return () => {
-            window.removeEventListener("wheel", onWheel);
             window.removeEventListener("touchstart", onTouchStart);
             window.removeEventListener("touchmove", onTouchMove);
         };
@@ -77,7 +72,13 @@ export default function Home({ skipIntro = false }) {
             />
 
             {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
+            {/* <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+                <Navbar />
+            </div> */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+            <div className="fixed inset-0 pointer-events-auto overflow-hidden" style={{ zIndex: 15 }}>
+                <Navbar />
+            </div>
                 <SparkleLayer />
                 <Fireworks />
                 {/* to enable autolaunch for fireworks uncomment the below*/}
