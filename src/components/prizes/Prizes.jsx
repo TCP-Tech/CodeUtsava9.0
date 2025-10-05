@@ -28,7 +28,7 @@ export default function PrizesSection() {
           </h3>
 
           {/* Cards grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 place-items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 place-items-center">
             {Prizes.map((item, index) => (
               <div
                 key={index}
