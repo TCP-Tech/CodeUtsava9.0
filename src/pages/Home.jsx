@@ -12,6 +12,7 @@ import Player from "../components/audioPlayer/player.jsx";
 import Cursor from "../components/cursor/Cursor.jsx";
 import BackgroundMedia from "../components/background/Background.jsx";
 import bg_image from "../assets/images/bg-part2.jpg";
+import Navbar from "../components/navbar/Navbar.jsx";
 
 export default function Home({ skipIntro = false }) {
   const [revealed, setRevealed] = useState(skipIntro);
@@ -63,27 +64,56 @@ export default function Home({ skipIntro = false }) {
 
       {!revealed ? (
         <>
-          <Intro onCurtainProgress={handleCurtainProgress} />
-          {heroAnimationsStarted && <Cursor />}
+            {/* Global fixed background for entire page */}
+            <BackgroundMedia
+                imageSrc={bg_image}
+                darken={0.5}
+                className="bg-right"
+            />
+
+            {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
+            {/* <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+                <Navbar />
+            </div> */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+            <div className="fixed inset-0 pointer-events-auto overflow-hidden" style={{ zIndex: 15 }}>
+                <Navbar />
+            </div>
+                <SparkleLayer />
+                <Fireworks />
+                {/* to enable autolaunch for fireworks uncomment the below*/}
+                {/* <Fireworks autoLaunch/>   */}
+            </div>
+
+            {/* Always render Hero for background visibility */}
+            <Hero animationsStarted={heroAnimationsStarted} />
+
+            {!revealed ? (
+                <>
+                    <Intro onCurtainProgress={handleCurtainProgress} />
+                    {/* Load cursor and start hero animations when curtain is halfway open */}
+                    {heroAnimationsStarted && <Cursor />}
+                </>
+            ) : (
+                <>
+                    <Cursor />
+                    <Lastyear />
+                    <AboutUS />
+                    <Sponsors />
+                    <Timeline />
+                    <Guide />
+                    <GRandAN />
+                    <FAQ />
+                    <Footer />
+                    <div className="fixed bottom-4 right-4">
+                        <Player />
+                    </div>
+                </>
+            )}
         </>
       ) : (
-        <>
-          <Cursor />
 
-          {/* Sections appear in natural top-to-bottom order */}
-          <Sponsors />
-          <Timeline />
-          <Guide />
-          <GRandAN />
-
-          <Footer />
-
-          {/* Floating player */}
-          <div className="fixed bottom-4 right-4">
-            <Player />
-          </div>
-        </>
-      )}
-    </>
+      
+       
   );
 }

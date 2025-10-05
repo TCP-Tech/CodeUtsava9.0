@@ -15,7 +15,7 @@ export default function App() {
     // smooth scroll using lenis
     useEffect(() => {
         const lenis = new Lenis({
-            duration: 1.8,          // slower than before (was ~1.2)
+            duration: 1.2,          // slower than before (was ~1.2)
             smooth: true,
             smoothTouch: true,
         });

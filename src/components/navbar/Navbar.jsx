@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../../assets/images/codeutsava.png";
+import logo from "../../assets/2.png";
 import ImageButton from "../button/TicketButton";
 
 const CONTACT_FORM_URL =
