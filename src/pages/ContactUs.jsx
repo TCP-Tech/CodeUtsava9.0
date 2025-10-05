@@ -4,12 +4,12 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 
-import Navbar2 from "../../components/navbar/Navbar2";
-import Footer from "../../components/footer/Footer";
-import BackgroundMedia from "../../components/background/Background";
-import SparkleLayer from "../../components/overlays/SparkleLayer";
-import Fireworks from "../../components/overlays/Fireworks";
-import bgImage from "../../assets/images/bg-part2.jpg";
+import Navbar from "../components/navbar/Navbar";
+import Footer from "../components/footer/Footer";
+import BackgroundMedia from "../components/background/Background";
+import SparkleLayer from "../components/overlays/SparkleLayer";
+import Fireworks from "../components/overlays/Fireworks";
+import bgImage from "../assets/images/bg-part2.jpg";
 
 // Fix leaflet marker icons for Vite/Rollup
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -51,7 +51,7 @@ export default function ContactUs() {
 
       {/* Navbar */}
       <div className="relative z-30">
-        <Navbar2 />
+        <Navbar/>
 
         {/* Page Header */}
         <h1

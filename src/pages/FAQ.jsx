@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Navbar2 from "../../components/navbar/Navbar2";
-import FAQimg from "../../assets/images/faq_img_final.png";
-import BackgroundMedia from "../../components/background/Background";
-import SparkleLayer from "../../components/overlays/SparkleLayer";
-import Fireworks from "../../components/overlays/Fireworks";
-import bgImage from "../../assets/images/bg-part2.jpg";
-import Footer from "../../components/footer/Footer";
+import Navbar from "../components/navbar/Navbar";
+import FAQimg from "../assets/images/faq_img_final.png";
+import BackgroundMedia from "../components/background/Background";
+import SparkleLayer from "../components/overlays/SparkleLayer";
+import Fireworks from "../components/overlays/Fireworks";
+import bgImage from "../assets/images/bg-part2.jpg";
+import Footer from "../components/footer/Footer";
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -27,7 +27,7 @@ export default function FAQPage() {
 
       {/* Navbar + FAQ content */}
       <div className="relative z-30">
-        <Navbar2 />
+        <Navbar />
 
         <div className="flex justify-center py-12">
           <div className="max-w-6xl w-full bg-gradient-to-r from-red-500/60 via-orange-400/60 to-yellow-400/60 backdrop-blur-md rounded-2xl p-10 shadow-2xl">

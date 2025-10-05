@@ -4,8 +4,8 @@ import Lenis from "lenis";
 
 // Pages
 import Home from "./pages/Home.jsx";
-import FAQ from "./pages/faq/FAQ.jsx";
-import ContactUs from "./pages/contact us/ContactUs.jsx";
+import FAQ from "./pages/FAQ.jsx";
+import ContactUs from "./pages/ContactUs.jsx";
 import EventsPage from "./pages/Events.jsx";
 
 
@@ -44,6 +44,7 @@ export default function App() {
                 {/* keep any other routes you need */}
                 <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/faq" element={<FAQ />} />
+                <Route path="/events" element={<EventsPage/>} />
             </Routes>
         </BrowserRouter>
     );

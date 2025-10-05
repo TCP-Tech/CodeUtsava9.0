@@ -1,6 +1,6 @@
 // src/pages/EventsPage.jsx
 import React from "react";
-import Navbar2 from "../components/navbar/Navbar2.jsx";
+import Navbar from "../components/navbar/Navbar.jsx";
 import Events from "../components/events/Events.jsx";
 import Footer from "../components/footer/Footer.jsx";
 import Fireworks from "../components/overlays/Fireworks.jsx";
@@ -30,7 +30,7 @@ export default function EventsPage() {
 
             {/* Foreground content */}
             <main className="relative z-20 pt-32">
-                <Navbar2/>
+                <Navbar/>
                 <Events />
             </main>
         </>
