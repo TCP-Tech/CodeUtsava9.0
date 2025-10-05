@@ -15,6 +15,7 @@ import FAQ from "./FAQ.jsx";
 import Cursor from "../components/cursor/Cursor.jsx";
 import BackgroundMedia from "../components/background/Background.jsx";
 import bg_image from "../assets/images/bg-part2.jpg";
+import PrizesSection from "../components/prizes/Prizes.jsx";
 
 export default function Home({ skipIntro = false }) {
     const [revealed, setRevealed] = useState(skipIntro);
@@ -100,6 +101,7 @@ export default function Home({ skipIntro = false }) {
                     <Sponsors />
                     <Timeline />
                     <Guide />
+                    <PrizesSection/>
                     <GRandAN />
                     <FAQ />
                     <Footer />
