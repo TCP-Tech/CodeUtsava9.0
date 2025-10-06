@@ -13,70 +13,101 @@ export default function PrizesSection() {
       "
     >
       <div className="w-full max-w-6xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white text-center mb-10 font-rye">
-            PRIZES
-          </h2>
-        {/* Outer glass container */}
-        <div className="backdrop-blur-lg bg-white/10 border-4 border-blue-900 rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 shadow-lg">
-          
-          {/* Heading */}
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white text-center mb-10 font-rye">
+          PRIZES
+        </h2>
 
+        {/* Outer glass container */}
+        <div className="backdrop-blur-lg bg-white/10 border-4 border-blue-900 rounded-3xl p-4 sm:p-6 md:p-12 lg:p-16 shadow-lg">
+          
           {/* Subheading */}
-          <h3 className="font-['Protest_Revolution'] text-2xl sm:text-3xl md:text-4xl text-center text-white mb-12 font-rye">
+          <h3 className="font-['Protest_Revolution'] text-center text-white mb-12 font-rye"
+              style={{ fontSize: "clamp(20px, 4vw, 36px)" }}
+          >
             WIN EXCITING PRIZES WORTH UPTO{" "}
             <span className="text-[#eb920c]">36 LAKHS!</span> 🏆
           </h3>
 
           {/* Cards grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 place-items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 place-items-center">
             {Prizes.map((item, index) => (
               <div
                 key={index}
-                className="relative flex flex-col items-center justify-start
-                  w-[500px] md:w-[450px] sm:w-full text-white rounded-2xl"
+                className="
+                  relative flex flex-col items-center justify-start
+                  aspect-square
+                  w-[95%] xs:w-[320px] sm:w-[380px] md:w-[440px] lg:w-[500px]
+                  text-white rounded-2xl transition-all duration-300
+                "
                 style={{
                   backgroundImage: `url(${prizesBg})`,
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
                   backgroundSize: "100% 100%",
-                  minHeight: "600px",
-                  minWidth: "600px",
-                  padding: "140px 70px 60px 100px", // keeps text inside yellow area
+                  paddingLeft: "clamp(10px, 25%, 70px)",
+                  paddingRight: "clamp(10px, 50%, 50px)",
+                  paddingTop: "clamp(12px, 10%, 80px)",
+                  paddingBottom: "clamp(20px, 5%, 80px)",
                 }}
               >
-                {/* Title */}
-                <h2 className="font-['Protest_Revolution'] text-[24px] mb-6 text-cyan-700 text-center drop-shadow-[0_2px_0px_rgba(0,0,0,0.8)] font-rye pt-2.5 pl-12 pr-15 ">
-                  {item.title}
-                </h2>
+                {/* Inner padding wrapper */}
+                <div
+                  className="
+                    flex flex-col justify-start items-center
+                    w-full h-full
+                    px-[10%] py-[20%]
+                    sm:px-[9%] sm:py-[18%]
+                    md:px-[10%] md:py-[20%]
+                    lg:px-[12%] lg:py-[22%]
+                    
+                  "
+                >
+                  {/* Title */}
+                  <h2
+                    className="
+                      font-['Protest_Revolution'] 
+                      mb-3 text-cyan-700 text-center drop-shadow-[0_2px_0px_rgba(0,0,0,0.8)] 
+                      font-rye break-words
+                    "
+                    style={{ fontSize: "clamp(8px, 2.2vw, 24px)" }}
+                  >
+                    {item.title}
+                  </h2>
 
-                {/* Cash Prize Section */}
-                {item.cashPrize.length > 0 && (
-                  <ul className="w-full text-left font-rye text-cyan-900 text-[17px] leading-relaxed space-y-2 pl-14 pr-14 ">
-                    {item.cashPrize.map((cash, i) => (
-                      <li key={i} className="list-disc marker:text-black">
-                        {cash}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                  {/* Cash Prize Section */}
+                  {item.cashPrize.length > 0 && (
+                    <ul
+                      className="
+                        w-full text-left font-rye text-cyan-900 leading-relaxed
+                        space-y-2 list-disc marker:text-black break-words
+                      "
+                      style={{ fontSize: "clamp(6px, 1.8vw, 14px)" }}
+                    >
+                      {item.cashPrize.map((cash, i) => (
+                        <li key={i}>{cash}</li>
+                      ))}
+                    </ul>
+                  )}
 
-                {/* Prize Info Section */}
-                {item.prizeInfo.length > 0 && (
-                  <ul className="w-full text-left font-rye text-cyan-900 text-[17px] leading-relaxed space-y-2 pl-14 pr-14 ">
-                    {item.prizeInfo.map((info, i) => (
-                      <li key={i} className="list-disc marker:text-black">
-                        {info}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                  {/* Prize Info Section */}
+                  {item.prizeInfo.length > 0 && (
+                    <ul
+                      className="
+                        w-full text-left font-rye text-cyan-900 leading-relaxed
+                        space-y-2 list-disc marker:text-black mt-2 break-words
+                      "
+                      style={{ fontSize: "clamp(6px, 1.8vw, 14px)" }}
+                    >
+                      {item.prizeInfo.map((info, i) => (
+                        <li key={i}>{info}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Disclaimer */}
-          <p className="mt-10 text-xs sm:text-sm text-black text-center italic">
-          </p>
         </div>
       </div>
     </div>
