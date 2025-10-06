@@ -16,7 +16,7 @@ export default function AboutUS() {
 
             <div className="relative z-0 max-w-7xl mx-auto px-4">
                 <header className="text-center">
-                    <h2 className="about-heading text-white text-stroke-strong text-balance">
+                    <h2 className="about-heading te text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)]  text-balance">
                         About&nbsp;Us
                     </h2>
                     <div className="mx-auto mt-3 neon-hr" />

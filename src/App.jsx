@@ -4,8 +4,10 @@ import Lenis from "lenis";
 
 // Pages
 import Home from "./pages/Home.jsx";
-import EventsPage from "./pages/Events.jsx";
 import FAQ from "./pages/FAQ.jsx";
+import ContactUs from "./pages/ContactUs.jsx";
+import EventsPage from "./pages/Events.jsx";
+
 
 import ClickSoundProvider from "./utils/ClickSoundProvider.jsx";
 
@@ -40,7 +42,9 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/events" element={<EventsPage />} />
                 {/* keep any other routes you need */}
+                <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/faq" element={<FAQ />} />
+                <Route path="/events" element={<EventsPage/>} />
             </Routes>
         </BrowserRouter>
     );

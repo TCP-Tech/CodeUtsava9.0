@@ -147,12 +147,15 @@ const Timeline = () => {
 
       <h2
         className="
-          text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl 
-          text-center font-rye tracking-wide sm:tracking-wider md:tracking-widest
+          codeutsava__timeline-header
+          text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center font-rye tracking-widest
+          mt-10 mb-8 drop-shadow-[0_0_14px_rgba(251,146,60,0.95)]
+           xs:text-3xl
+           font-rye  sm:tracking-wider md:tracking-widest
           pt-6 sm:pt-8 md:pt-10 pb-4 sm:pb-6 md:pb-8 
           px-4
         "
-        style={{ color: "white" }}
+        style={{ color: "#F3A83A" }}
       >
         TIMELINE
       </h2>
