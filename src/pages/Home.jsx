@@ -70,9 +70,9 @@ export default function Home({ skipIntro = false }) {
             />
 
             {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
-            <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+            <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: !revealed ? 1010 : 15 }}>
                 <SparkleLayer />
-                <Fireworks />
+                <Fireworks autoLaunch={!revealed} />
                 {/* to enable autolaunch for fireworks uncomment the below*/}
                 {/* <Fireworks autoLaunch/>   */}
             </div>
