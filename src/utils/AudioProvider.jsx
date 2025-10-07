@@ -28,8 +28,10 @@ export const AudioProvider = ({ children }) => {
 
       // Try to start audio on first user interaction
       const handleFirstInteraction = () => {
+        console.log("First user interaction detected, attempting to start audio");
         if (!isPlaying && audioRef.current) {
           audioRef.current.play().then(() => {
+            console.log("Audio started successfully");
             setIsPlaying(true);
           }).catch((error) => {
             console.log("Autoplay prevented:", error);
