@@ -39,14 +39,12 @@ const Timeline = () => {
   const cartRef = useRef(null);
   const lineRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
 
   // Detect screen size (mobile/tablet/desktop)
   useEffect(() => {
     const checkBreakpoints = () => {
       const w = window.innerWidth;
-      setIsMobile(w < 768);
-      setIsTablet(w >= 768 && w < 1024);
+      setIsMobile(w < 1200);
     };
 
     checkBreakpoints();
@@ -124,15 +122,13 @@ const Timeline = () => {
   };
 
   const getCartPositionClass = () => {
-    // mobile: pinned left, tablet: slightly left, desktop: centered
-    if (isMobile) return "left-[52px] -translate-x-0"; // we already offset translateX in transform: translate(-50%, ...)
-    if (isTablet) return "left-[calc(50%_-_28px)] md:-translate-x-1/2"; // slight offset so not exactly center
-    return "left-1/2 md:-translate-x-1/2";
+    // mobile & tablet: pinned left (centered on rail), desktop: centered
+    if (isMobile || isTablet) return "left-[34px]"; // centered on 20px rail: 24px + (20px/2) = 34px
+    return "left-1/2";
   };
 
   const getRailPositionClass = () => {
-    if (isMobile) return "left-6";
-    if (isTablet) return "left-[48%] md:-translate-x-1/2";
+    if (isMobile || isTablet) return "left-6";
     return "left-1/2 md:-translate-x-1/2";
   };
 
@@ -204,10 +200,11 @@ const Timeline = () => {
           z-[2]
           transition-transform duration-75 ease-out
           pointer-events-none
+          -translate-x-1/2
         `}
         style={{
           top: getTopOffset(),
-          // keep transform X consistent: we'll let CSS handle X; Y transform set in scroll handler
+          // Y transform set in scroll handler
           transform: "translate(-50%, 0px)",
         }}
       >
