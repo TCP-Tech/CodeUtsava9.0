@@ -22,7 +22,7 @@ import GRandAN from "../components/graphs&Analytics/GRandAN.jsx";
 
 import Guide from "../components/guidelines/Guide.jsx";
 
-// import FAQ from "./FAQ.jsx";
+import FAQ from "../components/faq/FAQ.jsx";
 
 import Cursor from "../components/cursor/Cursor.jsx";
 
@@ -37,135 +37,135 @@ import PrizesSection from "../components/prizes/Prizes.jsx";
 
 export default function Home({ skipIntro = false }) {
 
-  const [revealed, setRevealed] = useState(skipIntro);
+    const [revealed, setRevealed] = useState(skipIntro);
 
-  const [curtainProgress, setCurtainProgress] = useState(0);
+    const [curtainProgress, setCurtainProgress] = useState(0);
 
-  const [heroAnimationsStarted, setHeroAnimationsStarted] = useState(skipIntro);
+    const [heroAnimationsStarted, setHeroAnimationsStarted] = useState(skipIntro);
 
-  const MAX = 100;
+    const MAX = 100;
 
-  const progRef = useRef(0);
+    const progRef = useRef(0);
 
-  const touchStartYRef = useRef(0);
-
-
-
-  // Handle curtain progress from Intro component
-
-  const handleCurtainProgress = (progress) => {
-
-    setCurtainProgress(progress);
-
-    // Start hero animations and reveal only when curtain is completely open
-
-    if (progress >= 0.9 && !heroAnimationsStarted) {
-
-      setHeroAnimationsStarted(true);
-
-      setRevealed(true);
-
-    }
-
-  };
+    const touchStartYRef = useRef(0);
 
 
 
-  useEffect(() => {
+    // Handle curtain progress from Intro component
 
-    if (revealed) return;
+    const handleCurtainProgress = (progress) => {
 
+        setCurtainProgress(progress);
 
+        // Start hero animations and reveal only when curtain is completely open
 
-    const onWheel = (e) => {
+        if (progress >= 0.9 && !heroAnimationsStarted) {
 
-      const next = Math.min(Math.max(progRef.current + e.deltaY * 0.5, 0), MAX);
+            setHeroAnimationsStarted(true);
 
-      progRef.current = next;
+            setRevealed(true);
 
-      if (next >= MAX) setRevealed(true);
+        }
 
     };
 
 
 
-    const onTouchStart = (e) => {
+    useEffect(() => {
 
-      const t = e.touches && e.touches[0];
-
-      touchStartYRef.current = t ? t.clientY : 0;
-
-    };
+        if (revealed) return;
 
 
 
-    const onTouchMove = (e) => {
+        const onWheel = (e) => {
 
-      const t = e.touches && e.touches[0];
+            const next = Math.min(Math.max(progRef.current + e.deltaY * 0.5, 0), MAX);
 
-      const y = t ? t.clientY : touchStartYRef.current;
+            progRef.current = next;
 
-      const deltaY = touchStartYRef.current - y;
+            if (next >= MAX) setRevealed(true);
 
-      touchStartYRef.current = y;
-
-      const next = Math.min(Math.max(progRef.current + deltaY * 0.5, 0), MAX);
-
-      progRef.current = next;
-
-      if (next >= MAX) setRevealed(true);
-
-    };
+        };
 
 
 
-    window.addEventListener("wheel", onWheel, { passive: true });
+        const onTouchStart = (e) => {
 
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
+            const t = e.touches && e.touches[0];
 
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
+            touchStartYRef.current = t ? t.clientY : 0;
 
-    return () => {
-
-      window.removeEventListener("wheel", onWheel);
-
-      window.removeEventListener("touchstart", onTouchStart);
-
-      window.removeEventListener("touchmove", onTouchMove);
-
-    };
-
-  }, [revealed]);
+        };
 
 
 
-  return (
+        const onTouchMove = (e) => {
 
-    <>
+            const t = e.touches && e.touches[0];
 
-      {/* Global fixed background for entire page */}
+            const y = t ? t.clientY : touchStartYRef.current;
 
-      <BackgroundMedia
+            const deltaY = touchStartYRef.current - y;
 
-        imageSrc={bg_image}
+            touchStartYRef.current = y;
 
-        darken={0.5}
+            const next = Math.min(Math.max(progRef.current + deltaY * 0.5, 0), MAX);
 
-        className="bg-right"
+            progRef.current = next;
 
-      />
+            if (next >= MAX) setRevealed(true);
+
+        };
 
 
 
-      {/* Overlays for the whole page */}
+        window.addEventListener("wheel", onWheel, { passive: true });
 
-      <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+        window.addEventListener("touchstart", onTouchStart, { passive: true });
 
-        <SparkleLayer />
+        window.addEventListener("touchmove", onTouchMove, { passive: true });
 
-        <Fireworks />
+        return () => {
 
-      </div>
+            window.removeEventListener("wheel", onWheel);
+
+            window.removeEventListener("touchstart", onTouchStart);
+
+            window.removeEventListener("touchmove", onTouchMove);
+
+        };
+
+    }, [revealed]);
+
+
+
+    return (
+
+        <>
+
+            {/* Global fixed background for entire page */}
+
+            <BackgroundMedia
+
+                imageSrc={bg_image}
+
+                darken={0.5}
+
+                className="bg-right"
+
+            />
+
+
+
+            {/* Overlays for the whole page */}
+
+            <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+
+                <SparkleLayer />
+
+                <Fireworks />
+
+            </div>
             {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: !revealed ? 1010 : 15 }}>
                 <SparkleLayer />
@@ -176,52 +176,52 @@ export default function Home({ skipIntro = false }) {
 
 
 
-      {/* Always render Hero */}
+            {/* Always render Hero */}
 
-      <Hero animationsStarted={heroAnimationsStarted} />
+            <Hero animationsStarted={heroAnimationsStarted} />
 
 
 
-      {!revealed ? (
+            {!revealed ? (
 
-        <>
+                <>
 
-          <Intro onCurtainProgress={handleCurtainProgress} />
+                    <Intro onCurtainProgress={handleCurtainProgress} />
 
-          {heroAnimationsStarted && <Cursor />}
+                    {heroAnimationsStarted && <Cursor />}
 
-        </>
+                </>
 
-      ) : (
+            ) : (
 
-        <>
+                <>
 
-          <Cursor />
+                    <Cursor />
 
-          <Lastyear />
+                    <Lastyear />
 
-          <AboutUS />
+                    <AboutUS />
 
-          <Sponsors />
+                    <Sponsors />
 
-          <Timeline />
+                    <Timeline />
 
-          <Guide />
+                    <Guide />
 
           <PrizesSection />
 
-          <GRandAN />
+                    <GRandAN />
 
-          {/* <FAQ /> */}
+                    <FAQ />
 
-          <Footer />
+                    <Footer />
+
+                </>
+
+            )}
 
         </>
 
-      )}
-
-    </>
-
-  );
+    );
 
 } 

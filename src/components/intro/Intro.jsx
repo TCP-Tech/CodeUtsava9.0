@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import Hero from "../hero/Hero.jsx";
+import './intro.css'; // Import the new CSS for the button
 
 export default function FixedScrollSplit({ onCurtainProgress }) {
 
@@ -16,7 +17,7 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
         };
-        
+
         handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
@@ -25,20 +26,20 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
     // Button click handler: bring curtains in to close, then open to reveal hero
     const handleEnterClick = () => {
         if (isAnimating || curtainLocked.current) return;
-        
+
         setIsAnimating(true);
         setShowButton(false);
-        
+
         // Phase 1: Curtains come in and close (-1 to 0)
-        const closeDuration = 1000; 
+        const closeDuration = 1000;
         const closeStartTime = Date.now();
-        
+
         const animateClose = () => {
             const elapsed = Date.now() - closeStartTime;
             const progress = Math.min(elapsed / closeDuration, 1);
-            
+
             setCurtain(-1 + progress); // -1 to 0 (no curtains to closed)
-            
+
             if (progress < 1) {
                 requestAnimationFrame(animateClose);
             } else {
@@ -46,17 +47,17 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                 setTimeout(() => {
                     const openDuration = 2000;
                     const openStartTime = Date.now();
-                    
+
                     const animateOpen = () => {
                         const elapsed = Date.now() - openStartTime;
                         const progress = Math.min(elapsed / openDuration, 1);
-                        
+
                         setCurtain(progress); // 0 to 1 (closed to open)
-                        
+
                         if (onCurtainProgress) {
                             onCurtainProgress(progress);
                         }
-                        
+
                         if (progress < 1) {
                             requestAnimationFrame(animateOpen);
                         } else {
@@ -64,12 +65,12 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                             setIsAnimating(false);
                         }
                     };
-                    
+
                     requestAnimationFrame(animateOpen);
                 }, 200);
             }
         };
-        
+
         requestAnimationFrame(animateClose);
     };
 
@@ -79,26 +80,26 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
     // -1: No curtains (hidden off-screen)
     // 0: Curtains closed (at center, covering screen)
     // 1: Curtains open (off-screen on opposite sides)
-    
+
     const swayAmplitude = isMobile ? 24 : 48;
     const swayFrequency = 3;
-    
+
     // Calculate positions based on curtain state
     let leftPos, rightPos;
-    
+
     if (curtain < 0) {
         // State -1 to 0: Curtains coming in from off-screen to center
         const progress = curtain + 1; // 0 to 1
-        leftPos = -100 + (progress * 270); 
-        rightPos = 100 - (progress * 270);  
+        leftPos = -100 + (progress * 270);
+        rightPos = 100 - (progress * 270);
     } else {
         // State 0 to 1: Curtains opening from center to off-screen
         leftPos = -(curtain * 100); // 0vw to -100vw
-        rightPos = curtain * 100;    // 0vw to 100vw
+        rightPos = curtain * 100;   // 0vw to 100vw
     }
-    
+
     const sway = Math.sin(Math.abs(curtain) * Math.PI * swayFrequency) * swayAmplitude * (curtain >= 0 ? (1 - curtain) : (curtain + 1));
-    
+
     // Responsive border width and radius
     const borderWidth = isMobile ? "4px" : "8px";
     const borderRadius = isMobile ? "40px" : "80px";
@@ -164,78 +165,21 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                 {showButton && (
                     <div className="flex flex-col items-center space-y-4 md:space-y-8 z-50">
                         {/* Title */}
-                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-rye text-white text-center tracking-wide text-stroke-strong px-4">
+                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-rye text-white text-center tracking-wide text-stroke-strong px-4 whitespace-nowrap">
                             CODEUTSAVA 9.0
                         </h1>
-                        
-                        {/* Enhanced Carnival Enter Button */}
-                        <button
+
+                        {/* Old Website Enter Button */}
+                        <div
                             onClick={handleEnterClick}
-                            disabled={isAnimating}
-                            className="relative group px-8 py-4 md:px-12 md:py-6 text-white font-rye text-lg md:text-2xl font-bold rounded-2xl 
-                                     transform transition-all duration-500 ease-out
-                                     hover:scale-110 hover:rotate-1 active:scale-95
-                                     disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:rotate-0
-                                     overflow-hidden border-2 md:border-4 border-yellow-400"
-                            style={{
-                                background: `linear-gradient(135deg, 
-                                    #ff6b35 0%, #ff8c42 15%, #ff6b35 30%, 
-                                    #e74c3c 45%, #d63031 60%, #ff6b35 75%, 
-                                    #ff8c42 90%, #ff6b35 100%)`,
-                                backgroundSize: '300% 300%',
-                                animation: isAnimating ? 'carnivalShimmer 2s ease-in-out infinite' : 'carnivalShimmer 4s ease-in-out infinite',
-                                boxShadow: `
-                                    0 0 30px rgba(255, 107, 53, 0.6),
-                                    0 0 60px rgba(255, 140, 66, 0.4),
-                                    inset 0 2px 0 rgba(255, 255, 255, 0.3),
-                                    inset 0 -2px 0 rgba(0, 0, 0, 0.3)
-                                `,
-                                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)',
-                            }}
+                            className={`intro-button ${isAnimating ? 'pointer-events-none opacity-50' : ''}`}
                         >
-                            {/* Ticket perforations effect */}
-                            <div className="absolute top-0 left-0 w-full h-2 bg-repeat-x opacity-30"
-                                 style={{
-                                     backgroundImage: `radial-gradient(circle, transparent 2px, rgba(255,255,255,0.3) 2px)`,
-                                     backgroundSize: '8px 8px'
-                                 }} />
-                            <div className="absolute bottom-0 left-0 w-full h-2 bg-repeat-x opacity-30"
-                                 style={{
-                                     backgroundImage: `radial-gradient(circle, transparent 2px, rgba(255,255,255,0.3) 2px)`,
-                                     backgroundSize: '8px 8px'
-                                 }} />
-                            
-                            {/* Sparkle effects */}
-                            <div className="absolute inset-0 opacity-20">
-                                <div className="absolute top-2 left-4 w-2 h-2 bg-yellow-300 rounded-full animate-pulse" />
-                                <div className="absolute top-6 right-6 w-1 h-1 bg-white rounded-full animate-ping" />
-                                <div className="absolute bottom-3 left-8 w-1.5 h-1.5 bg-yellow-200 rounded-full animate-pulse" 
-                                     style={{ animationDelay: '1s' }} />
-                                <div className="absolute bottom-4 right-4 w-1 h-1 bg-orange-200 rounded-full animate-ping" 
-                                     style={{ animationDelay: '0.5s' }} />
+                            <div className="border">
+                                <div className="left-plane"></div>
+                                <div className="right-plane"></div>
                             </div>
-                            
-                            {/* Button text with carnival styling */}
-                            <span className="relative z-10 flex items-center justify-center space-x-2">
-                                {isAnimating ? (
-                                    <>
-                                        <span className="animate-spin">🎪</span>
-                                        <span>ENTERING...</span>
-                                        <span className="animate-bounce">🎭</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span className="animate-pulse">🎪</span>
-                                        <span>ENTER</span>
-                                        <span className="animate-bounce">🎭</span>
-                                    </>
-                                )}
-                            </span>
-                            
-                            {/* Hover glow effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 
-                                          group-hover:opacity-20 group-hover:animate-sweep transition-opacity duration-300" />
-                        </button>
+                            <div className="text">Enter</div>
+                        </div>
                     </div>
                 )}
 
