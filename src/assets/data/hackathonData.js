@@ -1,7 +1,7 @@
 const hackathonData = [
   {
     id: '#1',
-    title: "Registration Starts!",
+    title: "Registration Opens!",
     date: "15ᵗʰ September, 11:00 AM",
     description:
       "Registrations begin for CodeUtsava 9.0 ,the flagship event of The Turing Club of Programmers",
@@ -28,12 +28,12 @@ const hackathonData = [
     id: '#5',
     title: "Problem Statements Released.",
     date: "2nd November, 11:00 AM",
-    description: "Problems Statements for CodeUtsava 7.0 are released.",
+    description: "Problems Statements for CodeUtsava 9.0 are released.",
   },
   {
     id: '#6',
     title: "Hackathon Begins!",
-    date: "6-7 November, 8:00 AM",
+    date: "6ᵗʰ Nov, 8:00 AM",
     description: "Commencement of Codeutsava 9.0!",
   },
 ];
