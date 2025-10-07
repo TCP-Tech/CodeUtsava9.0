@@ -22,7 +22,7 @@ import GRandAN from "../components/graphs&Analytics/GRandAN.jsx";
 
 import Guide from "../components/guidelines/Guide.jsx";
 
-// import FAQ from "./FAQ.jsx";
+import FAQ from "../components/faq/FAQ.jsx";
 
 import Cursor from "../components/cursor/Cursor.jsx";
 
@@ -211,7 +211,7 @@ export default function Home({ skipIntro = false }) {
 
                     <GRandAN />
 
-                    {/* <FAQ /> */}
+                    <FAQ />
 
                     <Footer />
 
