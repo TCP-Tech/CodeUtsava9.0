@@ -161,7 +161,7 @@ export default function Navbar() {
                 <NavItem href="/faq" delay={0.6}>FAQ</NavItem>
                 <NavItem href="/contact-us" delay={0.9}>CONTACT US</NavItem>
                 <NavItem href="/events" delay={1.2}>EVENTS</NavItem>
-                <NavItem disabled delay={1.5}>TEAM</NavItem>
+                <NavItem href="/teams" delay={1.5}>TEAM</NavItem>
               </div>
             )}
 
@@ -203,7 +203,7 @@ export default function Navbar() {
                     <MobileNavLink href="/faq">FAQ</MobileNavLink>
                     <MobileNavLink href="/contact-us">CONTACT US</MobileNavLink>
                     <MobileNavLink href="/events">EVENTS</MobileNavLink>
-                    <MobileNavLink disabled>TEAM</MobileNavLink>
+                    <MobileNavLink href="/teams">TEAM</MobileNavLink>
                   </>
                 ) : (
                   <>

@@ -7,6 +7,7 @@ import Home from "./pages/Home.jsx";
 import FAQ from "./pages/FAQ.jsx";
 import ContactUs from "./pages/ContactUs.jsx";
 import EventsPage from "./pages/Events.jsx";
+import Teams from "./pages/Teams.jsx";
 
 
 import ClickSoundProvider from "./utils/ClickSoundProvider.jsx";
@@ -41,6 +42,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/events" element={<EventsPage />} />
+                <Route path="/teams" element={<Teams />} />
                 {/* keep any other routes you need */}
                 <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/faq" element={<FAQ />} />
