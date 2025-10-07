@@ -86,7 +86,7 @@
 
 /* ===== Highlight styles (color + bold only, no yellow) ===== */
 .hl-codeutsava {
-    color: #ff0099;
+    color: #ffae00;
     /* neon magenta */
     font-weight: 700;
 }
@@ -98,7 +98,7 @@
 }
 
 .hl-amount {
-    color: #00ff85;
+    color: #f7251a;
     /* mint neon */
     font-weight: 700;
 }
@@ -132,7 +132,7 @@
     width: 10px;
     height: 10px;
     border-radius: 9999px;
-    background: #1e90ff;
+    background: #ffcd18;
     /* blue bullet dot */
     outline: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: none;

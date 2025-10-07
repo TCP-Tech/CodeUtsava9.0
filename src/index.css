@@ -456,3 +456,15 @@ canvas.sparkle-layer__canvas {
     }
 }
 
+.swal-button-orange {
+  background-color: #f97316 !important; /* Tailwind orange-500 */
+  color: white !important;
+  font-weight: bold;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+}
+
+.swal-button-orange:hover {
+  background-color: #ea580c !important; /* Tailwind orange-600 */
+}
+
