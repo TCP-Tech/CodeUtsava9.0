@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
-import Navbar from "../components/navbar/navbar.jsx";
+import Navbar from "../components/navbar/Navbar.jsx";
 import Footer from "../components/footer/Footer.jsx";
 import Fireworks from "../components/overlays/Fireworks.jsx";
 import SparkleLayer from "../components/overlays/SparkleLayer.jsx";
