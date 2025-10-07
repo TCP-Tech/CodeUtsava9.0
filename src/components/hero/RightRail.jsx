@@ -10,7 +10,7 @@ export default function RightRail() {
         // </div>
         <div class="scroll-down-section">
             <a href="#about">
-                <span>Scroll Down</span>
+                <span className="hover:text-amber-300">Scroll Down</span>
             </a>
                 <svg
                     fill="var(--color-accent-2)"

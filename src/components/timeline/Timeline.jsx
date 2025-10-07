@@ -39,14 +39,12 @@ const Timeline = () => {
   const cartRef = useRef(null);
   const lineRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
 
-  // Detect screen size (mobile/tablet/desktop)
+  // Detect screen size (mobile + tablet up to 1170px vs desktop)
   useEffect(() => {
     const checkBreakpoints = () => {
       const w = window.innerWidth;
-      setIsMobile(w < 768);
-      setIsTablet(w >= 768 && w < 1024);
+      setIsMobile(w <= 1170);
     };
 
     checkBreakpoints();
@@ -71,8 +69,8 @@ const Timeline = () => {
       const vh = window.innerHeight;
       const scrollY = window.scrollY;
 
-      // TOP_OFFSET responsive: smaller on mobile/tablet
-      const TOP_OFFSET = isMobile ? 100 : isTablet ? 120 : 150;
+      // TOP_OFFSET responsive: mobile/tablet vs desktop
+      const TOP_OFFSET = isMobile ? 100 : 150;
 
       const start = railTop - vh + TOP_OFFSET;
       const end = railTop + railHeight - vh + TOP_OFFSET;
@@ -82,7 +80,7 @@ const Timeline = () => {
       const clamped = Math.max(0, Math.min(1, raw));
 
       // transform only Y (X handled by CSS classes)
-      cartRef.current.style.transform = `translate(-50%, ${clamped * maxY}px)`;
+      cartRef.current.style.transform = `translateY(${clamped * maxY}px)`;
     };
 
     const io = new IntersectionObserver(
@@ -114,26 +112,22 @@ const Timeline = () => {
       window.removeEventListener("resize", handleScroll);
       if (img) img.removeEventListener("load", handleScroll);
     };
-  }, [isMobile, isTablet]); // re-run when breakpoints change
+  }, [isMobile]);
 
-  // Calculate responsive positions (use state booleans instead of window checks)
+  // Calculate responsive positions
   const getTopOffset = () => {
-    if (isMobile) return 100;
-    if (isTablet) return 120;
-    return 150;
+    return isMobile ? 100 : 150;
   };
 
   const getCartPositionClass = () => {
-    // mobile: pinned left, tablet: slightly left, desktop: centered
-    if (isMobile) return "left-[52px] -translate-x-0"; // we already offset translateX in transform: translate(-50%, ...)
-    if (isTablet) return "left-[calc(50%_-_28px)] md:-translate-x-1/2"; // slight offset so not exactly center
-    return "left-1/2 md:-translate-x-1/2";
+    // mobile & tablet: centered on rail at left, desktop: centered on page
+    if (isMobile) return "left-[37px] -translate-x-1/2"; // centered on 20px rail with slight right adjustment
+    return "left-1/2 -translate-x-1/2";
   };
 
   const getRailPositionClass = () => {
     if (isMobile) return "left-6";
-    if (isTablet) return "left-[48%] md:-translate-x-1/2";
-    return "left-1/2 md:-translate-x-1/2";
+    return "left-1/2 -translate-x-1/2";
   };
 
   return (
@@ -146,13 +140,7 @@ const Timeline = () => {
       <BackgroundMedia imageSrc={bg_image} videoSrc={bg_video} darken={0.5} />
 
       <h2
-        className="
-          text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl 
-          text-center font-rye tracking-wide sm:tracking-wider md:tracking-widest
-          pt-6 sm:pt-8 md:pt-10 pb-4 sm:pb-6 md:pb-8 
-          px-4
-        "
-        style={{ color: "white" }}
+       className="text-3xl text-center sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-12"
       >
         TIMELINE
       </h2>
@@ -207,8 +195,8 @@ const Timeline = () => {
         `}
         style={{
           top: getTopOffset(),
-          // keep transform X consistent: we'll let CSS handle X; Y transform set in scroll handler
-          transform: "translate(-50%, 0px)",
+          // Y transform set in scroll handler
+          transform: "translateY(0px)",
         }}
       >
         <img
@@ -330,9 +318,9 @@ const Timeline = () => {
         })}
       </VerticalTimeline>
 
-      {/* Add custom styles for very small screens */}
+      {/* Add custom styles for mobile/tablet */}
       <style jsx>{`
-        @media (max-width: 767px) {
+        @media (max-width: 1170px) {
           .vertical-timeline::before {
             left: 24px !important;
           }
@@ -346,18 +334,6 @@ const Timeline = () => {
             margin-left: 60px !important;
             margin-top: -10px !important;
             position: relative !important;
-          }
-        }
-
-        @media (max-width: 1080px) {
-          .vertical-timeline::before {
-            left: 20px !important;
-          }
-          .vertical-timeline-element-content {
-            margin-left: 50px !important;
-          }
-          .vertical-timeline-element-date {
-            margin-left: 50px !important;
           }
         }
       `}</style>

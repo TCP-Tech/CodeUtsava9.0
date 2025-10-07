@@ -456,3 +456,40 @@ canvas.sparkle-layer__canvas {
     }
 }
 
+.swal-button-orange {
+  background-color: #f97316 !important; /* Tailwind orange-500 */
+  color: white !important;
+  font-weight: bold;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+}
+
+.swal-button-orange:hover {
+  background-color: #ea580c !important; /* Tailwind orange-600 */
+}
+
+/* Line clamp utilities for text truncation */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+

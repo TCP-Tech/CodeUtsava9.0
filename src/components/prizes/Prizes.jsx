@@ -46,7 +46,7 @@ export default function PrizesSection() {
                   backgroundSize: "100% 100%",
                   paddingLeft: "clamp(10px, 25%, 70px)",
                   paddingRight: "clamp(10px, 50%, 50px)",
-                  paddingTop: "clamp(12px, 10%, 80px)",
+                  paddingTop: "clamp(14px, 10%, 80px)",
                   paddingBottom: "clamp(20px, 5%, 80px)",
                 }}
               >
@@ -81,7 +81,7 @@ export default function PrizesSection() {
                         w-full text-left font-rye text-cyan-900 leading-relaxed
                         space-y-2 list-disc marker:text-black break-words
                       "
-                      style={{ fontSize: "clamp(6px, 1.8vw, 14px)" }}
+                      style={{ fontSize: "clamp(8px, 1.8vw, 14px)" }}
                     >
                       {item.cashPrize.map((cash, i) => (
                         <li key={i}>{cash}</li>
@@ -96,7 +96,7 @@ export default function PrizesSection() {
                         w-full text-left font-rye text-cyan-900 leading-relaxed
                         space-y-2 list-disc marker:text-black mt-2 break-words
                       "
-                      style={{ fontSize: "clamp(6px, 1.8vw, 14px)" }}
+                      style={{ fontSize: "clamp(8px, 1.8vw, 14px)" }}
                     >
                       {item.prizeInfo.map((info, i) => (
                         <li key={i}>{info}</li>
