@@ -131,7 +131,7 @@ const Footer = () => {
                         Speakers
                     </Link>
                     <button
-                        onClick={() => smoothScrollTo("#faq")}
+                        onClick={() => smoothScrollTo("#faqs")}
                         className="hover:text-blue-300 transition hover:drop-shadow-[0_0_6px_#60a5fa] text-left"
                     >
                         FAQ

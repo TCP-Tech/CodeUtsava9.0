@@ -1,8 +1,9 @@
 import React from "react";
 
 export default function SocialRail() {
+    // MODIFIED: Removed the className from the <ul> element
     return (
-        <ul className="codeutsava__hero-social-rail">
+        <ul>
             <li>
                 <a
                     target="_blank"
