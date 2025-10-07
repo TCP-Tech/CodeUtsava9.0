@@ -57,8 +57,8 @@ export default function AnalyticsPage() {
         >
             {/* Header */}
             <div className="text-center mb-10">
-                <h1 className="text-4xl md:text-5xl font-extrabold text-orange-400 tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)]">
-                    🎪 Graphs & Analytics 🎟
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye  text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)]">
+                     Graphs & Analytics 
                 </h1>
                 <p className="text-stone-400 mt-2">A glance at our journey over the years</p>
             </div>

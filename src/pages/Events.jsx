@@ -30,6 +30,7 @@ export default function EventsPage() {
 
             {/* Foreground content */}
             <main className="relative z-20 pt-32">
+                <Navbar/>
                 <Events />
             </main>
         </>

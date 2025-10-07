@@ -132,18 +132,18 @@ const Spons = () => {
     return (
         <section
             ref={containerRef}
-            className="relative h-screen overflow-hidden bg-transparent"
+            className="relative h-screen overflow-hidden bg-transparent max-lg:-top-70 max-lg:-mb-120 max-sm:-top-80 max-sm:-mb-160"
             style={{ zIndex: 5 }}
         >
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-8 sm:mb-12 md:mb-16 lg:mb-25 text-center px-4 rye-regular">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-12">
                     Our Sponsors
                 </h1>
 
                 {/* Infinite scrolling track */}
                 <div
                     ref={trackRef}
-                    className="relative w-full h-48 sm:h-64 md:h-80 overflow-visible"
+                    className="relative w-full h-48 sm:h-64 md:h-80 text-black overflow-visible"
                 >
                     {duplicatedSponsors.map((sponsor, idx) => (
                         <div
