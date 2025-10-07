@@ -10,24 +10,43 @@ import BackgroundMedia from "../background/Background.jsx";
 import bg_image from "../../assets/images/bg-part2.jpg";
 
 export default function Hero({ animationsStarted = false }) {
-    // Unified fade + slide down: start above (negative y) and move into place
+    // This variant is for the main text content
     const fadeFromAbove = (delay = 0) => ({
         hidden: { opacity: 0, y: -50 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay } },
     });
 
+    // MODIFIED: Changed hidden 'y' to create a slide-down effect
+    const socialRailAnimate = (delay = 0) => ({
+        hidden: { opacity: 0, y: "-75%" }, // Starts higher up
+        visible: { opacity: 1, y: "-50%", transition: { duration: 0.8, delay } }, // Slides down to center
+    });
+
+    // MODIFIED: Changed hidden 'y' to create a slide-down effect
+    const rightRailAnimate = (delay = 0) => ({
+        hidden: { opacity: 0, y: "-75%" }, // Starts higher up
+        visible: {
+            opacity: 1,
+            y: ["-50%", "-53%", "-50%"], // Slides down to center, then floats
+            transition: {
+                delay,
+                duration: 3,
+                ease: "easeInOut",
+                repeat: Infinity,
+            },
+        },
+    });
+
     return (
         <div className={`${animationsStarted ? "relative" : "fixed inset-0 -z-10"}`}>
-            {/* Background */}
             <BackgroundMedia imageSrc={bg_image} darken={0.5} className="bg-right" />
 
             {animationsStarted && (
                 <header
-                    className="relative overflow-hidden h-screen select-none hero-animations-active"
+                    className="relative overflow-hidden h-screen select-none"
                     aria-label="Hero"
                 >
                     <div className="relative z-10 pointer-events-auto h-full flex flex-col">
-                        {/* Navbar */}
                         <motion.div
                             variants={fadeFromAbove(0)}
                             initial="hidden"
@@ -36,7 +55,6 @@ export default function Hero({ animationsStarted = false }) {
                             <Navbar />
                         </motion.div>
 
-                        {/* Hero Text */}
                         <div className="flex-1 max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center">
                             <motion.h2
                                 variants={fadeFromAbove(0.3)}
@@ -77,7 +95,6 @@ export default function Hero({ animationsStarted = false }) {
                             </motion.p>
                         </div>
 
-                        {/* Bottom CTAs */}
                         <motion.div
                             variants={fadeFromAbove(1.5)}
                             initial="hidden"
@@ -88,7 +105,8 @@ export default function Hero({ animationsStarted = false }) {
 
                         {/* Rails */}
                         <motion.div
-                            variants={fadeFromAbove(1.8)}
+                            className="codeutsava__hero-social-rail"
+                            variants={socialRailAnimate(1.8)}
                             initial="hidden"
                             animate="visible"
                         >
@@ -96,7 +114,8 @@ export default function Hero({ animationsStarted = false }) {
                         </motion.div>
 
                         <motion.div
-                            variants={fadeFromAbove(2.0)}
+                            className="scroll-down-section"
+                            variants={rightRailAnimate(2.0)}
                             initial="hidden"
                             animate="visible"
                         >

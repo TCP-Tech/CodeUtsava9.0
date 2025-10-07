@@ -117,12 +117,11 @@ img {
 /* ============================= */
 /* 7. Hero / Entrance Animations */
 /* ============================= */
-/* Use this class on your hero wrapper when animations begin */
+/* These rules are no longer used by the rails, but kept for other potential elements */
 .hero-animations-active {
     animation: heroFadeIn 1.5s ease-out forwards;
 }
 
-/* MODIFIED: Removed rails from this rule to give them a custom animation */
 .hero-animations-active h1,
 .hero-animations-active h2,
 .hero-animations-active p,
@@ -130,35 +129,12 @@ img {
 .hero-animations-active .bottom-ctas {
     opacity: 0;
     transform: translateY(-30px);
-    /* start *above* and slide down */
     animation: heroTextSlideIn 1s ease-out forwards;
 }
-
-/* NEW: Animation rule for the vertically centered rails */
-.hero-animations-active .codeutsava__hero-social-rail,
-.hero-animations-active .scroll-down-section {
-    opacity: 0;
-    /* Start centered and then shifted up */
-    transform: translateY(calc(-50% - 30px));
-    animation: railSlideIn 1s ease-out forwards;
-}
-
-/* NEW: Added continuous float animation to the right rail after entry */
-.hero-animations-active .scroll-down-section {
-    animation:
-        railSlideIn 1s ease-out forwards,
-        float 4s ease-in-out 2.5s infinite;
-    /* Chain animations */
-}
-
 
 /* Stagger delays */
 .hero-animations-active nav {
     animation-delay: 0.1s;
-}
-
-.hero-animations-active .codeutsava__hero-social-rail {
-    animation-delay: 0.15s;
 }
 
 .hero-animations-active h2 {
@@ -179,11 +155,6 @@ img {
 
 .hero-animations-active .bottom-ctas {
     animation-delay: 1.0s;
-}
-
-.hero-animations-active .scroll-down-section {
-    animation-delay: 1.2s, 2.4s;
-    /* Delay for entry, then delay for float */
 }
 
 @keyframes heroFadeIn {
@@ -207,19 +178,6 @@ img {
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-/* NEW: Custom entry animation for rails to respect vertical centering */
-@keyframes railSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(calc(-50% - 30px));
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(-50%);
     }
 }
 
@@ -284,16 +242,15 @@ img {
 .scroll-down-section {
     color: #fff;
     position: absolute;
-    /* MODIFIED: Changed from 'bottom' to 'top' and added transform */
+    /* MODIFIED: Changed positioning to top: 50% */
     top: 50%;
-    transform: translateY(-50%);
     right: 3rem;
     transform-origin: right top 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* MODIFIED: Animation is now handled by .hero-animations-active */
+    /* MODIFIED: Animation is now handled by Framer Motion */
 }
 
 .scroll-down-section a {
@@ -313,29 +270,12 @@ img {
     transition: 0.2s ease-in-out;
 }
 
-/* NEW: Replaced 'bounce' with a smoother 'float' animation */
-@keyframes float {
-    0% {
-        transform: translateY(-50%);
-    }
-
-    50% {
-        transform: translateY(calc(-50% - 10px));
-    }
-
-    100% {
-        transform: translateY(-50%);
-    }
-}
-
-
 /* Social rail */
 .codeutsava__hero-social-rail {
     position: absolute;
     left: 48px;
-    /* MODIFIED: Changed from 'bottom' to 'top' and added transform */
+    /* MODIFIED: Changed positioning to top: 50% */
     top: 50%;
-    transform: translateY(-50%);
     margin: 0;
     padding: 0;
     list-style: none;
