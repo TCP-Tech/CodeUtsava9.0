@@ -1,19 +1,9 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { createPortal } from "react-dom";
-import carnivalIntro from "../../assets/audio/carnival_hero.mp3";
+import { useAudio } from "../../utils/AudioProvider.jsx";
 
 const AudioPlayer = () => {
-  const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-
-  const togglePlay = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
+  const { isPlaying, togglePlay } = useAudio();
 
   const playerUI = (
     <div
@@ -38,40 +28,38 @@ const AudioPlayer = () => {
                        focus:outline-none focus:ring-2 focus:ring-[#f3a83a]/50"
             style={{ willChange: "transform" }}
           >
-          {isPlaying ? (
-            // Pause icon
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="w-10 h-10 text-[#eadccb] drop-shadow-2xl filter drop-shadow-[0_0_8px_rgba(243,168,58,0.5)]"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={3}
-                d="M9 7v10M15 7v10"
-              />
-            </svg>
-          ) : (
-            // Play icon
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-9 h-9 text-[#eadccb] drop-shadow-2xl filter drop-shadow-[0_0_8px_rgba(243,168,58,0.5)] ml-1"
-            >
-              <polygon points="5,3 19,12 5,21" />
-            </svg>
-          )}
-        </button>
+            {isPlaying ? (
+              // Pause icon
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-10 h-10 text-[#eadccb] drop-shadow-2xl filter drop-shadow-[0_0_8px_rgba(243,168,58,0.5)]"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3}
+                  d="M9 7v10M15 7v10"
+                />
+              </svg>
+            ) : (
+              // Play icon
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-9 h-9 text-[#eadccb] drop-shadow-2xl filter drop-shadow-[0_0_8px_rgba(243,168,58,0.5)] ml-1"
+              >
+                <polygon points="5,3 19,12 5,21" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
     </div>
-
-    <audio ref={audioRef} src={carnivalIntro} loop autoPlay />
-  </div>
-);
+  );
 
   return createPortal(playerUI, document.body);
 };

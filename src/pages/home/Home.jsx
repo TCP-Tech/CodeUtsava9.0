@@ -10,7 +10,6 @@ import Sponsors from "../components/Sponsors/Spons.jsx";
 import Timeline from "../components/timeline/Timeline.jsx";
 import GRandAN from "../components/graphs&Analytics/GRandAN.jsx";
 import Guide from "../components/guidelines/Guide.jsx";
-import Player from "../components/audioPlayer/player.jsx";
 import FAQ from "./FAQ.jsx";
 import Cursor from "../components/cursor/Cursor.jsx";
 import BackgroundMedia from "../components/background/Background.jsx";
@@ -105,9 +104,6 @@ export default function Home({ skipIntro = false }) {
                     <GRandAN />
                     <FAQ />
                     <Footer />
-                    <div className="fixed bottom-4 right-4">
-                        <Player />
-                    </div>
                 </>
             )}
         </>

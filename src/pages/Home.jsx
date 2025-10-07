@@ -22,8 +22,6 @@ import GRandAN from "../components/graphs&Analytics/GRandAN.jsx";
 
 import Guide from "../components/guidelines/Guide.jsx";
 
-import Player from "../components/audioPlayer/player.jsx";
-
 // import FAQ from "./FAQ.jsx";
 
 import Cursor from "../components/cursor/Cursor.jsx";
@@ -167,6 +165,13 @@ export default function Home({ skipIntro = false }) {
         <Fireworks />
 
       </div>
+            {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: !revealed ? 1010 : 15 }}>
+                <SparkleLayer />
+                <Fireworks autoLaunch={!revealed} />
+                {/* to enable autolaunch for fireworks uncomment the below*/}
+                {/* <Fireworks autoLaunch/>   */}
+            </div>
 
 
 
@@ -209,12 +214,6 @@ export default function Home({ skipIntro = false }) {
           {/* <FAQ /> */}
 
           <Footer />
-
-          <div className="fixed bottom-4 right-4">
-
-            <Player />
-
-          </div>
 
         </>
 
