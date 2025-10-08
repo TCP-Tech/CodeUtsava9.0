@@ -48,12 +48,7 @@ const Prizes = [
     prizeInfo: [],
   },
   {
-    title: "🥇 Best Hack built on Ethereum 🥇",
-    cashPrize: ["The winning team will be awarded Rs. 12,000 in cash."],
-    prizeInfo: [],
-  },
-  {
-    title: "👻 For All Participants! 👻",
+    title: "🎊For All Participants!🎊",
     cashPrize: [],
     prizeInfo: [
       "30 days FREE trial of O' Reilly learning platform.",

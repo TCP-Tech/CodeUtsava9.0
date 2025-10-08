@@ -67,8 +67,8 @@ export default function Participation() {
             ref={ref}
             className="relative z-0 px-6 py-40 pt-28 md:pt-32"  /** navbar safety padding **/
         >
-            <h2 className="text-center font-['Rye'] text-5xl md:text-6xl text-white drop-shadow-lg mb-12">
-                Last Year Participation 🎟️
+            <h2 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] mb-12">
+                Last Year Participation 
             </h2>
 
             <div className="flex flex-wrap justify-center gap-8">
