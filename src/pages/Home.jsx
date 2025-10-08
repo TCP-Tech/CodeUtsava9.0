@@ -1,33 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import Intro from "../components/intro/Intro.jsx";
-
 import Hero from "../components/hero/Hero.jsx";
-
 import Footer from "../components/footer/Footer.jsx";
-
 import Fireworks from "../components/overlays/Fireworks.jsx";
-
 import SparkleLayer from "../components/overlays/SparkleLayer.jsx";
-
 import Lastyear from "../components/LYparticipation/Lastyear.jsx";
-
 import AboutUS from "../components/aboutUS/AboutUS.jsx";
-
 import Sponsors from "../components/Sponsors/Spons.jsx";
-
 import Timeline from "../components/timeline/Timeline.jsx";
-
 import GRandAN from "../components/graphs&Analytics/GRandAN.jsx";
-
 import Guide from "../components/guidelines/Guide.jsx";
 
 import FAQ from "../components/faq/FAQ.jsx";
 
 import Cursor from "../components/cursor/Cursor.jsx";
-
 import BackgroundMedia from "../components/background/Background.jsx";
-
 import bg_image from "../assets/images/bg-part2.jpg";
 import Navbar from "../components/navbar/Navbar.jsx";
 import PrizesSection from "../components/prizes/Prizes.jsx";
@@ -175,6 +163,16 @@ export default function Home({ skipIntro = false }) {
             </div>
 
 
+      {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
+      <div
+        className="fixed inset-0 pointer-events-none overflow-hidden"
+        style={{ zIndex: !revealed ? 1010 : 15 }}
+      >
+        <SparkleLayer />
+        <Fireworks autoLaunch={!revealed} />
+        {/* to enable autolaunch for fireworks uncomment the below */}
+        {/* <Fireworks autoLaunch/> */}
+      </div>
 
             {/* Always render Hero */}
 
