@@ -118,12 +118,12 @@ const Footer = () => {
                     >
                         Home
                     </button>
-                    <Link
+                    {/* <Link
                         to="/events"
                         className="hover:text-pink-400 transition hover:drop-shadow-[0_0_6px_#ec4899]"
                     >
                         Events
-                    </Link>
+                    </Link> */}
                     <Link
                         to="/speakers"
                         className="hover:text-green-400 transition hover:drop-shadow-[0_0_6px_#22c55e]"

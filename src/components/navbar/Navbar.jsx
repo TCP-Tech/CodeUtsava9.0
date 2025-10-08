@@ -158,8 +158,8 @@ export default function Navbar() {
                                 <NavItem href="#about" delay={0.3}>ABOUT US</NavItem>
                                 <NavItem href="#faqs" delay={0.6}>FAQ</NavItem>
                                 <NavItem href="/contact-us" delay={0.9}>CONTACT US</NavItem>
-                                <NavItem href="/events" delay={1.2}>EVENTS</NavItem>
-                                <NavItem href="/teams" delay={1.5}>TEAM</NavItem>
+                                {/* <NavItem href="/events" delay={1.2}>EVENTS</NavItem>
+                                <NavItem href="/teams" delay={1.5}>TEAM</NavItem> */}
                             </div>
                         )}
 
@@ -200,8 +200,8 @@ export default function Navbar() {
                                         <MobileNavLink href="#about">ABOUT US</MobileNavLink>
                                         <MobileNavLink href="/faq">FAQ</MobileNavLink>
                                         <MobileNavLink href="/contact-us">CONTACT US</MobileNavLink>
-                                        <MobileNavLink href="/events">EVENTS</MobileNavLink>
-                                        <MobileNavLink href="/teams">TEAM</MobileNavLink>
+                                        {/* <MobileNavLink href="/events">EVENTS</MobileNavLink>
+                                        <MobileNavLink href="/teams">TEAM</MobileNavLink> */}
                                     </>
                                 ) : (
                                     <>
