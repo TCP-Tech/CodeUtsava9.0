@@ -90,12 +90,12 @@ export default function Hero({ animationsStarted = false }) {
                                 className="mt-4 text-xs sm:text-sm md:text-base lg:text-lg tracking-wide text-white text-outline-strong px-2"
                             >
                                 CENTRAL INDIA’S{" "}
-                                <span className="text-accent-2">LARGEST CODING EVENT.</span> JOIN US ON{" "}
-                                <b className="text-primary">10—11 OCTOBER.</b>
+                                <b className="text-primary"><span className="text-accent-2">LARGEST CODING EVENT.</span> </b> JOIN US ON{" "}
+                                <b className="text-primary">6<sup>th</sup> - 7<sup>th</sup> NOVEMBER.</b>
                             </motion.p>
                         </div>
 
-                        <motion.div
+                        <motion.div 
                             variants={fadeFromAbove(1.5)}
                             initial="hidden"
                             animate="visible"

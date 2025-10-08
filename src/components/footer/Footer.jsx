@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import NIT from "../../assets/images/NIT.webp";
-import tcpName from "../../assets/images/tcpName.png";
-import codeutsava from "../../assets/images/codeutsava.png";
+import tcpName from "../../assets/1.png";
+import codeutsava from "../../assets/2.png";
 
 // Smooth scroll helper, uses Lenis if available
 function smoothScrollTo(targetSelector) {
