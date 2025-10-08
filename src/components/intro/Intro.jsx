@@ -42,10 +42,11 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
 
             if (progress < 1) {
                 requestAnimationFrame(animateClose);
-            } else {
+            } 
+            else {
                 // Phase 2: Curtains open (0 to 1)
                 setTimeout(() => {
-                    const openDuration = 2000;
+                    const openDuration = 1000;
                     const openStartTime = Date.now();
 
                     const animateOpen = () => {
@@ -67,7 +68,7 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                     };
 
                     requestAnimationFrame(animateOpen);
-                }, 200);
+                }, 1500);
             }
         };
 
@@ -90,12 +91,12 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
     if (curtain < 0) {
         // State -1 to 0: Curtains coming in from off-screen to center
         const progress = curtain + 1; // 0 to 1
-        leftPos = -100 + (progress * 270);
-        rightPos = 100 - (progress * 270);
+        leftPos = -50 + (progress * 50);
+        rightPos = 50 - (progress * 50);
     } else {
         // State 0 to 1: Curtains opening from center to off-screen
-        leftPos = -(curtain * 100); // 0vw to -100vw
-        rightPos = curtain * 100;   // 0vw to 100vw
+        leftPos = -(curtain * 100); // 0vw to 50vw
+        rightPos = curtain * 100;   // 0vw to 50vw
     }
 
     const sway = Math.sin(Math.abs(curtain) * Math.PI * swayFrequency) * swayAmplitude * (curtain >= 0 ? (1 - curtain) : (curtain + 1));
