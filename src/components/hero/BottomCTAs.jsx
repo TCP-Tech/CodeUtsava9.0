@@ -50,7 +50,7 @@ export default function BottomCTAs() {
                 className="apply-button pointer-events-auto"
                 data-hackathon-slug="codeutsava-9"
                 data-button-theme="light"
-                style="height: 44px; width: 312px"
+                style={{ height: "44px", width: "312px" }}
             ></div>
 
 
