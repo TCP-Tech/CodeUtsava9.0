@@ -41,7 +41,7 @@ export default function BottomCTAs() {
 
             <div
                 className="apply-button pointer-events-auto"
-                data-hackathon-slug="codeutsava-9"
+                data-hackathon-slug="codeutsava-9.devfolio.co"
                 data-button-theme="light"
             ></div>
 
