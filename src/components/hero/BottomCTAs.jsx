@@ -5,17 +5,23 @@ export default function BottomCTAs() {
     const [hidden, setHidden] = useState(false);
 
     // load Devfolio SDK script when component mounts
-    useEffect(() => {
-        const script = document.createElement("script");
-        script.src = "https://apply.devfolio.co/v2/sdk.js";
-        script.async = true;
-        script.defer = true;
-        document.body.appendChild(script);
+   useEffect(() => {
+  const loadDevfolio = () => {
+    if (window.Devfolio) return;
+    const script = document.createElement("script");
+    script.src = "https://apply.devfolio.co/v2/sdk.js";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      // Devfolio SDK initializes automatically once loaded
+      console.log("Devfolio SDK loaded");
+    };
+    document.body.appendChild(script);
+  };
 
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
+  loadDevfolio();
+}, []);
+
 
     useEffect(() => {
         const footer = document.querySelector("footer");
