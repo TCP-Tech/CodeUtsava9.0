@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import Hero from "../hero/Hero.jsx";
 import './intro.css'; // Import the new CSS for the button
-
+import cuimg from '../../assets/images/codeutsavaIntroTitle.png';
 export default function FixedScrollSplit({ onCurtainProgress }) {
 
     // Curtain state: -1 = no curtains (hidden), 0 = closed (covering screen), 1 = open (off-screen)
@@ -166,9 +166,7 @@ export default function FixedScrollSplit({ onCurtainProgress }) {
                 {showButton && (
                     <div className="flex flex-col items-center space-y-4 md:space-y-8 z-50">
                         {/* Title */}
-                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-rye text-white text-center tracking-wide text-stroke-strong px-4 whitespace-nowrap">
-                            CODEUTSAVA 9.0
-                        </h1>
+                        <img src={cuimg} alt="CodeUtsava" className="w-64 md:w-96" />
 
                         {/* Old Website Enter Button */}
                         <div
