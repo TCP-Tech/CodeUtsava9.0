@@ -36,18 +36,18 @@ const Footer = () => {
             {/* Top Section */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 {/* Logos */}
-                <div className="flex flex-col sm:flex-row items-center gap-6">
+                <div className="flex sm:flex-row md:flex-row items-center gap-6">
                     <img
                         src={codeutsava}
                         alt="CodeUtsava Logo"
                         loading="lazy"
-                        className="h-14 sm:h-16 object-contain drop-shadow-lg"
+                        className="h-24 sm:h-24 md:h-30 w:auto object-contain drop-shadow-lg"
                     />
                     <img
                         src={tcpName}
                         alt="TCP Logo"
                         loading="lazy"
-                        className="h-10 sm:h-12 object-contain drop-shadow-lg"
+                        className="h-18 sm:h-18 md:h-24 w:auto object-contain drop-shadow-lg"
                     />
                 </div>
 

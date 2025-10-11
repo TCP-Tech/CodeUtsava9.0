@@ -55,12 +55,12 @@ export default function Hero({ animationsStarted = false }) {
                             <Navbar />
                         </motion.div>
 
-                        <div className="flex-1 max-w-6xl mx-auto px-4 flex flex-col items-center justify-center text-center">
+                        <div className="flex-1 max-w-6xl mx-auto my-1.5 px-4 flex flex-col items-center justify-center text-center">
                             <motion.h2
                                 variants={fadeFromAbove(0.3)}
                                 initial="hidden"
                                 animate="visible"
-                                className="text-xl sm:text-4xl md:text-6xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary"
+                                className="text-2xl sm:text-4xl md:text-6xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary"
                             >
                                 WELCOME TO
                             </motion.h2>
@@ -90,7 +90,7 @@ export default function Hero({ animationsStarted = false }) {
                                 className="mt-4 text-xs sm:text-sm md:text-base lg:text-lg tracking-wide text-white text-outline-strong px-2"
                             >
                                 CENTRAL INDIA’S{" "}
-                                <b className="text-primary"><span className="text-accent-2">LARGEST CODING EVENT.</span> </b> JOIN US ON{" "}
+                                <b className="text-primary"><span className="text-accent-2">LARGEST CODING EVENT.</span> </b> JOIN US ON {" "}
                                 <b className="text-primary">6<sup>th</sup> - 7<sup>th</sup> NOVEMBER.</b>
                             </motion.p>
                         </div>
