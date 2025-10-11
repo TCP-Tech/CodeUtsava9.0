@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import NIT from "../../assets/images/NIT.webp";
-import tcpName from "../../assets/images/tcpName.png";
-import codeutsava from "../../assets/images/codeutsava.png";
+import tcpName from "../../assets/1.png";
+import codeutsava from "../../assets/2.png";
 
 // Smooth scroll helper, uses Lenis if available
 function smoothScrollTo(targetSelector) {
@@ -118,12 +118,12 @@ const Footer = () => {
                     >
                         Home
                     </button>
-                    <Link
+                    {/* <Link
                         to="/events"
                         className="hover:text-pink-400 transition hover:drop-shadow-[0_0_6px_#ec4899]"
                     >
                         Events
-                    </Link>
+                    </Link> */}
                     <Link
                         to="/speakers"
                         className="hover:text-green-400 transition hover:drop-shadow-[0_0_6px_#22c55e]"
@@ -131,7 +131,7 @@ const Footer = () => {
                         Speakers
                     </Link>
                     <button
-                        onClick={() => smoothScrollTo("#faq")}
+                        onClick={() => smoothScrollTo("#faqs")}
                         className="hover:text-blue-300 transition hover:drop-shadow-[0_0_6px_#60a5fa] text-left"
                     >
                         FAQ

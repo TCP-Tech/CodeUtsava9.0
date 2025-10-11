@@ -5,17 +5,23 @@ export default function BottomCTAs() {
     const [hidden, setHidden] = useState(false);
 
     // load Devfolio SDK script when component mounts
-    useEffect(() => {
-        const script = document.createElement("script");
-        script.src = "https://apply.devfolio.co/v2/sdk.js";
-        script.async = true;
-        script.defer = true;
-        document.body.appendChild(script);
+   useEffect(() => {
+  const loadDevfolio = () => {
+    if (window.Devfolio) return;
+    const script = document.createElement("script");
+    script.src = "https://apply.devfolio.co/v2/sdk.js";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      // Devfolio SDK initializes automatically once loaded
+      console.log("Devfolio SDK loaded");
+    };
+    document.body.appendChild(script);
+  };
 
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
+  loadDevfolio();
+}, []);
+
 
     useEffect(() => {
         const footer = document.querySelector("footer");
@@ -32,17 +38,19 @@ export default function BottomCTAs() {
 
     return (
         <div
-            className={`pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 z-50 
+            className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-50 
         flex flex-col md:flex-row gap-4 px-4 
         transition-opacity duration-2000 
+        z-999
         ${hidden ? "opacity-0" : "opacity-100"}`}
         >
             {/* Devfolio integrate button */}
 
             <div
-                className="apply-button pointer-events-auto"
+                className="apply-button"
                 data-hackathon-slug="codeutsava-9"
                 data-button-theme="light"
+                style={{ height: "44px", width: "312px" }}
             ></div>
 
 
@@ -51,7 +59,7 @@ export default function BottomCTAs() {
                 target="_blank"
                 rel="noopener noreferrer"
                 download="RegistrationInstructions.pdf"
-                className="pointer-events-auto bg-black/60 border text-[color:var(--color-muted)] px-5 py-3 rounded-xl shadow-lg transition hover:scale-[1.02]"
+                className="bg-black/60 border text-[color:var(--color-muted)] px-5 py-3 rounded-xl shadow-lg transition hover:scale-[1.02]"
                 style={{
                     borderColor:
                         "color-mix(in srgb, var(--color-primary) 60%, white 40%)",

@@ -50,7 +50,7 @@ export default function App() {
                     {/* keep any other routes you need */}
                     <Route path="/contact-us" element={<ContactUs />} />
                     <Route path="/faq" element={<FAQ />} />
-                    <Route path="/events" element={<EventsPage/>} />
+                    <Route path="/events" element={<EventsPage />} />
                 </Routes>
             </AudioProvider>
         </BrowserRouter>

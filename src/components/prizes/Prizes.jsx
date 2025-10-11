@@ -107,7 +107,7 @@ export default function PrizesSection() {
                   <h2
                     className="
                       font-['Protest_Revolution']
-                      mb-1 text-cyan-700 text-center drop-shadow-[0_0px_0px_rgba(0,0,0,0)]
+                      mb-1 text-cyan-700 text-center drop-shadow-[0_2px_0px_rgba(0,0,0,0.8)]
                       font-rye break-words
                       text-base
                       md:text-xs
