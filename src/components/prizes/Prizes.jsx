@@ -52,7 +52,7 @@ export default function PrizesSection() {
      
 
       <div className="w-full max-w-6xl mx-auto">
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white text-center mb-10 font-rye">
+        <h2 className=" text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-12">
           PRIZES
         </h2>
 
