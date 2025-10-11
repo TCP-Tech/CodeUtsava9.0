@@ -130,7 +130,7 @@ export default function Navbar() {
                                     }
                                 }}
                             >
-                                <img src={logo} alt="Logo" className="h-12 w-auto" />
+                                <img src={logo} alt="Logo" className="h-22 w-auto" />
                             </a>
                             {isLargeScreen && (
                                 <ImageButton

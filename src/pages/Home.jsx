@@ -106,10 +106,10 @@ export default function Home({ skipIntro = false }) {
           <div className="flex flex-col space-y-28 md:space-y-36 sm:space-y-40">
             <Lastyear />
             <AboutUS />
-            <div className="flex flex-col gap-18">
+            <div className="flex flex-col gap-20 pt-6 pb-12">
             <Sponsors />
             </div>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-20 pt-6 pb-12">
             <Timeline />
             </div>
             <Guide />
