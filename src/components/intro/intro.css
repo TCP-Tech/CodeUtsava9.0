@@ -138,16 +138,23 @@
 }
 
 /* Button styles from old website */
+
 .intro-button {
     font-family: "joystix monospace", sans-serif;
     position: relative;
     cursor: pointer;
     display: inline-block;
     text-transform: uppercase;
-    width: 500px;
+    width: 16rem;
     margin-top: 30px;
     user-select: none;
     transition: opacity 0.3s ease;
+}
+
+@media screen and (min-width: 768px) {
+    .intro-button {
+        width: 24rem;
+    }
 }
 
 .intro-button.disabled {
@@ -207,7 +214,7 @@
     transition: 0.15s ease-out;
     color: white;
     font-weight: 500;
-    font-size: 1.2rem;
+    font-size: 1rem;
     letter-spacing: 2px;
 }
 
