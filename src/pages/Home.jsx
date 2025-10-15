@@ -76,12 +76,13 @@ export default function Home({ skipIntro = false }) {
         <Fireworks autoLaunch={!revealed} />
       </div>
 
+      {/* Always render Cursor for custom cursor effect */}
+      <Cursor />
+
       {!revealed ? (
         <Intro onCurtainProgress={handleCurtainProgress} />
       ) : (
         <>
-          <Cursor />
-
           {/* 🌟 Add vertical spacing between all sections */}
           <div className="flex flex-col space-y-28 md:space-y-36 sm:space-y-40">
             <Lastyear />

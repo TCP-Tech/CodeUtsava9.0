@@ -136,7 +136,9 @@ export default function Hero({ animationsStarted = false }) {
                             initial="hidden"
                             animate="visible"
                         >
+                            <div className="relative" style={{top:"-70px"}}>
                             <BottomCTAs />
+                            </div>
                         </motion.div>
 
                         {/* Rails */}

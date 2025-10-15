@@ -89,15 +89,13 @@ export default function Home({ skipIntro = false }) {
             {/* Always render Hero for background visibility */}
             <Hero animationsStarted={heroAnimationsStarted} />
 
+            {/* Always render Cursor for custom cursor effect */}
+            <Cursor />
+
             {!revealed ? (
-                <>
-                    <Intro onCurtainProgress={handleCurtainProgress} />
-                    {/* Load cursor and start hero animations when curtain is halfway open */}
-                    {heroAnimationsStarted && <Cursor />}
-                </>
+                <Intro onCurtainProgress={handleCurtainProgress} />
             ) : (
                 <>
-                    <Cursor />
                     <Lastyear />
                     <AboutUS />
                     <Sponsors />
