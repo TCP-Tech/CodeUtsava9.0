@@ -8,7 +8,7 @@ export default function AboutUS() {
     const isMd = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
 
     return (
-        <section id="about" className="relative overflow-hidden py-16 md:py-28">
+        <section id="about" className="relative overflow-hidden">
             {/* soft neon wash */}
             <div className="pointer-events-none absolute inset-0">
                 <div className="neon-radial absolute -top-40 left-1/2 -translate-x-1/2 -z-10" />
