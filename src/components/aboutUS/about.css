@@ -92,19 +92,19 @@
 }
 
 .hl-33l {
-    color: #1e90ff;
+    color: #ffae00;
     /* electric blue */
     font-weight: 700;
 }
 
 .hl-amount {
-    color: #f7251a;
+    color: #ffae00;
     /* mint neon */
     font-weight: 700;
 }
 
 .hl-event {
-    color: #1e90ff;
+    color: #ffae00;
     /* reuse the blue accent */
     font-weight: 700;
 }

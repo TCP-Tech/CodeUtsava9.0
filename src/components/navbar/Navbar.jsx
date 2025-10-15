@@ -31,8 +31,8 @@ function smoothScrollTo(targetSelector) {
 }
 
 const NavItem = ({ children, href, onClick, className = "", disabled = false, delay = 0 }) => {
-    const baseClasses = `px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition cursor-pointer ${
-        disabled ? "opacity-50 cursor-not-allowed" : "hover:text-[#E4D0B6]"
+    const baseClasses = `px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition-all duration-300 cursor-pointer ${
+        disabled ? "opacity-50 cursor-not-allowed" : "hover:text-[#E4D0B6] hover:scale-105"
     }`;
 
     const currentPath = window.location.pathname;
@@ -51,9 +51,30 @@ const NavItem = ({ children, href, onClick, className = "", disabled = false, de
         <motion.a
             href={href}
             onClick={handleClick}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay }}
+            initial={{ 
+                opacity: 0, 
+                y: -20,
+                scale: 1,
+                filter: "blur(2px)"
+            }}
+            animate={{ 
+                opacity: 1, 
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)"
+            }}
+            transition={{ 
+                duration: 0.8, 
+                delay,
+                ease: [0.25, 0.30, 0.35, 0.40],
+                type: "spring",
+                stiffness: 60,
+                damping: 15
+            }}
+            whileHover={{
+                y: -2,
+                transition: { duration: 0.2, ease: "easeOut" }
+            }}
             className={baseClasses}
             aria-disabled={disabled}
         >
@@ -174,20 +195,28 @@ export default function Navbar() {
 
                         {/* Desktop nav links */}
                         {isHomePage && isLargeScreen && (
-                            <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-6 text-white font-bold">
-                                <NavItem href="#hero" delay={0.0}>
+                            <motion.div 
+                                className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-6 text-white font-bold"
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ 
+                                    duration: 0.6, 
+                                    ease: [0.25, 0.30, 0.35, 0.40] 
+                                }}
+                            >
+                                <NavItem href="#hero" delay={0.2}>
                                     HOME
                                 </NavItem>
-                                <NavItem href="#about" delay={0.3}>
+                                <NavItem href="#about" delay={0.4}>
                                     ABOUT US
                                 </NavItem>
                                 <NavItem href="#faqs" delay={0.6}>
                                     FAQ
                                 </NavItem>
-                                <NavItem href="/contact-us" delay={0.9}>
+                                <NavItem href="/contact-us" delay={0.8}>
                                     CONTACT US
                                 </NavItem>
-                            </div>
+                            </motion.div>
                         )}
                     </div>
 
@@ -195,21 +224,69 @@ export default function Navbar() {
                     <AnimatePresence>
                         {!isLargeScreen && mobileOpen && (
                             <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
+                                initial={{ 
+                                    height: 0, 
+                                    opacity: 0,
+                                    y: -10
+                                }}
+                                animate={{ 
+                                    height: "auto", 
+                                    opacity: 1,
+                                    y: 0
+                                }}
+                                exit={{ 
+                                    height: 0, 
+                                    opacity: 0,
+                                    y: -10
+                                }}
+                                transition={{ 
+                                    duration: 0.4,
+                                    ease: [0.25, 0.30, 0.35, 0.40],
+                                    type: "spring",
+                                    stiffness: 100,
+                                    damping: 15
+                                }}
                                 className="flex flex-col items-center gap-4 overflow-hidden md:hidden text-white font-semibold mt-2"
                             >
                                 {isHomePage ? (
                                     <>
-                                        <MobileNavLink href="#hero">HOME</MobileNavLink>
-                                        <MobileNavLink href="#about">ABOUT US</MobileNavLink>
-                                        <MobileNavLink href="#faqs">FAQ</MobileNavLink>
-                                        <MobileNavLink href="/contact-us">CONTACT US</MobileNavLink>
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0, duration: 0.3 }}
+                                        >
+                                            <MobileNavLink href="#hero">HOME</MobileNavLink>
+                                        </motion.div>
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0, duration: 0.3 }}
+                                        >
+                                            <MobileNavLink href="#about">ABOUT US</MobileNavLink>
+                                        </motion.div>
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0, duration: 0.3 }}
+                                        >
+                                            <MobileNavLink href="#faqs">FAQ</MobileNavLink>
+                                        </motion.div>
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0, duration: 0.3 }}
+                                        >
+                                            <MobileNavLink href="/contact-us">CONTACT US</MobileNavLink>
+                                        </motion.div>
                                     </>
                                 ) : (
-                                    <MobileNavLink href="/">GO BACK TO HOME</MobileNavLink>
+                                    <motion.div
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.1, duration: 0.3 }}
+                                    >
+                                        <MobileNavLink href="/">GO BACK TO HOME</MobileNavLink>
+                                    </motion.div>
                                 )}
                             </motion.div>
                         )}
