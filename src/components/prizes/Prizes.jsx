@@ -52,21 +52,28 @@ export default function PrizesSection() {
      
 
       <div className="w-full max-w-6xl mx-auto">
-        <h2 className=" text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-12">
+        <h2 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-12 text-stroke-strong">
           PRIZES
         </h2>
 
-        {/* Outer glass container */}
-        <div className="backdrop-blur-lg bg-white/10 border-4 border-blue-900 rounded-3xl p-4 sm:p-6 md:p-12 lg:p-16 shadow-lg">
+        {/* Outer glass container with carnival theme */}
+        <div className="relative">
+          {/* Gradient border frame */}
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#802b1d] via-[#2c2b4c] to-[#f3a83a] p-[2px]">
+            <div className="h-full w-full rounded-[inherit] bg-black/40 backdrop-blur-lg"></div>
+          </div>
           
-          {/* Subheading */}
-          <h3
-            className="font-['Protest_Revolution'] text-center text-white mb-12 font-rye"
-            style={{ fontSize: "clamp(20px, 4vw, 36px)" }}
-          >
-            WIN EXCITING PRIZES WORTH UPTO{" "}
-            <span className="text-[#eb920c]">36 LAKHS!</span> 🏆
-          </h3>
+          {/* Content container */}
+          <div className="relative backdrop-blur-lg bg-gradient-to-br from-black/60 via-black/40 to-black/60 border border-white/20 rounded-3xl p-4 sm:p-6 md:p-12 lg:p-16 shadow-[0_0_30px_rgba(0,0,0,0.6)]">
+          
+            {/* Subheading */}
+            <h3
+              className="font-rye text-center text-white mb-12 text-stroke-strong"
+              style={{ fontSize: "clamp(20px, 4vw, 36px)" }}
+            >
+              WIN EXCITING PRIZES WORTH UPTO{" "}
+              <span className="text-[#f3a83a] drop-shadow-[0_0_10px_rgba(243,168,58,0.8)]">36 LAKHS!</span> 🏆
+            </h3>
 
           {/* Cards grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 place-items-center">
@@ -106,9 +113,9 @@ export default function PrizesSection() {
                   {/* Title */}
                   <h2
                     className="
-                      font-['Protest_Revolution']
+                      font-rye
                       mb-1 text-cyan-700 text-center drop-shadow-[0_2px_0px_rgba(0,0,0,0.8)]
-                      font-rye break-words
+                      break-words
                       text-base
                       md:text-xs
                       sm:text-xs
@@ -153,6 +160,7 @@ export default function PrizesSection() {
             ))}
           </div>
 
+          </div>
         </div>
       </div>
     </div>

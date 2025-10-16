@@ -53,26 +53,22 @@ const NavItem = ({ children, href, onClick, className = "", disabled = false, de
             onClick={handleClick}
             initial={{ 
                 opacity: 0, 
-                y: -20,
-                scale: 1,
-                filter: "blur(2px)"
+                y: -30,
+                filter: "blur(4px)"
             }}
             animate={{ 
                 opacity: 1, 
                 y: 0,
-                scale: 1,
                 filter: "blur(0px)"
             }}
             transition={{ 
-                duration: 0.8, 
+                duration: 1.0, 
                 delay,
-                ease: [0.25, 0.30, 0.35, 0.40],
-                type: "spring",
-                stiffness: 60,
-                damping: 15
+                ease: [0.22, 1, 0.36, 1]
             }}
             whileHover={{
-                y: -2,
+                y: -3,
+                scale: 1.05,
                 transition: { duration: 0.2, ease: "easeOut" }
             }}
             className={baseClasses}
@@ -197,23 +193,23 @@ export default function Navbar() {
                         {isHomePage && isLargeScreen && (
                             <motion.div 
                                 className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-6 text-white font-bold"
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
                                 transition={{ 
                                     duration: 0.6, 
-                                    ease: [0.25, 0.30, 0.35, 0.40] 
+                                    ease: [0.22, 1, 0.36, 1] 
                                 }}
                             >
-                                <NavItem href="#hero" delay={0.2}>
+                                <NavItem href="#hero" delay={0.1}>
                                     HOME
                                 </NavItem>
-                                <NavItem href="#about" delay={0.4}>
+                                <NavItem href="#about" delay={0.2}>
                                     ABOUT US
                                 </NavItem>
-                                <NavItem href="#faqs" delay={0.6}>
+                                <NavItem href="#faqs" delay={0.3}>
                                     FAQ
                                 </NavItem>
-                                <NavItem href="/contact-us" delay={0.8}>
+                                <NavItem href="/contact-us" delay={0.4}>
                                     CONTACT US
                                 </NavItem>
                             </motion.div>
