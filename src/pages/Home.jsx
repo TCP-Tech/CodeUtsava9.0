@@ -22,48 +22,28 @@ export default function Home({ skipIntro = false }) {
   const [revealed, setRevealed] = useState(skipIntro);
   const [curtainProgress, setCurtainProgress] = useState(0);
   const [heroAnimationsStarted, setHeroAnimationsStarted] = useState(skipIntro);
-
-  const MAX = 100;
-  const progRef = useRef(0);
-  const touchStartYRef = useRef(0);
+  const [showHero, setShowHero] = useState(skipIntro); // New state for hero visibility
 
   // Handle curtain progress from Intro component
   const handleCurtainProgress = (progress) => {
     setCurtainProgress(progress);
-    // Start hero animations and reveal only when curtain is completely open
-    if (progress >= 0.9 && !heroAnimationsStarted) {
+    
+    // Start preloading hero when intro initializes
+    if (progress >= 0.1 && !heroAnimationsStarted) {
       setHeroAnimationsStarted(true);
-      setRevealed(true);
+    }
+    
+    // Show hero and start animations when curtain starts revealing
+    if (progress >= 1.0 && !showHero) {
+      setShowHero(true); // Make hero visible immediately
+      
+      // Delay removing intro until curtains finish opening
+      // 1.6s curtain animation + 200ms buffer = 1800ms
+      setTimeout(() => {
+        setRevealed(true);
+      }, 1800);
     }
   };
-
-  useEffect(() => {
-    if (revealed) return;
-
-    
-    const onTouchStart = (e) => {
-      const t = e.touches && e.touches[0];
-      touchStartYRef.current = t ? t.clientY : 0;
-    };
-
-    const onTouchMove = (e) => {
-      const t = e.touches && e.touches[0];
-      const y = t ? t.clientY : touchStartYRef.current;
-      const deltaY = touchStartYRef.current - y;
-      touchStartYRef.current = y;
-      const next = Math.min(Math.max(progRef.current + deltaY * 0.5, 0), MAX);
-      progRef.current = next;
-      if (next >= MAX) setRevealed(true);
-    };
-
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-
-    return () => {
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-    };
-  }, [revealed]);
 
   return (
     <>
@@ -74,6 +54,19 @@ export default function Home({ skipIntro = false }) {
         className="bg-right"
       />
 
+      {/* Always render and preload Hero (hidden behind intro until revealed) */}
+      <div style={{ 
+        opacity: showHero ? 1 : 0, 
+        transition: showHero ? 'opacity 0.3s ease-in' : 'none',
+        position: revealed ? 'static' : 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        zIndex: revealed ? 'auto' : -1
+      }}>
+        <Hero animationsStarted={showHero} />
+      </div>
+
       {/* Overlays for the whole page */}
       <div
         className="fixed inset-0 pointer-events-none overflow-hidden"
@@ -83,18 +76,13 @@ export default function Home({ skipIntro = false }) {
         <Fireworks autoLaunch={!revealed} />
       </div>
 
-      {/* Always render Hero */}
-      <Hero animationsStarted={heroAnimationsStarted} />
+      {/* Always render Cursor for custom cursor effect */}
+      <Cursor />
 
       {!revealed ? (
-        <>
-          <Intro onCurtainProgress={handleCurtainProgress} />
-          {heroAnimationsStarted && <Cursor />}
-        </>
+        <Intro onCurtainProgress={handleCurtainProgress} />
       ) : (
         <>
-          <Cursor />
-
           {/* 🌟 Add vertical spacing between all sections */}
           <div className="flex flex-col space-y-28 md:space-y-36 sm:space-y-40">
             <Lastyear />
