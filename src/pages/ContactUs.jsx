@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import emailjs from "@emailjs/browser";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -24,18 +25,81 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function ContactUs() {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    Swal.fire({
-      title: "Thank You!",
-      text: "Your message has been sent",
-      icon: "success",
-      customClass: {
-        title: "swal-title-custom",
-        popup: "swal-popup-custom",
-        confirmButton: "swal-button-orange",
-      },
+  const [formData, setFormData] = useState({
+    name: "",
+    contact: "",
+    email: "",
+    message: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // EmailJS configuration
+    const serviceId = "service_vd2r5gp";
+    const templateId = "template_ebprf0z"; 
+    const publicKey = "muZX9OwYinoY4h80T";
+
+    try {
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: formData.name,
+          mobile: formData.contact,
+          email: formData.email,
+          message: formData.message,
+          
+        },
+        publicKey
+      );
+
+      console.log("Email sent successfully:", result);
+
+      // Show success message
+      Swal.fire({
+        title: "Thank You!",
+        text: "Your message has been sent successfully!",
+        icon: "success",
+        customClass: {
+          title: "swal-title-custom",
+          popup: "swal-popup-custom",
+          confirmButton: "swal-button-orange",
+        },
+      });
+
+      // Reset form
+      setFormData({
+        name: "",
+        contact: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Email sending failed:", error);
+      Swal.fire({
+        title: "Oops!",
+        text: "Failed to send message. Please try again.",
+        icon: "error",
+        customClass: {
+          title: "swal-title-custom",
+          popup: "swal-popup-custom",
+          confirmButton: "swal-button-orange",
+        },
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -83,6 +147,9 @@ export default function ContactUs() {
                   </label>
                   <input
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     placeholder="Enter your name"
                     required
                     className="w-full font-rye text-md p-3 rounded-md bg-white placeholder-yellow-600"
@@ -96,6 +163,9 @@ export default function ContactUs() {
                   </label>
                   <input
                     type="tel"
+                    name="contact"
+                    value={formData.contact}
+                    onChange={handleChange}
                     placeholder="Enter your Phone Number"
                     required
 className="w-full font-rye text-md p-3 rounded-md bg-white placeholder-yellow-600"
@@ -108,6 +178,9 @@ className="w-full font-rye text-md p-3 rounded-md bg-white placeholder-yellow-60
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="Enter your Email"
                     required
 className="w-full font-rye text-md p-3 rounded-md bg-white placeholder-yellow-600"
@@ -119,6 +192,9 @@ className="w-full font-rye text-md p-3 rounded-md bg-white placeholder-yellow-60
                     Message
                   </label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     placeholder="Enter your message"
                     required
 className="w-full font-rye text-md p-3 rounded-md bg-white placeholder-yellow-600"
@@ -127,10 +203,11 @@ className="w-full font-rye text-md p-3 rounded-md bg-white placeholder-yellow-60
 
                 <button
                   type="submit"
-                  className="w-full mt-4 text-white font-rye font-semibold text-xl py-3 rounded-lg"
+                  disabled={isLoading}
+                  className="w-full mt-4 text-white font-rye font-semibold text-xl py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ backgroundColor: "#D89533" }}
                 >
-                  SUBMIT
+                  {isLoading ? "SENDING..." : "SUBMIT"}
                 </button>
               </form>
             </div>

@@ -137,14 +137,12 @@ const Footer = () => {
                         FAQ
                     </button>
                     {/* updated Contact Us */}
-                    <a
-                        href={CONTACT_FORM_URL}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="hover:text-pink-300 transition hover:drop-shadow-[0_0_6px_#f472b6]"
+                    <Link
+                        to="/contact-us"
+                        className="hover:text-green-400 transition hover:drop-shadow-[0_0_6px_#22c55e]"
                     >
                         Contact Us
-                    </a>
+                    </Link>
                 </div>
             </div>
 
