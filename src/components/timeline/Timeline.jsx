@@ -229,7 +229,7 @@ const Timeline = () => {
                 boxShadow: "none",
                 padding: 0,
                 border: "none",
-                marginTop: isMobile ? 40 : 70,
+                marginTop: isMobile ? 0 : 70,
               }}
               contentClassName="!p-0 !bg-transparent !shadow-none"
               date={element.date}
@@ -321,19 +321,42 @@ const Timeline = () => {
       {/* Add custom styles for mobile/tablet */}
       <style jsx>{`
         @media (max-width: 1170px) {
+        .vertical-timeline {
+            margin: -2rem auto !important;
+            padding: 0 !important;
+        }
           .vertical-timeline::before {
             left: 24px !important;
           }
           .vertical-timeline-element-content {
             margin-left: 60px !important;
+            margin-top: 10px !important;
+            margin-bottom: 10px !important;
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
           }
           .vertical-timeline-element-date {
             left: auto !important;
             right: auto !important;
             text-align: left !important;
             margin-left: 60px !important;
-            margin-top: -10px !important;
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
             position: relative !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .vertical-timeline-element-content {
+            margin-left: 40px !important;
+            margin-top: 6px !important;
+            margin-bottom: 6px !important;
+            padding-top: 8px !important;
+            padding-bottom: 8px !important;
+          }
+          .vertical-timeline-element-date {
+            margin-left: 40px !important;
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
           }
         }
       `}</style>

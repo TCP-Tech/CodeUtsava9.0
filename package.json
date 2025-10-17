@@ -39,7 +39,7 @@
     "react-scroll": "^1.9.3",
     "react-vertical-timeline-component": "^3.5.3",
     "recharts": "^3.2.1",
-    "sweetalert2": "^11.23.0",
+    "sweetalert2": "^11.26.0",
     "swiper": "^11.2.10",
     "three": "^0.180.0"
   },
