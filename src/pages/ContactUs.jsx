@@ -45,9 +45,9 @@ export default function ContactUs() {
     setIsLoading(true);
 
     // EmailJS configuration
-    const serviceId = "service_y25o3tu"; // You'll need to replace this
-    const templateId = "TCP-Tech_Response"; // You'll need to replace this
-    const publicKey = "kE8yPfFnAkGs6aRJk"; // You'll need to replace this
+    const serviceId = "service_vd2r5gp";
+    const templateId = "template_ebprf0z"; 
+    const publicKey = "muZX9OwYinoY4h80T";
 
     try {
       // Send email using EmailJS
@@ -55,10 +55,11 @@ export default function ContactUs() {
         serviceId,
         templateId,
         {
-          person_name: formData.name,
-          mobile_no: formData.contact,
-          email_id: formData.email,
+          name: formData.name,
+          mobile: formData.contact,
+          email: formData.email,
           message: formData.message,
+          
         },
         publicKey
       );
