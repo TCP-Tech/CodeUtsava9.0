@@ -136,7 +136,7 @@ export default function Hero({ animationsStarted = false }) {
                             initial="hidden"
                             animate="visible"
                         >
-                            <div className="relative" style={{top:"-70px"}}>
+                            <div className="relative" style={{top:"-10.25rem"}}>
                             <BottomCTAs />
                             </div>
                         </motion.div>
