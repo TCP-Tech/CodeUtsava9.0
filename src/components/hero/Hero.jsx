@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-
+import codeutsava from "../../assets/images/codeutsava logo.svg";
 import Navbar from "../navbar/Navbar.jsx";
 import BottomCTAs from "./BottomCTAs.jsx";
 import SocialRail from "./SocialRail.jsx";
@@ -100,14 +100,13 @@ export default function Hero({ animationsStarted = false }) {
                             >
                                 WELCOME TO
                             </motion.h2>
-
                             <motion.h1
                                 variants={revealAnimation(0.3)}
                                 initial="hidden"
                                 animate="visible"
-                                className="mt-4 font-rye text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight text-[#F3A83A] text-stroke-strong break-words px-2"
+                                className="-mt-7 w-200 h-40"
                             >
-                                CODEUTSAVA 9.0
+                                <img src={codeutsava} alt="CodeUtsava Logo" className=""/>
                             </motion.h1>
 
                             <motion.p
