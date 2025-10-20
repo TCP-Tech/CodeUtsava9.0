@@ -104,7 +104,7 @@ export default function Hero({ animationsStarted = false }) {
                                 variants={revealAnimation(0.3)}
                                 initial="hidden"
                                 animate="visible"
-                                className="-mt-7 w-200 h-40"
+                                className="-mt-4 sm:w-40 h-15 md:w-200 lg:w-200 lg:h-40 lg:-mt-7"
                             >
                                 <img src={codeutsava} alt="CodeUtsava Logo" className=""/>
                             </motion.h1>
