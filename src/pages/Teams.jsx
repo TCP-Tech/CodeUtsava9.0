@@ -10,10 +10,6 @@ import BackgroundMedia from "../components/background/Background.jsx";
 import bg_image from "../assets/images/bg-part2.jpg";
 
 import {
-  overallCoordinators,
-  headCoordinators,
-  managers,
-  executives,
   departmentColors,
   hierarchyLevels
 } from "../assets/data/teamsData.js";
@@ -116,6 +112,7 @@ const TeamCard = ({ member, index, level }) => {
             alt={member.name}
             className="w-full h-full object-cover"
             variants={imageVariants}
+            style={{ objectPosition: 'center 30%' }}
           />
           
           {/* Photo overlay with carnival pattern */}
@@ -266,14 +263,20 @@ const TeamSection = ({ title, members, level, description }) => {
 
         {/* Team grid */}
         <div className={`grid ${getGridCols()} gap-8 justify-items-center`}>
-          {members.map((member, index) => (
-            <TeamCard
-              key={member.id}
-              member={member}
-              index={index}
-              level={level}
-            />
-          ))}
+          {members && members.length > 0 ? (
+            members.map((member, index) => (
+              <TeamCard
+                key={member.id}
+                member={member}
+                index={index}
+                level={level}
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-400 text-xl">No team members found in this category.</p>
+            </div>
+          )}
         </div>
       </div>
     </motion.section>
@@ -282,11 +285,91 @@ const TeamSection = ({ title, members, level, description }) => {
 
 export default function Teams() {
   const [isLoading, setIsLoading] = useState(true);
+  const [teamData, setTeamData] = useState({
+    overallCoordinators: [],
+    headCoordinators: [],
+    managers: [],
+    executives: []
+  });
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Simulate loading time for dramatic entrance
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
+    async function getTeamData() {
+      try {
+        const response = await fetch('https://codeutsava.nitrr.ac.in/server/team/2025/');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        console.log('API Response:', result); // Debug log
+        
+        if (result?.data && Array.isArray(result.data)) {
+          // Helper function to convert Google Drive link to thumbnail URL
+          const convertDriveUrl = (url) => {
+            try {
+              if (!url) return 'https://via.placeholder.com/300x400?text=No+Image';
+              
+              // Extract file ID from Google Drive URL
+              const match = url.match(/\/d\/([^\/]+)/);
+              if (match && match[1]) {
+                return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w700`;
+              }
+              return url;
+            } catch (err) {
+              console.error('Error converting drive URL:', err);
+              return 'https://via.placeholder.com/300x400?text=No+Image';
+            }
+          };
+
+          // Transform API data to match component structure
+          const transformedData = result.data.map(member => {
+            try {
+              return {
+                id: member.id || Math.random(),
+                name: member.name || 'Unknown',
+                role: member.domain || 'Team Member',
+                department: member.domain || 'General',
+                image: convertDriveUrl(member.drive_image_url || member.image),
+                bio: member.branch && member.year ? `${member.branch} - Year ${member.year}` : 'Team Member',
+                social: {
+                  linkedin: member.linkedin || '',
+                  github: '',
+                  instagram: member.instagram || ''
+                },
+                member_type: member.member_type // Keep for filtering
+              };
+            } catch (err) {
+              console.error('Error transforming member:', member, err);
+              return null;
+            }
+          }).filter(Boolean); // Remove any null entries
+
+          // Categorize by member_type
+          const categorized = {
+            overallCoordinators: transformedData.filter(m => m.member_type === 'OCO'),
+            headCoordinators: transformedData.filter(m => m.member_type === 'HCO'),
+            managers: transformedData.filter(m => m.member_type === 'MNG'),
+            executives: transformedData.filter(m => m.member_type === 'EXC')
+          };
+
+          console.log('Categorized Data:', categorized); // Debug log
+
+          setTeamData(categorized);
+        } else {
+          throw new Error('Invalid API response structure');
+        }
+      } catch (error) {
+        console.error("Error fetching team data:", error);
+        setError(`Failed to load team data: ${error.message}`);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    getTeamData();
   }, []);
 
   const pageVariants = {
@@ -350,6 +433,19 @@ export default function Teams() {
 
       {/* Navigation */}
       <Navbar />
+
+      {/* Error notification */}
+      {error && (
+        <motion.div
+          className="fixed top-24 right-4 bg-red-900/90 border-2 border-red-500 text-white px-6 py-4 rounded-lg backdrop-blur-sm z-50 max-w-sm shadow-xl"
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <p className="text-sm font-semibold">⚠️ {error}</p>
+          <p className="text-xs mt-1 opacity-80">Please try refreshing the page</p>
+        </motion.div>
+      )}
 
       {/* Main content */}
       <main className="relative z-10 pt-20">
@@ -434,28 +530,28 @@ export default function Teams() {
         {/* Team sections */}
         <TeamSection
           title="Ring Leaders"
-          members={overallCoordinators}
+          members={teamData.overallCoordinators}
           level={1}
           description="The masterminds orchestrating our grand carnival spectacle, ensuring every act performs in perfect harmony."
         />
 
         <TeamSection
           title="Circus Masters"
-          members={headCoordinators}
+          members={teamData.headCoordinators}
           level={2}
           description="Department heads who lead their specialized acts, bringing expertise and vision to every carnival ring."
         />
 
         <TeamSection
           title="Performance Directors"
-          members={managers}
+          members={teamData.managers}
           level={3}
           description="The skilled coordinators who ensure each carnival act is executed flawlessly, managing day-to-day magic."
         />
 
         <TeamSection
           title="Carnival Performers"
-          members={executives}
+          members={teamData.executives}
           level={4}
           description="Our talented team members who bring creativity, energy, and passion to make the carnival dreams a reality."
         />
