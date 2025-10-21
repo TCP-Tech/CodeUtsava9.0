@@ -296,7 +296,20 @@ export default function Teams() {
   useEffect(() => {
     async function getTeamData() {
       try {
-        const response = await fetch('https://codeutsava.nitrr.ac.in/server/team/2025/');
+        // Try direct fetch first, with fallback to CORS proxy if needed
+        let response;
+        try {
+          response = await fetch('https://codeutsava.nitrr.ac.in/server/team/2025/', {
+            mode: 'cors',
+            headers: {
+              'Accept': 'application/json',
+            }
+          });
+        } catch (corsError) {
+          console.warn('Direct fetch failed (likely CORS), trying proxy:', corsError);
+          // Fallback to CORS proxy
+          response = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://codeutsava.nitrr.ac.in/server/team/2025/'));
+        }
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
