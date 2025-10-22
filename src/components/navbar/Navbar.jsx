@@ -212,6 +212,9 @@ export default function Navbar() {
                                 <NavItem href="/contact-us" delay={0.4}>
                                     CONTACT US
                                 </NavItem>
+                                <NavItem href="/teams" delay={0.5}>
+                                    TEAM
+                                </NavItem>
                             </motion.div>
                         )}
                     </div>
@@ -273,6 +276,13 @@ export default function Navbar() {
                                             transition={{ delay: 0, duration: 0.3 }}
                                         >
                                             <MobileNavLink href="/contact-us">CONTACT US</MobileNavLink>
+                                        </motion.div>
+                                        <motion.div
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0, duration: 0.3 }}
+                                        >
+                                            <MobileNavLink href="/teams">TEAM</MobileNavLink>
                                         </motion.div>
                                     </>
                                 ) : (

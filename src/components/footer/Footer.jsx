@@ -125,6 +125,12 @@ const Footer = () => {
                         Events
                     </Link> */}
                     <Link
+                        to="/teams"
+                        className="hover:text-pink-400 transition hover:drop-shadow-[0_0_6px_#ec4899]"
+                    >
+                        TCP Team
+                    </Link>
+                    <Link
                         to="/speakers"
                         className="hover:text-green-400 transition hover:drop-shadow-[0_0_6px_#22c55e]"
                     >
@@ -151,7 +157,7 @@ const Footer = () => {
                 <div className="text-center md:text-left">
                     Architected with <span className="text-pink-400">❤️</span> by{" "}
                     <Link
-                        to="/team"
+                        to="/teams"
                         className="hover:text-green-400 hover:drop-shadow-[0_0_6px_#22c55e] transition"
                     >
                         TCP Team
