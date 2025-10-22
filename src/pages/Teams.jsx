@@ -23,6 +23,7 @@ import { departmentColors, hierarchyLevels } from "../assets/data/teamsData.js";
 // Team member card component with carnival styling
 const TeamCard = ({ member, index, level }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
     const nameContainerRef = useRef(null);
     const nameRef = useRef(null);
     const marqueeItemRef = useRef(null);
@@ -175,9 +176,11 @@ const TeamCard = ({ member, index, level }) => {
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
-            whileHover="hover"
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            tabIndex={0}
             viewport={{ once: true, amount: 0.3 }}
         >
             {/* (overlay will be inserted inside the rounded card container below so it inherits rounded corners) */}
@@ -357,7 +360,12 @@ const TeamCard = ({ member, index, level }) => {
                         src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover"
-                        variants={imageVariants}
+                        animate={{ y: [0, -6, 0] }}
+                        transition={{
+                            duration: 6,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                        }}
                         style={{ objectPosition: "center 30%" }}
                     />
 
@@ -382,7 +390,12 @@ const TeamCard = ({ member, index, level }) => {
                 </div>
 
                 {/* Content section */}
-                <div className="p-6 space-y-3">
+                <motion.div
+                    className="p-6 space-y-3"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
                     {/* Name with carnival typography - scrolling for long names */}
                     <div
                         ref={nameContainerRef}
@@ -471,7 +484,7 @@ const TeamCard = ({ member, index, level }) => {
                     </p>
 
                     {/* Enhanced Social Links with Reveal Animation */}
-                </div>
+                </motion.div>
 
                 {/* Carnival tent bottom decoration */}
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#802b1d] via-[#f3a83a] to-[#2c2b4c]" />
@@ -696,31 +709,67 @@ export default function Teams() {
                         })
                         .filter(Boolean); // Remove any null entries
 
+                    // Helper: sort so 'Tech' department members are prioritized
+                    const sortByDomainPriority = (arr) => {
+                        if (!Array.isArray(arr)) return arr || [];
+                        const sorted = arr.slice().sort((a, b) => {
+                            const da = (a.department || "").toLowerCase();
+                            const db = (b.department || "").toLowerCase();
+                            const pa = da.includes("tech") ? 0 : 1;
+                            const pb = db.includes("tech") ? 0 : 1;
+                            if (pa !== pb) return pa - pb; // tech-first-ish when department contains 'tech'
+                            // then by department name
+                            const depCmp = da.localeCompare(db);
+                            if (depCmp !== 0) return depCmp;
+                            // finally by name
+                            return (a.name || "").localeCompare(b.name || "");
+                        });
+                        // debug: show order of departments
+                        try {
+                            console.debug(
+                                "sortByDomainPriority result:",
+                                sorted.map((s) => ({
+                                    name: s.name,
+                                    department: s.department,
+                                }))
+                            );
+                        } catch (e) {}
+                        return sorted;
+                    };
+
                     // Categorize by member_type
                     const categorized = {
-                        overallCoordinators: addMockSocialLinks(
-                            transformedData.filter(
-                                (m) => m.member_type === "OCO"
-                            ),
-                            "OCO"
+                        overallCoordinators: sortByDomainPriority(
+                            addMockSocialLinks(
+                                transformedData.filter(
+                                    (m) => m.member_type === "OCO"
+                                ),
+                                "OCO"
+                            )
                         ),
-                        headCoordinators: addMockSocialLinks(
-                            transformedData.filter(
-                                (m) => m.member_type === "HCO"
-                            ),
-                            "HCO"
+                        headCoordinators: sortByDomainPriority(
+                            addMockSocialLinks(
+                                transformedData.filter(
+                                    (m) => m.member_type === "HCO"
+                                ),
+                                "HCO"
+                            )
                         ),
-                        managers: addMockSocialLinks(
-                            transformedData.filter(
-                                (m) => m.member_type === "MNG"
-                            ),
-                            "MNG"
+                        managers: sortByDomainPriority(
+                            addMockSocialLinks(
+                                transformedData.filter(
+                                    (m) => m.member_type === "MNG"
+                                ),
+                                "MNG"
+                            )
                         ),
-                        executives: addMockSocialLinks(
-                            transformedData.filter(
-                                (m) => m.member_type === "EXC"
-                            ),
-                            "EXC"
+                        executives: sortByDomainPriority(
+                            addMockSocialLinks(
+                                transformedData.filter(
+                                    (m) => m.member_type === "EXC"
+                                ),
+                                "EXC"
+                            )
                         ),
                     };
 
