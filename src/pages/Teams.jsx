@@ -152,7 +152,7 @@ const TeamCard = ({ member, index, level }) => {
     const getCardSize = () => {
         switch (level) {
             case 1:
-                return "w-80 h-96"; // Overall Coordinators - largest
+                return "w-80 h-88"; // Overall Coordinators - slightly reduced height
             case 2:
                 return "w-72 h-88"; // Head Coordinators
             case 3:
@@ -471,7 +471,7 @@ const TeamCard = ({ member, index, level }) => {
                         >
                             {member.role}
                         </p>
-                        {member.department && (
+                        {member.department && level !== 1 && (
                             <p className="text-xs text-gray-400 mt-1 font-bebas-neue tracking-wide">
                                 {member.department} Department
                             </p>
