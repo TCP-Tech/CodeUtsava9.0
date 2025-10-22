@@ -351,48 +351,41 @@ const TeamCard = ({ member, index, level }) => {
                             )}
                     </div>
                 </motion.div>
-                {/* Carnival stripes decoration */}
-                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#802b1d] via-[#f3a83a] to-[#2c2b4c]" />
+                {/* carnival stripe removed to allow image to sit flush */}
 
-                {/* Member photo */}
-                <div className="relative overflow-hidden h-48 bg-gradient-to-b from-gray-700 to-gray-800">
-                    <motion.img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover"
-                        animate={{ y: [0, -6, 0] }}
-                        transition={{
-                            duration: 6,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                        style={{ objectPosition: "center 30%" }}
-                    />
+                {/* Full-card background image (fills card) */}
+                <motion.img
+                    src={member.image}
+                    alt={member.name}
+                    className="absolute inset-0 w-full h-full object-cover z-0"
+                    style={{ objectPosition: "center 18%" }}
+                    animate={{ scale: [1, 1.02, 1] }}
+                    transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
+                />
 
-                    {/* Photo overlay with carnival pattern */}
-                    <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
-                        variants={overlayVariants}
-                        initial={{ opacity: 0.3 }}
-                    />
+                {/* Top fade between image and card content for smooth transition */}
+                <div className="absolute top-0 left-0 w-full h-36 bg-gradient-to-b from-black/50 to-transparent z-10 pointer-events-none" />
 
-                    {/* Hierarchy level indicator */}
-                    <div className="absolute top-3 right-3">
-                        <div className="flex space-x-1">
-                            {[...Array(5 - level)].map((_, i) => (
-                                <div
-                                    key={i}
-                                    className="w-2 h-2 rounded-full bg-gradient-to-r from-[#f3a83a] to-[#802b1d]"
-                                />
-                            ))}
-                        </div>
+                {/* Hierarchy level indicator (above image) */}
+                <div className="absolute top-3 right-3 z-20">
+                    <div className="flex space-x-1">
+                        {[...Array(5 - level)].map((_, i) => (
+                            <div
+                                key={i}
+                                className="w-2 h-2 rounded-full bg-gradient-to-r from-[#f3a83a] to-[#802b1d]"
+                            />
+                        ))}
                     </div>
                 </div>
 
-                {/* Content section */}
-                <motion.div
-                    className="p-6 space-y-3"
-                    initial={{ opacity: 0, y: 6 }}
+                {/* Content section (backdrop blurred so image shows through) */}
+                <motion.section
+                    className="absolute left-0 right-0 bottom-0 p-6 space-y-3 bg-black/60 backdrop-blur-sm z-10 rounded-b-2xl"
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                 >
@@ -484,7 +477,7 @@ const TeamCard = ({ member, index, level }) => {
                     </p>
 
                     {/* Enhanced Social Links with Reveal Animation */}
-                </motion.div>
+                </motion.section>
 
                 {/* Carnival tent bottom decoration */}
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#802b1d] via-[#f3a83a] to-[#2c2b4c]" />
