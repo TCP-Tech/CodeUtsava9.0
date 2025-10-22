@@ -696,31 +696,67 @@ export default function Teams() {
                         })
                         .filter(Boolean); // Remove any null entries
 
+                    // Helper: sort so 'Tech' department members are prioritized
+                    const sortByDomainPriority = (arr) => {
+                        if (!Array.isArray(arr)) return arr || [];
+                        const sorted = arr.slice().sort((a, b) => {
+                            const da = (a.department || "").toLowerCase();
+                            const db = (b.department || "").toLowerCase();
+                            const pa = da.includes("tech") ? 0 : 1;
+                            const pb = db.includes("tech") ? 0 : 1;
+                            if (pa !== pb) return pa - pb; // tech-first-ish when department contains 'tech'
+                            // then by department name
+                            const depCmp = da.localeCompare(db);
+                            if (depCmp !== 0) return depCmp;
+                            // finally by name
+                            return (a.name || "").localeCompare(b.name || "");
+                        });
+                        // debug: show order of departments
+                        try {
+                            console.debug(
+                                "sortByDomainPriority result:",
+                                sorted.map((s) => ({
+                                    name: s.name,
+                                    department: s.department,
+                                }))
+                            );
+                        } catch (e) {}
+                        return sorted;
+                    };
+
                     // Categorize by member_type
                     const categorized = {
-                        overallCoordinators: addMockSocialLinks(
-                            transformedData.filter(
-                                (m) => m.member_type === "OCO"
-                            ),
-                            "OCO"
+                        overallCoordinators: sortByDomainPriority(
+                            addMockSocialLinks(
+                                transformedData.filter(
+                                    (m) => m.member_type === "OCO"
+                                ),
+                                "OCO"
+                            )
                         ),
-                        headCoordinators: addMockSocialLinks(
-                            transformedData.filter(
-                                (m) => m.member_type === "HCO"
-                            ),
-                            "HCO"
+                        headCoordinators: sortByDomainPriority(
+                            addMockSocialLinks(
+                                transformedData.filter(
+                                    (m) => m.member_type === "HCO"
+                                ),
+                                "HCO"
+                            )
                         ),
-                        managers: addMockSocialLinks(
-                            transformedData.filter(
-                                (m) => m.member_type === "MNG"
-                            ),
-                            "MNG"
+                        managers: sortByDomainPriority(
+                            addMockSocialLinks(
+                                transformedData.filter(
+                                    (m) => m.member_type === "MNG"
+                                ),
+                                "MNG"
+                            )
                         ),
-                        executives: addMockSocialLinks(
-                            transformedData.filter(
-                                (m) => m.member_type === "EXC"
-                            ),
-                            "EXC"
+                        executives: sortByDomainPriority(
+                            addMockSocialLinks(
+                                transformedData.filter(
+                                    (m) => m.member_type === "EXC"
+                                ),
+                                "EXC"
+                            )
                         ),
                     };
 
