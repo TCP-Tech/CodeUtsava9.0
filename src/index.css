@@ -418,3 +418,71 @@ img {
     backface-visibility: hidden;
     transform: translateZ(0);
 }
+
+/* Social Media Card Enhancements */
+.social-card-container {
+    perspective: 1000px;
+}
+
+.social-icon-wrapper {
+    transform-style: preserve-3d;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.social-icon-wrapper:hover {
+    transform: translateZ(20px) rotateY(10deg) rotateX(-5deg);
+}
+
+/* Enhanced glow effects for social icons */
+.social-glow-linkedin {
+    box-shadow: 0 0 20px rgba(0, 119, 181, 0.3), 0 0 40px rgba(0, 119, 181, 0.1),
+        inset 0 0 20px rgba(0, 119, 181, 0.1);
+}
+
+.social-glow-github {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+        0 0 40px rgba(255, 255, 255, 0.1),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.social-glow-instagram {
+    box-shadow: 0 0 20px rgba(228, 64, 95, 0.3), 0 0 40px rgba(253, 89, 73, 0.1),
+        inset 0 0 20px rgba(228, 64, 95, 0.1);
+}
+
+/* Carnival-themed social hover effects */
+.social-carnival-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.social-carnival-effect::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(243, 168, 58, 0.1),
+        transparent
+    );
+    animation: carnival-rotate 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.social-carnival-effect:hover::before {
+    opacity: 1;
+}
+
+@keyframes carnival-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

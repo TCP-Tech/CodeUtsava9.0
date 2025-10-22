@@ -1,6 +1,15 @@
+/*
+ * 🎪 MOCK SOCIAL LINKS DEMO 🎪
+ *
+ * To remove mock social links later:
+ * 1. Set ENABLE_MOCK_SOCIAL_LINKS = false (line ~613)
+ * 2. Or remove the addMockSocialLinks function entirely (lines ~620-655)
+ * 3. Or remove the addMockSocialLinks() calls from categorized object (lines ~783-796)
+ */
+
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
+import { Linkedin, Github, Instagram } from "lucide-react";
 import Navbar from "../components/navbar/Navbar.jsx";
 import Footer from "../components/footer/Footer.jsx";
 import Fireworks from "../components/overlays/Fireworks.jsx";
@@ -162,7 +171,7 @@ const TeamCard = ({ member, index, level }) => {
 
     return (
         <motion.div
-            className={`relative ${getCardSize()} mx-auto`}
+            className={`relative ${getCardSize()} mx-auto rounded-2xl overflow-hidden`}
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
@@ -171,8 +180,10 @@ const TeamCard = ({ member, index, level }) => {
             onHoverEnd={() => setIsHovered(false)}
             viewport={{ once: true, amount: 0.3 }}
         >
+            {/* (overlay will be inserted inside the rounded card container below so it inherits rounded corners) */}
+
             {/* Card container with carnival tent design */}
-            <div
+            <motion.div
                 className="relative h-full bg-gradient-to-br from-black/80 via-gray-900/70 to-black/90 rounded-2xl overflow-hidden border-2 border-[#f3a83a]/30 backdrop-blur-sm"
                 style={{
                     boxShadow: isHovered
@@ -184,7 +195,159 @@ const TeamCard = ({ member, index, level }) => {
             rgba(243,168,58,0.1) 100%),
             linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.9))`,
                 }}
+                initial={false}
+                /* Keep the card fully opaque; overlay will sit on top */
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.0 }}
             >
+                {/* Social overlay inside rounded card (clipped to rounded corners) */}
+                <motion.div
+                    className="absolute inset-0 z-20 flex items-center justify-center bg-black/70 backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300"
+                    style={{ borderRadius: "inherit" }}
+                    initial={{ opacity: 0, pointerEvents: "none" }}
+                    animate={
+                        isHovered
+                            ? { opacity: 1, pointerEvents: "auto" }
+                            : { opacity: 0, pointerEvents: "none" }
+                    }
+                    transition={{ duration: 0.28, ease: "easeOut" }}
+                >
+                    <div className="flex flex-col items-center gap-6 px-4">
+                        <div className="flex items-center gap-4">
+                            {member.social.linkedin && (
+                                <motion.a
+                                    href={member.social.linkedin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="social-carnival-effect social-icon-wrapper block p-3 rounded-xl bg-gradient-to-br from-[#0077b5]/10 to-[#0077b5]/5 border border-[#0077b5]/20 backdrop-blur-sm transition-all duration-300"
+                                    initial={{ scale: 0.85, opacity: 0, y: 8 }}
+                                    animate={
+                                        isHovered
+                                            ? { scale: 1, opacity: 1, y: 0 }
+                                            : { scale: 0.85, opacity: 0 }
+                                    }
+                                    transition={{
+                                        duration: 0.36,
+                                        delay: 0.08,
+                                        ease: [0.2, 0.9, 0.25, 1],
+                                    }}
+                                    whileHover={{
+                                        scale: 1.12,
+                                        rotate: [0, -6, 4, 0],
+                                        y: -3,
+                                    }}
+                                    whileTap={{ scale: 0.96 }}
+                                >
+                                    <div className="relative flex items-center justify-center">
+                                        <Linkedin
+                                            size={28}
+                                            className="text-[#0077b5] transition-colors duration-300"
+                                        />
+                                        <motion.span
+                                            className="absolute inset-0 rounded-xl border border-transparent"
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            whileHover={{
+                                                opacity: 0.18,
+                                                scale: 1.15,
+                                            }}
+                                            transition={{ duration: 0.35 }}
+                                        />
+                                    </div>
+                                </motion.a>
+                            )}
+                            {member.social.github && (
+                                <motion.a
+                                    href={member.social.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="social-carnival-effect social-icon-wrapper block p-3 rounded-xl bg-gradient-to-br from-gray-100/10 to-gray-100/5 border border-gray-300/20 backdrop-blur-sm transition-all duration-300"
+                                    initial={{ scale: 0.85, opacity: 0, y: 8 }}
+                                    animate={
+                                        isHovered
+                                            ? { scale: 1, opacity: 1, y: 0 }
+                                            : { scale: 0.85, opacity: 0 }
+                                    }
+                                    transition={{
+                                        duration: 0.36,
+                                        delay: 0.16,
+                                        ease: [0.2, 0.9, 0.25, 1],
+                                    }}
+                                    whileHover={{
+                                        scale: 1.12,
+                                        rotate: [0, 6, -4, 0],
+                                        y: -3,
+                                    }}
+                                    whileTap={{ scale: 0.96 }}
+                                >
+                                    <div className="relative flex items-center justify-center">
+                                        <Github
+                                            size={28}
+                                            className="text-gray-100 transition-colors duration-300"
+                                        />
+                                        <motion.span
+                                            className="absolute inset-0 rounded-xl border border-transparent"
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            whileHover={{
+                                                opacity: 0.12,
+                                                scale: 1.08,
+                                            }}
+                                            transition={{ duration: 0.35 }}
+                                        />
+                                    </div>
+                                </motion.a>
+                            )}
+                            {member.social.instagram && (
+                                <motion.a
+                                    href={member.social.instagram}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="social-carnival-effect social-icon-wrapper block p-3 rounded-xl bg-gradient-to-br from-[#E4405F]/10 to-[#fd5949]/5 border border-[#E4405F]/20 backdrop-blur-sm transition-all duration-300"
+                                    initial={{ scale: 0.85, opacity: 0, y: 8 }}
+                                    animate={
+                                        isHovered
+                                            ? { scale: 1, opacity: 1, y: 0 }
+                                            : { scale: 0.85, opacity: 0 }
+                                    }
+                                    transition={{
+                                        duration: 0.36,
+                                        delay: 0.24,
+                                        ease: [0.2, 0.9, 0.25, 1],
+                                    }}
+                                    whileHover={{
+                                        scale: 1.12,
+                                        rotate: [0, -4, 4, 0],
+                                        y: -3,
+                                    }}
+                                    whileTap={{ scale: 0.96 }}
+                                >
+                                    <div className="relative flex items-center justify-center">
+                                        <Instagram
+                                            size={28}
+                                            className="text-[#E4405F] transition-colors duration-300"
+                                        />
+                                        <motion.span
+                                            className="absolute inset-0 rounded-xl border border-transparent"
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            whileHover={{
+                                                opacity: 0.18,
+                                                scale: 1.12,
+                                            }}
+                                            transition={{ duration: 0.35 }}
+                                        />
+                                    </div>
+                                </motion.a>
+                            )}
+                        </div>
+                        {!member.social.linkedin &&
+                            !member.social.github &&
+                            !member.social.instagram && (
+                                <span className="px-4 py-2 rounded-lg bg-gradient-to-r from-gray-600/10 to-gray-500/10 border border-gray-400/20 backdrop-blur-sm text-xs text-gray-400 font-medium tracking-wide">
+                                    ohh! seems like this member is lost in the
+                                    carnival 😱
+                                </span>
+                            )}
+                    </div>
+                </motion.div>
                 {/* Carnival stripes decoration */}
                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#802b1d] via-[#f3a83a] to-[#2c2b4c]" />
 
@@ -307,44 +470,12 @@ const TeamCard = ({ member, index, level }) => {
                         {member.bio}
                     </p>
 
-                    {/* Social links */}
-                    <div className="flex justify-center space-x-4 pt-2">
-                        {member.social.linkedin && (
-                            <motion.a
-                                href={member.social.linkedin}
-                                className="text-gray-400 hover:text-[#0077b5] transition-colors"
-                                whileHover={{ scale: 1.2, rotate: 5 }}
-                                whileTap={{ scale: 0.9 }}
-                            >
-                                <FaLinkedin size={16} />
-                            </motion.a>
-                        )}
-                        {member.social.github && (
-                            <motion.a
-                                href={member.social.github}
-                                className="text-gray-400 hover:text-white transition-colors"
-                                whileHover={{ scale: 1.2, rotate: -5 }}
-                                whileTap={{ scale: 0.9 }}
-                            >
-                                <FaGithub size={16} />
-                            </motion.a>
-                        )}
-                        {member.social.instagram && (
-                            <motion.a
-                                href={member.social.instagram}
-                                className="text-gray-400 hover:text-[#E4405F] transition-colors"
-                                whileHover={{ scale: 1.2, rotate: 5 }}
-                                whileTap={{ scale: 0.9 }}
-                            >
-                                <FaInstagram size={16} />
-                            </motion.a>
-                        )}
-                    </div>
+                    {/* Enhanced Social Links with Reveal Animation */}
                 </div>
 
                 {/* Carnival tent bottom decoration */}
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#802b1d] via-[#f3a83a] to-[#2c2b4c]" />
-            </div>
+            </motion.div>
         </motion.div>
     );
 };
@@ -436,6 +567,9 @@ const TeamSection = ({ title, members, level, description }) => {
 };
 
 export default function Teams() {
+    // 🎪 MOCK SOCIAL LINKS FLAG - Set to false to remove mock data
+    const ENABLE_MOCK_SOCIAL_LINKS = true;
+
     const [isLoading, setIsLoading] = useState(true);
     const [teamData, setTeamData] = useState({
         overallCoordinators: [],
@@ -444,6 +578,55 @@ export default function Teams() {
         executives: [],
     });
     const [error, setError] = useState(null);
+
+    // 🎪 Mock social links function (easy to remove later)
+    const addMockSocialLinks = (members, memberType) => {
+        if (!ENABLE_MOCK_SOCIAL_LINKS || !members || members.length === 0)
+            return members;
+
+        // Mock social links for demonstration
+        const mockSocialProfiles = [
+            {
+                linkedin: "https://linkedin.com/in/codeutsava-demo",
+                github: "https://github.com/codeutsava-demo",
+                instagram: "https://instagram.com/codeutsava_demo",
+            },
+            {
+                linkedin: "https://linkedin.com/in/carnival-dev",
+                github: "https://github.com/carnival-dev",
+                instagram: "",
+            },
+            {
+                linkedin: "",
+                github: "https://github.com/festival-coder",
+                instagram: "https://instagram.com/festival_coder",
+            },
+            {
+                linkedin: "https://linkedin.com/in/hackathon-hero",
+                github: "",
+                instagram: "https://instagram.com/hackathon_hero",
+            },
+        ];
+
+        // Add mock social links to first few members of each category for demonstration
+        return members.map((member, index) => {
+            // Add mock social to first 2-3 members of each category
+            const shouldAddMock = index < Math.min(3, members.length);
+            if (shouldAddMock) {
+                const mockProfile =
+                    mockSocialProfiles[index % mockSocialProfiles.length];
+                return {
+                    ...member,
+                    social: {
+                        linkedin: mockProfile.linkedin,
+                        github: mockProfile.github,
+                        instagram: mockProfile.instagram,
+                    },
+                };
+            }
+            return member;
+        });
+    };
 
     useEffect(() => {
         async function getTeamData() {
@@ -515,17 +698,29 @@ export default function Teams() {
 
                     // Categorize by member_type
                     const categorized = {
-                        overallCoordinators: transformedData.filter(
-                            (m) => m.member_type === "OCO"
+                        overallCoordinators: addMockSocialLinks(
+                            transformedData.filter(
+                                (m) => m.member_type === "OCO"
+                            ),
+                            "OCO"
                         ),
-                        headCoordinators: transformedData.filter(
-                            (m) => m.member_type === "HCO"
+                        headCoordinators: addMockSocialLinks(
+                            transformedData.filter(
+                                (m) => m.member_type === "HCO"
+                            ),
+                            "HCO"
                         ),
-                        managers: transformedData.filter(
-                            (m) => m.member_type === "MNG"
+                        managers: addMockSocialLinks(
+                            transformedData.filter(
+                                (m) => m.member_type === "MNG"
+                            ),
+                            "MNG"
                         ),
-                        executives: transformedData.filter(
-                            (m) => m.member_type === "EXC"
+                        executives: addMockSocialLinks(
+                            transformedData.filter(
+                                (m) => m.member_type === "EXC"
+                            ),
+                            "EXC"
                         ),
                     };
 
