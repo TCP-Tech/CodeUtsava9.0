@@ -914,7 +914,7 @@ export default function Teams() {
 
                     {/* Floating carnival elements */}
                     <motion.div
-                        className="absolute top-1/4 left-10 text-6xl"
+                        className="absolute top-20 md:top-1/4 md:left-50 text-5xl md:text-8xl"
                         animate={{
                             y: [0, -20, 0],
                             rotate: [0, 5, -5, 0],
@@ -929,7 +929,7 @@ export default function Teams() {
                     </motion.div>
 
                     <motion.div
-                        className="absolute bottom-1/4 right-10 text-5xl"
+                        className="absolute md:bottom-1/4 right-10 md:right-20 text-5xl md:text-8xl"
                         animate={{
                             y: [0, 15, 0],
                             rotate: [0, -5, 5, 0],

@@ -262,7 +262,7 @@ export default function Navbar() {
                                     <NavItem href="/contact-us" delay={0.4}>
                                         CONTACT US
                                     </NavItem>
-                                    <NavItem href="/teams" delay={0.5}>
+                                    <NavItem href="/team" delay={0.5}>
                                         TEAM
                                     </NavItem>
                                 </motion.div>
@@ -313,7 +313,7 @@ export default function Navbar() {
                                         <MobileNavLink href="/contact-us">
                                             CONTACT US
                                         </MobileNavLink>
-                                        <MobileNavLink href="/teams">
+                                        <MobileNavLink href="/team">
                                             TEAM
                                         </MobileNavLink>
                                     </>
