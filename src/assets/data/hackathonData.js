@@ -15,7 +15,7 @@ const hackathonData = [
   {
     id: '#3',
     title: "Registration Closes!",
-    date: "25ᵗʰ October, 11:59 PM",
+    date: "28ᵗʰ October, 11:59 PM",
     description: "Registrations for CodeUtsava 9.0 officially closed.",
   },
   {
