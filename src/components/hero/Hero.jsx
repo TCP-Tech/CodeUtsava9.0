@@ -91,12 +91,12 @@ export default function Hero({ animationsStarted = false }) {
                             <Navbar />
                         </motion.div>
 
-                        <div className="flex-1 max-w-6xl mx-auto my-1.5 px-4 flex flex-col items-center justify-center text-center">
+                        <div className="flex-1 max-w-6xl mx-auto mb-40 md:mb-0  px-4 flex flex-col items-center justify-center text-center">
                             <motion.h2
                                 variants={revealAnimation(0.15)}
                                 initial="hidden"
                                 animate="visible"
-                                className="text-2xl sm:text-4xl md:text-6xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary"
+                                className="text-3xl sm:text-4xl md:text-6xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary"
                             >
                                 WELCOME TO
                             </motion.h2>
@@ -113,7 +113,7 @@ export default function Hero({ animationsStarted = false }) {
                                 variants={slideReveal(0.45)}
                                 initial="hidden"
                                 animate="visible"
-                                className="mt-6 text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold tracking-wide text-white text-outline-strong"
+                                className="mt-6 font-rye text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold tracking-wide text-white text-outline-strong"
                             >
                                 CODE. INNOVATE. CELEBRATE.
                             </motion.p>
@@ -122,7 +122,7 @@ export default function Hero({ animationsStarted = false }) {
                                 variants={slideReveal(0.6)}
                                 initial="hidden"
                                 animate="visible"
-                                className="mt-4 text-xs sm:text-sm md:text-base lg:text-lg tracking-wide text-white text-outline-strong px-2"
+                                className="mt-4 font-rye text-xs sm:text-sm md:text-base lg:text-lg tracking-wide text-white text-outline-strong px-2"
                             >
                                 CENTRAL INDIA'S{" "}
                                 <b className="text-primary"><span className="text-accent-2">LARGEST CODING EVENT.</span> </b> JOIN US ON {" "}
@@ -135,14 +135,14 @@ export default function Hero({ animationsStarted = false }) {
                             initial="hidden"
                             animate="visible"
                         >
-                            <div className="relative" style={{top:"-10.25rem"}}>
+                            <div className="relative md:top-[-10.25rem] top-[-20rem]" >
                             <BottomCTAs />
                             </div>
                         </motion.div>
 
                         {/* Rails */}
                         <motion.div
-                            className="codeutsava__hero-social-rail"
+                            className="codeutsava__hero-social-rail "
                             variants={socialRailAnimate(0.9)}
                             initial="hidden"
                             animate="visible"

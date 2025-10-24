@@ -46,7 +46,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/events" element={<EventsPage />} />
-                    <Route path="/teams" element={<Teams />} />
+                    <Route path="/team" element={<Teams />} />
                     {/* keep any other routes you need */}
                     <Route path="/contact-us" element={<ContactUs />} />
                     <Route path="/faq" element={<FAQ />} />

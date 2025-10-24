@@ -392,11 +392,10 @@ const TeamCard = ({ member, index, level }) => {
                     {/* Name with carnival typography - scrolling for long names */}
                     <div
                         ref={nameContainerRef}
-                        className={`relative overflow-hidden h-7 flex items-center ${
-                            isOverflowing
-                                ? "justify-start pl-2"
-                                : "justify-center"
-                        }`}
+                        className={`relative overflow-hidden h-7 flex items-center ${isOverflowing
+                            ? "justify-start pl-2"
+                            : "justify-center"
+                            }`}
                         aria-hidden={false}
                     >
                         {/* Non-overflowing: simple centered name */}
@@ -677,9 +676,7 @@ export default function Teams() {
                                     name: member.name || "Unknown",
                                     role: member.domain || "Team Member",
                                     department: member.domain || "General",
-                                    image: convertDriveUrl(
-                                        member.drive_image_url || member.image
-                                    ),
+                                    image: member.image.replace("http://localhost:8000", "https://codeutsava.nitrr.ac.in"),
                                     bio:
                                         member.branch && member.year
                                             ? `${member.branch} - Year ${member.year}`
@@ -726,7 +723,7 @@ export default function Teams() {
                                     department: s.department,
                                 }))
                             );
-                        } catch (e) {}
+                        } catch (e) { }
                         return sorted;
                     };
 
@@ -872,11 +869,11 @@ export default function Teams() {
                     variants={heroVariants}
                 >
                     {/* Carnival tent top decoration */}
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-64 h-8 bg-gradient-to-r from-[#802b1d] via-[#f3a83a] to-[#2c2b4c] rounded-b-full" />
+                    <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-64 h-8 bg-gradient-to-r from-[#802b1d] via-[#f3a83a] to-[#2c2b4c] rounded-b-full" />
 
                     <div className="relative z-10 max-w-4xl mx-auto px-4">
                         <motion.h1
-                            className="text-5xl md:text-7xl lg:text-8xl font-rye text-[#f3a83a] tracking-wide uppercase mb-6 text-stroke-strong"
+                            className="text-3xl md:text-5xl lg:text-5xl font-rye text-[#f3a83a] tracking-wide uppercase mb-6 text-stroke-strong"
                             initial={{ opacity: 0, y: -30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.3 }}
@@ -884,7 +881,7 @@ export default function Teams() {
                             Meet Our
                         </motion.h1>
                         <motion.h1
-                            className="text-5xl md:text-7xl lg:text-8xl font-rye text-[#f3a83a] tracking-wide uppercase mb-8 text-stroke-strong"
+                            className="text-3xl md:text-5xl lg:text-5xl font-rye text-[#f3a83a] tracking-wide uppercase mb-8 text-stroke-strong"
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.5 }}
@@ -914,7 +911,7 @@ export default function Teams() {
 
                     {/* Floating carnival elements */}
                     <motion.div
-                        className="absolute top-1/4 left-10 text-6xl"
+                        className="absolute top-20 md:top-1/4 md:left-50 text-5xl md:text-8xl"
                         animate={{
                             y: [0, -20, 0],
                             rotate: [0, 5, -5, 0],
@@ -929,7 +926,7 @@ export default function Teams() {
                     </motion.div>
 
                     <motion.div
-                        className="absolute bottom-1/4 right-10 text-5xl"
+                        className="absolute md:bottom-1/4 right-10 md:right-20 text-5xl md:text-8xl"
                         animate={{
                             y: [0, 15, 0],
                             rotate: [0, -5, 5, 0],
@@ -947,28 +944,28 @@ export default function Teams() {
 
                 {/* Team sections */}
                 <TeamSection
-                    title="Ring Leaders"
+                    title="Overall Coordinators"
                     members={teamData.overallCoordinators}
                     level={1}
                     description="The masterminds orchestrating our grand carnival spectacle, ensuring every act performs in perfect harmony."
                 />
 
                 <TeamSection
-                    title="Circus Masters"
+                    title="Head Coordinators"
                     members={teamData.headCoordinators}
                     level={2}
                     description="Department heads who lead their specialized acts, bringing expertise and vision to every carnival ring."
                 />
 
                 <TeamSection
-                    title="Performance Directors"
+                    title="Managers"
                     members={teamData.managers}
                     level={3}
                     description="The skilled coordinators who ensure each carnival act is executed flawlessly, managing day-to-day magic."
                 />
 
                 <TeamSection
-                    title="Carnival Performers"
+                    title="Executives"
                     members={teamData.executives}
                     level={4}
                     description="Our talented team members who bring creativity, energy, and passion to make the carnival dreams a reality."
