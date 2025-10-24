@@ -42,7 +42,7 @@ export default function BottomCTAs() {
         <div
             className={`absolute top-0 bottom-8 left-1/2 -translate-x-1/2 z-50 px-4 transition-opacity duration-2000 ${hidden ? "opacity-0" : "opacity-100"}`}
         >
-            <div className={`flex ${isMobile ? "flex-col w-full items-center gap-2" : "flex-row gap-4 items-center justify-center"}`}>
+            <div className={`flex ${isMobile ? "flex-col w-full items-center gap-4" : "flex-row gap-4 items-center justify-center"}`}>
                 {/* Devfolio integrate button - single responsive element */}
                 <div
                     className="apply-button"
