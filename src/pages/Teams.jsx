@@ -119,7 +119,6 @@ const TeamCard = ({ member, index, level }) => {
             scale: 1,
             transition: {
                 duration: 0.6,
-                delay: index * 0.1,
                 ease: "easeOut",
             },
         },
@@ -175,14 +174,11 @@ const TeamCard = ({ member, index, level }) => {
         <motion.div
             className={`relative ${getCardSize()} mx-auto rounded-2xl overflow-hidden`}
             variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             tabIndex={0}
-            viewport={{ once: true, amount: 0.3 }}
         >
             {/* (overlay will be inserted inside the rounded card container below so it inherits rounded corners) */}
 
