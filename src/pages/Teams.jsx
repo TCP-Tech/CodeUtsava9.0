@@ -17,6 +17,7 @@ import SparkleLayer from "../components/overlays/SparkleLayer.jsx";
 import Cursor from "../components/cursor/Cursor.jsx";
 import BackgroundMedia from "../components/background/Background.jsx";
 import bg_image from "../assets/images/bg-part2.jpg";
+import default_profile from "../assets/images/dummys.jpeg";
 
 import { departmentColors, hierarchyLevels } from "../assets/data/teamsData.js";
 
@@ -118,7 +119,6 @@ const TeamCard = ({ member, index, level }) => {
             scale: 1,
             transition: {
                 duration: 0.6,
-                delay: index * 0.1,
                 ease: "easeOut",
             },
         },
@@ -174,14 +174,11 @@ const TeamCard = ({ member, index, level }) => {
         <motion.div
             className={`relative ${getCardSize()} mx-auto rounded-2xl overflow-hidden`}
             variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             tabIndex={0}
-            viewport={{ once: true, amount: 0.3 }}
         >
             {/* (overlay will be inserted inside the rounded card container below so it inherits rounded corners) */}
 
@@ -463,17 +460,8 @@ const TeamCard = ({ member, index, level }) => {
                         >
                             {member.role}
                         </p>
-                        {member.department && level !== 1 && (
-                            <p className="text-xs text-gray-400 mt-1 font-bebas-neue tracking-wide">
-                                {member.department} Department
-                            </p>
-                        )}
-                    </div>
 
-                    {/* Bio */}
-                    <p className="text-xs text-gray-300 text-center leading-relaxed line-clamp-3">
-                        {member.bio}
-                    </p>
+                    </div>
 
                     {/* Enhanced Social Links with Reveal Animation */}
                 </motion.section>
@@ -676,7 +664,7 @@ export default function Teams() {
                                     name: member.name || "Unknown",
                                     role: member.domain || "Team Member",
                                     department: member.domain || "General",
-                                    image: member.image.replace("http://localhost:8000", "https://codeutsava.nitrr.ac.in"),
+                                    image: (member.image || default_profile).replace("http://localhost:8000", "https://codeutsava.nitrr.ac.in"),
                                     bio:
                                         member.branch && member.year
                                             ? `${member.branch} - Year ${member.year}`
@@ -762,6 +750,10 @@ export default function Teams() {
                             )
                         ),
                     };
+
+                    categorized.overallCoordinators.map(member => {
+                        member.role = "Overall Coordinator";
+                    });
 
                     console.log("Categorized Data:", categorized); // Debug log
 
