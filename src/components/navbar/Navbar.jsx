@@ -45,11 +45,10 @@ const NavItem = ({
     disabled = false,
     delay = 0,
 }) => {
-    const baseClasses = `px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition-all duration-300 cursor-pointer ${
-        disabled
-            ? "opacity-50 cursor-not-allowed"
-            : "hover:text-[#E4D0B6] hover:scale-105"
-    }`;
+    const baseClasses = `px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition-all duration-300 cursor-pointer ${disabled
+        ? "opacity-50 cursor-not-allowed"
+        : "hover:text-[#E4D0B6] hover:scale-105"
+        }`;
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -107,11 +106,10 @@ export default function Navbar() {
                 }
                 setMobileOpen(false);
             }}
-            className={`px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition cursor-pointer ${
-                disabled
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:text-[#E4D0B6]"
-            }`}
+            className={`px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition cursor-pointer ${disabled
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:text-[#E4D0B6]"
+                }`}
         >
             {children}
         </span>
@@ -142,7 +140,7 @@ export default function Navbar() {
                                     <img
                                         src={logo}
                                         alt="Logo"
-                                        className="h-22 w-auto"
+                                        className="h-14 w-auto"
                                     />
                                 </Link>
                                 <ImageButton
@@ -168,7 +166,7 @@ export default function Navbar() {
                                     <img
                                         src={logo}
                                         alt="Logo"
-                                        className="h-22 w-auto"
+                                        className="h-14 w-auto"
                                     />
                                 </Link>
                             </div>
@@ -195,7 +193,7 @@ export default function Navbar() {
                                         <img
                                             src={logo2}
                                             alt="Logo 2"
-                                            className="h-20 w-auto mt-2"
+                                            className="h-14 w-auto mt-2"
                                         />
                                     </Link>
                                 </>
@@ -207,7 +205,7 @@ export default function Navbar() {
                                     <img
                                         src={logo2}
                                         alt="Logo 2"
-                                        className="h-18 w-auto mt-0"
+                                        className="h-14 w-auto mt-0"
                                     />
                                 </Link>
                             )}
