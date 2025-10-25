@@ -13,6 +13,7 @@ import Teams from "./pages/Teams.jsx";
 import ClickSoundProvider from "./utils/ClickSoundProvider.jsx";
 import { AudioProvider } from "./utils/AudioProvider.jsx";
 import Player from "./components/audioPlayer/player.jsx";
+import CountDown from "./components/CountDown/CountDown.jsx";
 
 export default function App() {
     // smooth scroll using lenis
@@ -51,6 +52,7 @@ export default function App() {
                     <Route path="/contact-us" element={<ContactUs />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/events" element={<EventsPage />} />
+                    <Route path="/timer" element={<CountDown />} />
                 </Routes>
             </AudioProvider>
         </BrowserRouter>
