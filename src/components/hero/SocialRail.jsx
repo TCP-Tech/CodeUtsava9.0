@@ -3,7 +3,7 @@ import React from "react";
 export default function SocialRail() {
     // MODIFIED: Removed the className from the <ul> element
     return (
-        <ul>
+        <ul >
             <li>
                 <a
                     target="_blank"

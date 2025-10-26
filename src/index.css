@@ -18,10 +18,12 @@
     --color-accent-2: #f3a83a;
     --color-background: #0d0d0de1;
     --color-muted: #eadccb;
-    --brand-grad: linear-gradient(to right,
-            var(--color-primary) 0%,
-            var(--color-accent) 25%,
-            var(--color-accent-2) 100%);
+    --brand-grad: linear-gradient(
+        to right,
+        var(--color-primary) 0%,
+        var(--color-accent) 25%,
+        var(--color-accent-2) 100%
+    );
 }
 
 html {
@@ -93,25 +95,18 @@ img {
 /* 6. Text Contrast Helpers */
 /* ============================= */
 .text-outline-strong {
-    text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.85),
-        0 -1px 3px rgba(0, 0, 0, 0.85),
-        1px 0 3px rgba(0, 0, 0, 0.85),
-        -1px 0 3px rgba(0, 0, 0, 0.85),
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 -1px 3px rgba(0, 0, 0, 0.85),
+        1px 0 3px rgba(0, 0, 0, 0.85), -1px 0 3px rgba(0, 0, 0, 0.85),
         0 0 12px rgba(0, 0, 0, 0.55);
 }
 
 .text-outline-soft {
-    text-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.65),
-        0 -1px 2px rgba(0, 0, 0, 0.55);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65), 0 -1px 2px rgba(0, 0, 0, 0.55);
 }
 
 .text-stroke-strong {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.6);
-    text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.6),
-        0 0 12px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 12px rgba(0, 0, 0, 0.35);
 }
 
 /* ============================= */
@@ -154,7 +149,7 @@ img {
 }
 
 .hero-animations-active .bottom-ctas {
-    animation-delay: 1.0s;
+    animation-delay: 1s;
 }
 
 @keyframes heroFadeIn {
@@ -213,7 +208,6 @@ img {
 }
 
 @keyframes carnivalBounce {
-
     0%,
     20%,
     53%,
@@ -242,15 +236,13 @@ img {
 .scroll-down-section {
     color: #fff;
     position: absolute;
-    /* MODIFIED: Changed positioning to top: 50% */
-    top: 50%;
+    bottom: 70px;
     right: 3rem;
     transform-origin: right top 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* MODIFIED: Animation is now handled by Framer Motion */
 }
 
 .scroll-down-section a {
@@ -270,17 +262,32 @@ img {
     transition: 0.2s ease-in-out;
 }
 
+/* 🧩 Responsive adjustments */
+@media (max-width: 1024px) {
+    .scroll-down-section {
+        bottom: 120px; /* Adjusted to align with SocialRail */
+        right: 1.5rem; /* Reduce distance from right edge */
+        transform: translateY(-50%);
+    }
+}
+
+@media (max-width: 768px) {
+    .scroll-down-section {
+        display: none; /* Hide entirely on small screens */
+    }
+}
+
 /* Social rail */
 .codeutsava__hero-social-rail {
     position: absolute;
     left: 48px;
-    /* MODIFIED: Changed positioning to top: 50% */
-    top: 50%;
+    bottom: 50px;
     margin: 0;
     padding: 0;
     list-style: none;
     font-size: 2.5rem;
     text-align: center;
+    margin-bottom: 32px; /* Slightly above ScrollDown */
 }
 
 .codeutsava__hero-social-rail li {
@@ -314,5 +321,168 @@ img {
 @media screen and (max-width: 1000px) {
     .codeutsava__hero-social-rail {
         display: none;
+    }
+}
+
+/* ============================= */
+/* Team Card Scrolling Text Animation */
+/* ============================= */
+
+@keyframes scroll-text {
+    /* 0 - 12.5%: hold at start */
+    0% {
+        transform: translateX(0);
+    }
+    12.5% {
+        transform: translateX(0);
+    }
+    /* 12.5% - 37.5%: scroll to end */
+    37.5% {
+        transform: translateX(var(--scroll-distance, -30%));
+    }
+    /* 37.5% - 62.5%: hold at end */
+    62.5% {
+        transform: translateX(var(--scroll-distance, -30%));
+    }
+    /* 62.5% - 87.5%: return to start */
+    87.5% {
+        transform: translateX(0);
+    }
+    /* 87.5% - 100%: small final hold */
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animate-scroll-text {
+    /* Ensure the element is positioned so translateX moves it left when negative */
+    will-change: transform;
+    /* Duration is configurable via --scroll-duration (s); fallback to 4s */
+    animation: scroll-text var(--scroll-duration, 4.6s) linear infinite;
+    animation-delay: 0.5s;
+}
+
+.animate-scroll-text:hover {
+    animation-play-state: paused;
+}
+
+/* Right-side fade mask for scrolling names to visually smooth the reveal */
+/* removed fade mask - scrolling text should not have black fading */
+
+/* Invisible spacer utility inside the name container to ensure extra space for scrolling */
+.name-spacer {
+    display: inline-block;
+    width: var(--name-spacer-width, 0px);
+    height: 1px;
+}
+
+/* Continuous marquee for long names: two identical inline blocks translate left continuously */
+.marquee {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.marquee__track {
+    display: inline-flex;
+    align-items: center;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    animation: marquee-move var(--marquee-duration, 6s) linear infinite;
+    /* Ensure the track is exactly twice the width of one item */
+    width: fit-content;
+}
+
+@keyframes marquee-move {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+.marquee__item {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    /* Ensure both items have identical width */
+    flex-shrink: 0;
+}
+
+/* Encourage GPU compositing to reduce subpixel repaint jitter */
+.marquee__track,
+.marquee__item {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+/* Social Media Card Enhancements */
+.social-card-container {
+    perspective: 1000px;
+}
+
+.social-icon-wrapper {
+    transform-style: preserve-3d;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.social-icon-wrapper:hover {
+    transform: translateZ(20px) rotateY(10deg) rotateX(-5deg);
+}
+
+/* Enhanced glow effects for social icons */
+.social-glow-linkedin {
+    box-shadow: 0 0 20px rgba(0, 119, 181, 0.3), 0 0 40px rgba(0, 119, 181, 0.1),
+        inset 0 0 20px rgba(0, 119, 181, 0.1);
+}
+
+.social-glow-github {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+        0 0 40px rgba(255, 255, 255, 0.1),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.social-glow-instagram {
+    box-shadow: 0 0 20px rgba(228, 64, 95, 0.3), 0 0 40px rgba(253, 89, 73, 0.1),
+        inset 0 0 20px rgba(228, 64, 95, 0.1);
+}
+
+/* Carnival-themed social hover effects */
+.social-carnival-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.social-carnival-effect::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(243, 168, 58, 0.1),
+        transparent
+    );
+    animation: carnival-rotate 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.social-carnival-effect:hover::before {
+    opacity: 1;
+}
+
+@keyframes carnival-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }

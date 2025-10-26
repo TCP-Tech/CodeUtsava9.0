@@ -210,9 +210,9 @@ const Spons = () => {
                                             alt={sponsor.alt || `Sponsor ${idx + 1}`}
                                             className="h-8 sm:h-12 md:h-16 object-contain mb-1 sm:mb-2 filter drop-shadow-lg"
                                         />
-                                        <p className="text-white text-xs sm:text-sm font-bold text-center drop-shadow-lg">
+                                        {/* <p className="text-white text-xs sm:text-sm font-bold text-center drop-shadow-lg">
                                             {sponsor.alt || "Sponsor"}
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </div>
                             </div>

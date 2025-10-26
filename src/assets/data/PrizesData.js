@@ -48,7 +48,7 @@ const Prizes = [
     prizeInfo: [],
   },
   {
-    title: "🎊For All Participants!🎊",
+    title: "For All Participants!",
     cashPrize: [],
     prizeInfo: [
       "30 days FREE trial of O' Reilly learning platform.",
