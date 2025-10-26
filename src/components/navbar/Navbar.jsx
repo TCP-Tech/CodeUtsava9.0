@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,7 +15,11 @@ function smoothScrollTo(targetSelector) {
     const offset = nav ? nav.offsetHeight : 0;
     let destinationY = 0;
 
-    if (!targetSelector || targetSelector === "#" || targetSelector === "#hero") {
+    if (
+        !targetSelector ||
+        targetSelector === "#" ||
+        targetSelector === "#hero"
+    ) {
         destinationY = 0;
     } else {
         const el = document.querySelector(targetSelector);
@@ -24,71 +29,90 @@ function smoothScrollTo(targetSelector) {
     }
 
     if (window.lenis && typeof window.lenis.scrollTo === "function") {
-        window.lenis.scrollTo(destinationY, { easing: (t) => 1 - Math.pow(1 - t, 3) });
+        window.lenis.scrollTo(destinationY, {
+            easing: (t) => 1 - Math.pow(1 - t, 3),
+        });
     } else {
         window.scrollTo({ top: destinationY, behavior: "smooth" });
     }
 }
 
-const NavItem = ({ children, href, onClick, className = "", disabled = false, delay = 0 }) => {
-    const baseClasses = `px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition cursor-pointer ${
-        disabled ? "opacity-50 cursor-not-allowed" : "hover:text-[#E4D0B6]"
-    }`;
+const NavItem = ({
+    children,
+    href,
+    onClick,
+    className = "",
+    disabled = false,
+    delay = 0,
+}) => {
+    const baseClasses = `px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition-all duration-300 cursor-pointer ${disabled
+        ? "opacity-50 cursor-not-allowed"
+        : "hover:text-[#E4D0B6] hover:scale-105"
+        }`;
 
-    const currentPath = window.location.pathname;
-    const isHomePage = currentPath === "/" || currentPath === "/home";
+    const location = useLocation();
+    const navigate = useNavigate();
+    const isHomePage =
+        location.pathname === "/" || location.pathname === "/home";
 
     const handleClick = (e) => {
-        if (!disabled && href?.startsWith("#")) {
-            e.preventDefault();
+        e.preventDefault();
+        if (disabled) return;
+
+        if (href?.startsWith("#")) {
             if (isHomePage) smoothScrollTo(href);
-            else window.location.href = "/";
+            else navigate("/", { state: { scrollTo: href } });
+        } else {
+            navigate(href);
         }
         if (onClick) onClick(e);
     };
 
     return (
-        <motion.a
-            href={href}
+        <motion.span
             onClick={handleClick}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay }}
+            initial={{ opacity: 0, y: -30, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1.0, delay, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{
+                y: -3,
+                scale: 1.05,
+                transition: { duration: 0.2, ease: "easeOut" },
+            }}
             className={baseClasses}
-            aria-disabled={disabled}
         >
             {children}
-        </motion.a>
+        </motion.span>
     );
 };
 
 export default function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const isLargeScreen = useMediaQuery({ minWidth: 1024 });
-    const currentPath = window.location.pathname;
-    const isHomePage = currentPath === "/" || currentPath === "/home";
+    const location = useLocation();
+    const navigate = useNavigate();
+    const isHomePage =
+        location.pathname === "/" || location.pathname === "/home";
 
     const MobileNavLink = ({ href, children, disabled = false }) => (
-        <a
-            href={href}
-            onClick={
-                !disabled
-                    ? href?.startsWith("#")
-                        ? (e) => {
-                              e.preventDefault();
-                              if (isHomePage) smoothScrollTo(href);
-                              else window.location.href = "/";
-                              setMobileOpen(false);
-                          }
-                        : () => setMobileOpen(false)
-                    : undefined
-            }
-            className={`px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition cursor-pointer ${
-                disabled ? "opacity-50 cursor-not-allowed" : "hover:text-[#E4D0B6]"
-            }`}
+        <span
+            onClick={() => {
+                if (disabled) return;
+                if (href?.startsWith("#")) {
+                    if (isHomePage) smoothScrollTo(href);
+                    else navigate("/", { state: { scrollTo: href } });
+                } else {
+                    navigate(href);
+                }
+                setMobileOpen(false);
+            }}
+            className={`px-4 py-2 text-[1.1rem] rye-regular tracking-wide transition cursor-pointer ${disabled
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:text-[#E4D0B6]"
+                }`}
         >
             {children}
-        </a>
+        </span>
     );
 
     return (
@@ -101,24 +125,29 @@ export default function Navbar() {
                             <button
                                 className="text-white text-4xl"
                                 onClick={() => setMobileOpen(!mobileOpen)}
-                                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                                aria-label={
+                                    mobileOpen ? "Close menu" : "Open menu"
+                                }
                             >
                                 {mobileOpen ? <FiX /> : <FiMenu />}
                             </button>
                         ) : (
                             <div className="flex items-center gap-4">
-                                <a
-                                    href="/"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        smoothScrollTo("#hero");
-                                    }}
+                                <Link
+                                    to="/"
+                                    onClick={() => smoothScrollTo("#hero")}
                                 >
-                                    <img src={logo} alt="Logo" className="h-22 w-auto" />
-                                </a>
+                                    <img
+                                        src={logo}
+                                        alt="Logo"
+                                        className="h-14 w-auto"
+                                    />
+                                </Link>
                                 <ImageButton
                                     text="FEEDBACK"
-                                    onClick={() => window.open(CONTACT_FORM_URL, "_blank")}
+                                    onClick={() =>
+                                        window.open(CONTACT_FORM_URL, "_blank")
+                                    }
                                     style={{ fontSize: "16px" }}
                                 />
                             </div>
@@ -127,16 +156,19 @@ export default function Navbar() {
                         {/* Center: Main logo on mobile */}
                         {!isLargeScreen && (
                             <div className="absolute left-1/2 transform -translate-x-1/2">
-                                <a
-                                    href="/"
-                                    onClick={(e) => {
-                                        e.preventDefault();
+                                <Link
+                                    to="/"
+                                    onClick={() => {
                                         smoothScrollTo("#hero");
                                         setMobileOpen(false);
                                     }}
                                 >
-                                    <img src={logo} alt="Logo" className="h-22 w-auto" />
-                                </a>
+                                    <img
+                                        src={logo}
+                                        alt="Logo"
+                                        className="h-14 w-auto"
+                                    />
+                                </Link>
                             </div>
                         )}
 
@@ -146,70 +178,147 @@ export default function Navbar() {
                                 <>
                                     <ImageButton
                                         text="BROCHURE"
-                                        onClick={() => window.open("/Brochure.pdf", "_blank")}
+                                        onClick={() =>
+                                            window.open(
+                                                "/Brochure.pdf",
+                                                "_blank"
+                                            )
+                                        }
                                         style={{ fontSize: "16px" }}
                                     />
-                                    <a
-                                        href="/"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            smoothScrollTo("#hero");
-                                        }}
+                                    <Link
+                                        to="/"
+                                        onClick={() => smoothScrollTo("#hero")}
                                     >
-                                        <img src={logo2} alt="Logo 2" className="h-20 w-auto mt-2" />
-                                    </a>
+                                        <img
+                                            src={logo2}
+                                            alt="Logo 2"
+                                            className="h-14 w-auto mt-2"
+                                        />
+                                    </Link>
                                 </>
                             ) : (
-                                <a
-                                    href="/"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        smoothScrollTo("#hero");
-                                    }}
+                                <Link
+                                    to="/"
+                                    onClick={() => smoothScrollTo("#hero")}
                                 >
-                                    <img src={logo2} alt="Logo 2" className="h-18 w-auto mt-0" />
-                                </a>
+                                    <img
+                                        src={logo2}
+                                        alt="Logo 2"
+                                        className="h-14 w-auto mt-0"
+                                    />
+                                </Link>
                             )}
                         </div>
 
                         {/* Desktop nav links */}
-                        {isHomePage && isLargeScreen && (
-                            <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-6 text-white font-bold">
-                                <NavItem href="#hero" delay={0.0}>
+                        {/* {isHomePage && isLargeScreen && (
+                            <motion.div
+                                className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-6 text-white font-bold"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                            >
+                                <NavItem href="#hero" delay={0.1}>
                                     HOME
                                 </NavItem>
-                                <NavItem href="#about" delay={0.3}>
+                                <NavItem href="#about" delay={0.2}>
                                     ABOUT US
                                 </NavItem>
-                                <NavItem href="#faqs" delay={0.6}>
+                                <NavItem href="#faqs" delay={0.3}>
                                     FAQ
                                 </NavItem>
-                                <NavItem href="/contact-us" delay={0.9}>
+                                <NavItem href="/contact-us" delay={0.4}>
                                     CONTACT US
                                 </NavItem>
-                            </div>
-                        )}
+                                <NavItem href="/teams" delay={0.5}>
+                                    TEAM
+                                </NavItem>
+                            </motion.div>
+                        )} */}
+                        {/* Desktop nav links or "Back to Home" */}
+                        {isLargeScreen &&
+                            (isHomePage ? (
+                                <motion.div
+                                    className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-6 text-white font-bold"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{
+                                        duration: 0.6,
+                                        ease: [0.22, 1, 0.36, 1],
+                                    }}
+                                >
+                                    <NavItem href="#hero" delay={0.1}>
+                                        HOME
+                                    </NavItem>
+                                    <NavItem href="#about" delay={0.2}>
+                                        ABOUT US
+                                    </NavItem>
+                                    <NavItem href="#faqs" delay={0.3}>
+                                        FAQ
+                                    </NavItem>
+                                    <NavItem href="/contact-us" delay={0.4}>
+                                        CONTACT US
+                                    </NavItem>
+                                    <NavItem href="/team" delay={0.5}>
+                                        TEAM
+                                    </NavItem>
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    className="absolute left-1/2 transform -translate-x-1/2 text-white font-bold"
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{
+                                        duration: 0.6,
+                                        ease: [0.22, 1, 0.36, 1],
+                                    }}
+                                >
+                                    <NavItem href="/" delay={0.2}>
+                                        BACK TO HOME
+                                    </NavItem>
+                                </motion.div>
+                            ))}
                     </div>
 
                     {/* Mobile Menu */}
                     <AnimatePresence>
                         {!isLargeScreen && mobileOpen && (
                             <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
+                                initial={{ height: 0, opacity: 0, y: -10 }}
+                                animate={{ height: "auto", opacity: 1, y: 0 }}
+                                exit={{ height: 0, opacity: 0, y: -10 }}
+                                transition={{
+                                    duration: 0.4,
+                                    ease: [0.25, 0.3, 0.35, 0.4],
+                                    type: "spring",
+                                    stiffness: 100,
+                                    damping: 15,
+                                }}
                                 className="flex flex-col items-center gap-4 overflow-hidden md:hidden text-white font-semibold mt-2"
                             >
                                 {isHomePage ? (
                                     <>
-                                        <MobileNavLink href="#hero">HOME</MobileNavLink>
-                                        <MobileNavLink href="#about">ABOUT US</MobileNavLink>
-                                        <MobileNavLink href="#faqs">FAQ</MobileNavLink>
-                                        <MobileNavLink href="/contact-us">CONTACT US</MobileNavLink>
+                                        <MobileNavLink href="#hero">
+                                            HOME
+                                        </MobileNavLink>
+                                        <MobileNavLink href="#about">
+                                            ABOUT US
+                                        </MobileNavLink>
+                                        <MobileNavLink href="#faqs">
+                                            FAQ
+                                        </MobileNavLink>
+                                        <MobileNavLink href="/contact-us">
+                                            CONTACT US
+                                        </MobileNavLink>
+                                        <MobileNavLink href="/team">
+                                            TEAM
+                                        </MobileNavLink>
                                     </>
                                 ) : (
-                                    <MobileNavLink href="/">GO BACK TO HOME</MobileNavLink>
+                                    <MobileNavLink href="/">
+                                        GO BACK TO HOME
+                                    </MobileNavLink>
                                 )}
                             </motion.div>
                         )}

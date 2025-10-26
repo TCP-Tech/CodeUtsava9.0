@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-
+import codeutsava from "../../assets/images/codeutsava logo.svg";
 import Navbar from "../navbar/Navbar.jsx";
 import BottomCTAs from "./BottomCTAs.jsx";
 import SocialRail from "./SocialRail.jsx";
@@ -10,29 +10,65 @@ import BackgroundMedia from "../background/Background.jsx";
 import bg_image from "../../assets/images/bg-part2.jpg";
 
 export default function Hero({ animationsStarted = false }) {
-    // This variant is for the main text content
-    const fadeFromAbove = (delay = 0) => ({
-        hidden: { opacity: 0, y: -50 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay } },
+    // Smooth reveal animation with slide down and fade
+    const revealAnimation = (delay = 0) => ({
+        hidden: { opacity: 0, y: -60 },
+        visible: { 
+            opacity: 1, 
+            y: 0,
+            transition: { 
+                duration: 1.0,
+                delay,
+                ease: [0.22, 1, 0.36, 1] // Smooth ease-out curve
+            } 
+        },
     });
 
-    // MODIFIED: Changed hidden 'y' to create a slide-down effect
+    // Enhanced slide-down effect with longer duration
+    const slideReveal = (delay = 0) => ({
+        hidden: { opacity: 0, y: -40 },
+        visible: { 
+            opacity: 1, 
+            y: 0,
+            transition: { 
+                duration: 0.9, 
+                delay,
+                ease: [0.22, 1, 0.36, 1]
+            } 
+        },
+    });
+
+    // MODIFIED: Enhanced slide from left with reveal effect
     const socialRailAnimate = (delay = 0) => ({
-        hidden: { opacity: 0, y: "-75%" }, // Starts higher up
-        visible: { opacity: 1, y: "-50%", transition: { duration: 0.8, delay } }, // Slides down to center
+        hidden: { opacity: 0, x: -100 },
+        visible: { 
+            opacity: 1, 
+            x: 0,
+            transition: { 
+                duration: 1.0, 
+                delay,
+                ease: [0.22, 1, 0.36, 1]
+            } 
+        },
     });
 
-    // MODIFIED: Changed hidden 'y' to create a slide-down effect
+    // MODIFIED: Enhanced slide from right with reveal and float
     const rightRailAnimate = (delay = 0) => ({
-        hidden: { opacity: 0, y: "-75%" }, // Starts higher up
+        hidden: { opacity: 0, x: 100 },
         visible: {
             opacity: 1,
-            y: ["-50%", "-53%", "-50%"], // Slides down to center, then floats
+            x: 0,
+            y: ["-50%", "-53%", "-50%"],
             transition: {
                 delay,
-                duration: 3,
-                ease: "easeInOut",
-                repeat: Infinity,
+                duration: 1.0,
+                ease: [0.22, 1, 0.36, 1],
+                y: {
+                    duration: 3,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    delay: delay + 1.0,
+                },
             },
         },
     });
@@ -48,65 +84,66 @@ export default function Hero({ animationsStarted = false }) {
                 >
                     <div className="relative z-10 pointer-events-auto h-full flex flex-col">
                         <motion.div
-                            variants={fadeFromAbove(0)}
+                            variants={revealAnimation(0)}
                             initial="hidden"
                             animate="visible"
                         >
                             <Navbar />
                         </motion.div>
 
-                        <div className="flex-1 max-w-6xl mx-auto my-1.5 px-4 flex flex-col items-center justify-center text-center">
+                        <div className="flex-1 max-w-6xl mx-auto mb-40 md:mb-0  px-4 flex flex-col items-center justify-center text-center">
                             <motion.h2
-                                variants={fadeFromAbove(0.3)}
+                                variants={revealAnimation(0.15)}
                                 initial="hidden"
                                 animate="visible"
-                                className="text-2xl sm:text-4xl md:text-6xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary"
+                                className="text-3xl sm:text-4xl md:text-6xl lg:text-6xl font-rye tracking-widest text-outline-soft text-primary"
                             >
                                 WELCOME TO
                             </motion.h2>
-
                             <motion.h1
-                                variants={fadeFromAbove(0.6)}
+                                variants={revealAnimation(0.3)}
                                 initial="hidden"
                                 animate="visible"
-                                className="mt-4 font-rye text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight text-[#F3A83A] text-stroke-strong break-words px-2"
+                                className="-mt-4 sm:w-40 h-15 md:w-200 lg:w-200 lg:h-40 lg:-mt-7"
                             >
-                                CODEUTSAVA 9.0
+                                <img src={codeutsava} alt="CodeUtsava Logo" className=""/>
                             </motion.h1>
 
                             <motion.p
-                                variants={fadeFromAbove(0.9)}
+                                variants={slideReveal(0.45)}
                                 initial="hidden"
                                 animate="visible"
-                                className="mt-6 text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold tracking-wide text-white text-outline-strong"
+                                className="mt-6 font-rye text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold tracking-wide text-white text-outline-strong"
                             >
                                 CODE. INNOVATE. CELEBRATE.
                             </motion.p>
 
                             <motion.p
-                                variants={fadeFromAbove(1.2)}
+                                variants={slideReveal(0.6)}
                                 initial="hidden"
                                 animate="visible"
-                                className="mt-4 text-xs sm:text-sm md:text-base lg:text-lg tracking-wide text-white text-outline-strong px-2"
+                                className="mt-4 font-rye text-xs sm:text-sm md:text-base lg:text-lg tracking-wide text-white text-outline-strong px-2"
                             >
-                                CENTRAL INDIA’S{" "}
+                                CENTRAL INDIA'S{" "}
                                 <b className="text-primary"><span className="text-accent-2">LARGEST CODING EVENT.</span> </b> JOIN US ON {" "}
                                 <b className="text-primary">6<sup>th</sup> - 7<sup>th</sup> NOVEMBER.</b>
                             </motion.p>
                         </div>
 
                         <motion.div 
-                            variants={fadeFromAbove(1.5)}
+                            variants={slideReveal(0.75)}
                             initial="hidden"
                             animate="visible"
                         >
+                            <div className="relative md:top-[-10.25rem] top-[-20rem]" >
                             <BottomCTAs />
+                            </div>
                         </motion.div>
 
                         {/* Rails */}
                         <motion.div
-                            className="codeutsava__hero-social-rail"
-                            variants={socialRailAnimate(1.8)}
+                            className="codeutsava__hero-social-rail "
+                            variants={socialRailAnimate(0.9)}
                             initial="hidden"
                             animate="visible"
                         >
@@ -115,7 +152,7 @@ export default function Hero({ animationsStarted = false }) {
 
                         <motion.div
                             className="scroll-down-section"
-                            variants={rightRailAnimate(2.0)}
+                            variants={rightRailAnimate(0.9)}
                             initial="hidden"
                             animate="visible"
                         >

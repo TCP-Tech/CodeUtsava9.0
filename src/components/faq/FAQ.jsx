@@ -9,9 +9,9 @@ export default function FAQ() {
     const faqs = [
         { q: "HOW DO I REGISTER FOR THE HACKATHON?", a: "Visit our registration page and fill out the required details. You’ll receive a confirmation email once you’re registered." },
         { q: "WHAT IS THE PARTICIPATION FEE?", a: (<> Participation is <b>completely free</b>! There are no charges at any stage of the hackathon. </>) },
-        { q: "WHAT IF I DON’T HAVE A TEAM OR IDEA?", a: "No worries! You can register solo and find teammates during the team formation phase, or get inspired by our problem statements." },
+        // { q: "WHAT IF I DON’T HAVE A TEAM OR IDEA?", a: "No worries! You can register solo and find teammates during the team formation phase, or get inspired by our problem statements." },
         { q: "WHO CAN PARTICIPATE?", a: "Anyone who is a student (undergraduate or postgraduate) can participate, regardless of experience level." },
-        { q: "WHEN AND HOW WILL THE TEAMS BE SHORTLISTED?", a: "Teams will be shortlisted based on their idea submissions. Check the timeline on our website for announcement dates." },
+        // { q: "WHEN AND HOW WILL THE TEAMS BE SHORTLISTED?", a: "Teams will be shortlisted based on their idea submissions. Check the timeline on our website for announcement dates." },
         { q: "WHAT IS THE IDEAL TEAM SIZE?", a: "Teams should consist of 2-4 Members." },
         { q: "WHY SHOULD I PARTICIPATE IN CODEUTSAVA?", a: "Winners get cash prizes, and all participants will have excellent networking opportunities, learn new skills, and get cool swag ;)" },
         { q: "WHAT OTHER PERKS ARE PROVIDED?", a: "Accommodations and meals will be provided, and travel expenses up to Rs.1500 per individual will be reimbursed for all the selected teams participating in CodeUtsava 9.0!" },
