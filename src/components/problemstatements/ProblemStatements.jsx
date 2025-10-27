@@ -2,11 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { Sparkles, Ticket, PartyPopper } from "lucide-react";
 
-// Mock data - replace with your actual imports
 const problems = [
   {
     img: "🎪",
-    title: "Virtual Carnival Experience",
+    title: "To be Announced",
     domain: "AR/VR & Gaming",
     impact: "Enhanced digital entertainment",
     background: "Create immersive carnival experiences",
@@ -14,7 +13,7 @@ const problems = [
   },
   {
     img: "🎡",
-    title: "Smart Queue Management",
+    title: "To be Announced",
     domain: "IoT & Analytics",
     impact: "Reduced wait times",
     background: "Optimize carnival ride queues",
@@ -22,7 +21,7 @@ const problems = [
   },
   {
     img: "🎠",
-    title: "Carnival Safety Monitor",
+    title: "To be Announced",
     domain: "Computer Vision",
     impact: "Improved safety protocols",
     background: "Monitor crowd density and safety",
@@ -30,7 +29,7 @@ const problems = [
   },
   {
     img: "🎢",
-    title: "Digital Ticketing System",
+    title: "To be Announced",
     domain: "Blockchain & Fintech",
     impact: "Seamless transactions",
     background: "Modernize carnival payment systems",
@@ -38,7 +37,7 @@ const problems = [
   },
   {
     img: "🎭",
-    title: "Performance Scheduler",
+    title: "To be Announced",
     domain: "ML & Optimization",
     impact: "Better event planning",
     background: "Optimize carnival show timings",
@@ -46,7 +45,7 @@ const problems = [
   },
   {
     img: "🍿",
-    title: "Food Court Analytics",
+    title: "To be Announced",
     domain: "Data Science",
     impact: "Reduced waste",
     background: "Optimize food stall operations",
@@ -64,7 +63,7 @@ const ProblemCard = ({ img, title, domain, impact, background, statement }) => {
     >
       <div className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
         {/* Front of card */}
-        <div className="absolute w-full h-full backface-hidden bg-gradient-to-br from-red-950/60 to-amber-900/40 border-2 border-red-500/50 rounded-2xl shadow-[0_0_20px_rgba(248,113,113,0.3)] p-6 backdrop-blur-sm hover:shadow-[0_0_30px_rgba(251,146,60,0.5)] transition-all">
+        <div className="absolute w-full h-full backface-hidden bg-gradient-to-br from-red-950/60 to-amber-600/40 border-2 border-red-500/10 rounded-2xl shadow-[0_0_20px_rgba(248,113,113,0.3)] p-6 backdrop-blur-sm hover:shadow-[0_0_30px_rgba(251,146,60,0.5)] transition-all">
           <div className="flex flex-col items-center justify-center h-full">
             <div className="text-7xl mb-4 drop-shadow-[0_0_10px_rgba(251,146,60,0.8)]">
               {img}
@@ -105,9 +104,9 @@ const ProblemCard = ({ img, title, domain, impact, background, statement }) => {
   );
 };
 
-const Section8 = () => {
+const ProblemStatements = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center py-16 px-6 relative overflow-hidden" id="problems">
+    <div className="min-h-screen z-0 flex flex-col items-center py-16 px-6 relative overflow-hidden" id="problems">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         <div className="absolute top-20 left-10 animate-bounce delay-100 text-4xl">🎈</div>
@@ -138,7 +137,7 @@ const Section8 = () => {
           </div>
 
           <button 
-            className="bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-orange-100 font-bold py-4 px-8 rounded-full text-lg shadow-[0_0_20px_rgba(251,146,60,0.5)] transform hover:scale-105 transition-all duration-300 border-2 border-orange-400/40"
+            className="bg-gradient-to-r from-red-400/50 to-amber-600/50 hover:from-red-500 hover:to-amber-500 text-orange-100 font-bold py-4 px-8 rounded-full text-lg shadow-[0_0_20px_rgba(251,146,60,0.5)] transform hover:scale-105 transition-all duration-300 border-2 border-orange-400/40"
             onClick={() => window.open('#', '_blank')}
           >
             <div className="flex items-center gap-3">
@@ -229,4 +228,4 @@ const Section8 = () => {
   );
 };
 
-export default Section8;
+export default ProblemStatements;

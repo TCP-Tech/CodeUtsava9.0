@@ -125,7 +125,7 @@ const Footer = () => {
                         Events
                     </Link> */}
                     <Link
-                        to="/teams"
+                        to="/team"
                         className="hover:text-pink-400 transition hover:drop-shadow-[0_0_6px_#ec4899]"
                     >
                         TCP Team
