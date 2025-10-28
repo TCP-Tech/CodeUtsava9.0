@@ -125,7 +125,7 @@ const ProblemStatements = () => {
           </div>
           
           <h1 className="text-3xl text-center sm:text-4xl md:text-5xl lg:text-6xl font-rye text-[#F3A83A] tracking-wide uppercase drop-shadow-[0_0_14px_rgba(251,146,60,0.95)] p-12">
-            🎟 Problem Statements 🎟
+            Problem Statements
           </h1>
           
           <div className="flex items-center justify-center gap-2 text-lg md:text-xl text-stone-400 mb-8 flex-wrap">
