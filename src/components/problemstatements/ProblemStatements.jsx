@@ -106,7 +106,7 @@ const ProblemCard = ({ img, title, domain, impact, background, statement }) => {
 
 const ProblemStatements = () => {
   return (
-    <div className="min-h-screen z-0 flex flex-col items-center py-16 px-6 relative overflow-hidden" id="problems">
+    <div className="min-h-screen z-0 flex flex-col items-center px-6 relative overflow-hidden" id="problems">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         <div className="absolute top-20 left-10 animate-bounce delay-100 text-4xl">🎈</div>
