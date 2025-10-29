@@ -26,7 +26,7 @@ export default function PrizesSection() {
             padding-bottom: 5px !important;
             /* Ensure the card is fluid for very small screens */
             width: 98% !important; 
-            max-width: 370px !important;
+            max-width: 500px !important;
           }
 
           /* Target the content wrapper for text fitting */
@@ -38,13 +38,14 @@ export default function PrizesSection() {
           
           /* Target title for reduced font size */
           .prize-card h2 {
-            font-size: 10px !important; /* Very small font size for tightest fit */
+            max-width: 150px !important;
+            font-size: 7px !important; /* Very small font size for tightest fit */
             padding-top:0.7rem !important;
           }
 
           /* Target list items for reduced font size */
           .prize-card ul {
-            font-size: 8.5px !important; /* Extremely small font size for tightest fit */
+            font-size: 7px !important; /* Extremely small font size for tightest fit */
           }
         }
         `}
