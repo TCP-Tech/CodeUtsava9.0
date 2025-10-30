@@ -17,6 +17,7 @@ import BackgroundMedia from "../components/background/Background.jsx";
 import bg_image from "../assets/images/bg-part2.jpg";
 import Navbar from "../components/navbar/Navbar.jsx";
 import PrizesSection from "../components/prizes/Prizes.jsx";
+import CountDown from "../components/CountDown/CountDown.jsx";
 import ProblemStatements from "../components/problemstatements/ProblemStatements.jsx"
 import TeamsShortlisted from "../components/teamsShortlisted/TeamsShortlisted.jsx"
 
