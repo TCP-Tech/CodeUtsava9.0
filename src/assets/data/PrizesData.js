@@ -8,6 +8,7 @@ const Prizes = [
       "A Wolfram | Alpha PRO subscription for one year absolutely FREE.",
       "An O’Reilly Ebook for FREE.",
       "One month FREE Echo-3D Premium.",
+      "50% off on all TLE eliminator courses.",
     ],
   },
   {
@@ -18,7 +19,8 @@ const Prizes = [
     prizeInfo: [
       "A Wolfram | Alpha PRO subscription for one year absolutely FREE.",
       "An O’Reilly Ebook for FREE.",
-      "One month FREE Echo-3D Premium.",
+      "One month FREE Echo-3D Premium.",,
+      "50% off on all TLE eliminator courses.",
     ],
   },
   {
@@ -29,7 +31,8 @@ const Prizes = [
     prizeInfo: [
       "A Wolfram | Alpha PRO subscription for one year absolutely FREE.",
       "An O’Reilly Ebook for FREE.",
-      "One month FREE Echo-3D Premium.",
+      "One month FREE Echo-3D Premium.",,
+      "50% off on all TLE eliminator courses.",
     ],
   },
   {
@@ -39,7 +42,8 @@ const Prizes = [
     ],
     prizeInfo: [
       "A Wolfram | Alpha PRO subscription for one year absolutely FREE.",
-      "One month FREE Echo-3D Premium.",
+      "One month FREE Echo-3D Premium.",,
+      "50% off on all TLE eliminator courses.",
     ],
   },
   {
@@ -55,7 +59,8 @@ const Prizes = [
       "30 days FREE access to Wolfram | One.",
       "One month FREE Echo3D Pro.",
       "Tshirts, stickers and other goodies for the team.",
-      "System Driven mocks by InterviewBuddy.",
+      "System Driven mocks by InterviewBuddy.",,
+      "50% off on all TLE eliminator courses.",
     ],
   },
 ];
