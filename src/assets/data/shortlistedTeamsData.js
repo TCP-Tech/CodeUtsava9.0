@@ -279,12 +279,12 @@ const shortlistedTeams = [
         college: "NIT Raipur",
     },
     {
-        name: "ACE",
+        name: "CodeBlooded",
         leader: "",
-        member1: "Vinay Pepakayala",
-        member2: "Dharavath Rahul",
-        member3: "",
-        member4: "",
+        member1: "Tanmay Srivastava",
+        member2: "Amber Agrawal",
+        member3: "Tejas Surya",
+        member4: "Rakshith Shetty",
         college: "NIT Raipur",
     },
     {
