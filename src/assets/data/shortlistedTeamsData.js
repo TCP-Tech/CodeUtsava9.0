@@ -350,6 +350,15 @@ const shortlistedTeams = [
         member4: "",
         college: "Dayananda Sagar College of Engineering, BANGALORE",
     },
+    {
+        name: "Base2",
+        leader: "",
+        member1: "Priyanshu Kumar Pandey",
+        member2: "Shreeyash Kumar Dheemar",
+        member3: "",
+        member4: "",
+        college: "NIT Raipur",
+    },
 ];
 
 export default shortlistedTeams;
