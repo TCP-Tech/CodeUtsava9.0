@@ -1,0 +1,151 @@
+.codeutsava_countDown-container {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-image: url('/src/assets/images/bg.webp');
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto;
+  }
+  
+  .dark-cover{
+    background-color: rgba(0, 0, 0, 0.404);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .cu-countDown-header {
+    font-size: 17px;
+    padding-bottom: 20px;
+    text-shadow: 2.85px 2.85px 0.532px black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cu-countDown-header h1{
+    color: #F3A83A;
+    margin-bottom: 3rem;
+  }
+  
+  .countdown-timer {
+    display: flex;
+    padding: 30px 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(25px);
+    background-color: rgba(0, 0, 0, 0.363);
+    border-radius: 15px;
+    width: 90vw;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 3px solid;
+    border-color: var(--primary-c);
+  }
+  
+  .flip-clock-wrapper {
+    font-family: pixelled;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .flip-clock-divider .flip-clock-label {
+    color: white;
+  }
+  
+  .flip-clock-wrapper ul li a div div.inn {
+    color: white;
+    background-color: var(--highlighter-c);
+    text-shadow: 2.85px 2.85px 0.532px black;
+  }
+  
+  .flip-clock-dot {
+    background: var(--highlighter-c);
+  }
+  
+  .flip-clock-wrapper ul {
+    width: 85px;
+  }
+  
+  #countDown-message {
+    margin-top: 10px;
+    font-weight: bold;
+    animation: blink 0.5s infinite alternate;
+    color: red;
+  }
+  @keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+  
+  .start-countdown {
+    width: 45%;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--primary-c);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .start-countdown:disabled {
+    background-color: gray;
+  }
+  
+  @media (max-width: 768px) {
+    .cu-countDown-header {
+      font-size: 10px; 
+    }
+    .cu-countDown-header img {
+      height:4rem; 
+    }
+    .cu-countDown-header-heading{
+        font-size:40px;
+    }
+  
+    .countdown-timer {
+      padding: 20px 10px;
+      width: 95vw;
+    }
+  
+    .flip-clock-wrapper ul {
+      width: 70px;
+    }
+  
+    .start-countdown {
+      padding: 8px 16px; 
+      font-size: 14px; 
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .cu-countDown-header {
+      font-size: 14px
+    }
+  
+    .countdown-timer {
+      padding: 15px 5px;
+      width: 100vw; 
+    }
+  
+    .flip-clock-wrapper ul {
+      width: 60px; 
+    }
+  
+    .start-countdown {
+      padding: 6px 12px; 
+      font-size: 12px;
+    }
+  }
+  

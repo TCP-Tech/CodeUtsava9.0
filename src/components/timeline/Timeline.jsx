@@ -235,7 +235,7 @@ const Timeline = () => {
               date={element.date}
               dateClassName="
                 !text-white/95 
-                !text-xs xs:!text-sm sm:!text-base md:!text-lg lg:!text-xl 
+                !text-base xs:!text-lg sm:!text-xl md:!text-2xl lg:!text-2xl md:text-center
                 !font-semibold
                 !pl-2 sm:!pl-0
               "
