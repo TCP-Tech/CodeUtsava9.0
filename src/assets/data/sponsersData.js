@@ -10,6 +10,7 @@ import sponser10 from "../images/sponsers/fold.png";
 import sponser14 from "../images/sponsers/sponser14.webp";
 import sponser15 from "../images/sponsers/sponser15.webp";
 import sponser16 from "../images/sponsers/sponser16.webp";
+import sponser18 from "../images/sponsers/sponser18.webp";
 
 const platinum = [
   {
@@ -56,9 +57,9 @@ const gold = [
     img: sponser1,
     alt: "DEVFOLIO LOGO"
   },
-  // {
-  //   img: sponser14,
-  // },
+  {
+     img: sponser18,
+  },
   // {
   //   img: sponser3,
   // }
