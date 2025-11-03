@@ -359,6 +359,15 @@ const shortlistedTeams = [
         member4: "",
         college: "NIT Raipur",
     },
+    {
+        name: "Kaju Katli",
+        leader: "",
+        member1: "Alisha Tripathi",
+        member2: "Priyadarshi Satyakam",
+        member3: "Darshan Kochar",
+        member4: "",
+        college: "IIIT Naya Raipur",
+    },
 ];
 
 export default shortlistedTeams;
