@@ -61,7 +61,7 @@ const CountDown = () => {
         }
     };
 
-    const initializeFlipClock = (remainingTime) => {
+    const initializeFlipClock = (startTime, endTime = null) => {
         if (!isFlipClockReady) {
             console.warn("FlipClock is not ready yet");
             return;
@@ -82,14 +82,17 @@ const CountDown = () => {
             // Clear the container
             flipClockRef.current.innerHTML = "";
 
-            // Calculate start and end dates for countdown
+            // For elapsed time that continues counting, we need to use from: past, to: future
+            // This makes it count UP continuously
             const now = new Date();
-            const endDate = new Date(now.getTime() + remainingTime);
+            const futureTime = new Date(
+                now.getTime() + 365 * 24 * 60 * 60 * 1000
+            ); // Add 1 year to allow continuous counting
 
-            // Create an elapsed time face for countdown (from now to end date)
+            // Create an elapsed time face showing time passed since start
             const elapsedTimeFace = elapsedTime({
-                from: now,
-                to: endDate,
+                from: new Date(startTime),
+                to: futureTime, // Set to far future so it keeps counting
                 format: "hh:mm:ss", // lowercase format for hours:minutes:seconds
             });
 
@@ -113,7 +116,7 @@ const CountDown = () => {
             const currentTime = Date.now();
             const endTime = currentTime + countdownDuration;
             await setCounterData(true, currentTime, endTime);
-            initializeFlipClock(countdownDuration);
+            initializeFlipClock(currentTime, endTime);
             if (startButtonRef.current)
                 startButtonRef.current.style.display = "none";
         } else {
@@ -130,13 +133,23 @@ const CountDown = () => {
         (async () => {
             const counterData = await fetchCounterData();
             const currentTime = Date.now();
+
             if (counterData && counterData.flag) {
+                // Countdown has been started
                 const remainingTime = counterData.endTime - currentTime;
+
                 if (remainingTime > 0) {
+                    // Timer is still running - hide button and show elapsed time
                     if (startButtonRef.current)
                         startButtonRef.current.style.display = "none";
-                    initializeFlipClock(remainingTime);
+
+                    // Initialize clock with the actual start time from server
+                    initializeFlipClock(
+                        counterData.startTime,
+                        counterData.endTime
+                    );
                 } else {
+                    // Timer has ended
                     if (messageRef.current) {
                         messageRef.current.textContent =
                             "GAME OVER: Hackathon Complete! You've Leveled Up!";
@@ -144,10 +157,21 @@ const CountDown = () => {
                     }
                     if (startButtonRef.current)
                         startButtonRef.current.style.display = "none";
+
+                    // Show the final elapsed time (full duration)
+                    initializeFlipClock(
+                        counterData.startTime,
+                        counterData.endTime
+                    );
                 }
             } else {
-                // Show clock at 00:00:00 when no countdown is active (matching last year's behavior)
-                initializeFlipClock(0);
+                // No countdown has been started yet - show button and clock at 00:00:00
+                if (startButtonRef.current)
+                    startButtonRef.current.style.display = "block";
+
+                // Show clock at 00:00:00 when no countdown is active
+                const now = Date.now();
+                initializeFlipClock(now, now);
             }
         })();
 
