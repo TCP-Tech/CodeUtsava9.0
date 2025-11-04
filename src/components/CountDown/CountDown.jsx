@@ -42,22 +42,48 @@ const CountDown = () => {
     };
 
     const setCounterData = async (flag, startTime, endTime) => {
-        const csrftoken = document.querySelector(
-            "[name=csrfmiddlewaretoken]"
-        )?.value;
+        // Try to get CSRF token from cookie (Django sets csrftoken cookie)
+        const getCsrfTokenFromCookie = () => {
+            const name = "csrftoken";
+            const cookies = document.cookie.split(";");
+            for (let cookie of cookies) {
+                const [key, value] = cookie.trim().split("=");
+                if (key === name) {
+                    return value;
+                }
+            }
+            return null;
+        };
+
+        const csrftoken =
+            getCsrfTokenFromCookie() ||
+            document.querySelector("[name=csrfmiddlewaretoken]")?.value;
+
         try {
+            const headers = {
+                "Content-Type": "application/json",
+            };
+
+            // Only add CSRF token if it exists
+            if (csrftoken) {
+                headers["X-CSRFToken"] = csrftoken;
+            }
+
             const response = await fetch(`${baseUrl}setcounter/`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": csrftoken,
-                },
+                headers: headers,
+                credentials: "include", // Include cookies for CSRF
                 body: JSON.stringify({ flag, startTime, endTime }),
             });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
             return await response.json();
         } catch (error) {
             console.error("Error setting countdown data:", error);
-            return null;
+            throw error; // Re-throw to handle in handleStart
         }
     };
 
@@ -122,18 +148,27 @@ const CountDown = () => {
     };
 
     const handleStart = async () => {
-        const counterData = await fetchCounterData();
-        if (counterData && !counterData.flag) {
-            const currentTime = Date.now();
-            const endTime = currentTime + countdownDuration;
-            await setCounterData(true, currentTime, endTime);
-            initializeFlipClock(currentTime, true); // true = start counting
-            if (startButtonRef.current)
-                startButtonRef.current.style.display = "none";
-        } else {
+        try {
+            const counterData = await fetchCounterData();
+            if (counterData && !counterData.flag) {
+                const currentTime = Date.now();
+                const endTime = currentTime + countdownDuration;
+                await setCounterData(true, currentTime, endTime);
+                initializeFlipClock(currentTime, true); // true = start counting
+                if (startButtonRef.current)
+                    startButtonRef.current.style.display = "none";
+            } else {
+                if (messageRef.current) {
+                    messageRef.current.textContent =
+                        "Countdown has already started!";
+                }
+            }
+        } catch (error) {
+            console.error("Failed to start countdown:", error);
             if (messageRef.current) {
                 messageRef.current.textContent =
-                    "Countdown has already started!";
+                    "Error starting countdown. Please try again.";
+                messageRef.current.style.color = "#ff4444";
             }
         }
     };
