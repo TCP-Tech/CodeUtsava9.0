@@ -13,11 +13,7 @@ const Spons = () => {
     const containerRef = useRef(null);
     const trackRef = useRef(null);
 
-    const allSponsors = [
-        ...sponsers.platinum,
-        ...sponsers.gold,
-        ...sponsers.partners,
-    ];
+    const allSponsors = sponsers;
 
     // Create enough duplicates for seamless infinite scroll
     const duplicatedSponsors = [];
@@ -45,7 +41,11 @@ const Spons = () => {
 
         // Set initial positions - fill screen width from start
         const screenWidth = window.innerWidth;
-        const cardsToShow = Math.ceil(screenWidth / cardWidth) + 2; // Extra cards for seamless scroll
+        let cardsToShow = allSponsors.length + 2; // Extra cards for seamless scroll
+        if (cardsToShow % 2 === 0) {
+            cardsToShow += 1; // Ensure odd number of cards for better centering
+        }
+        console.log("Cards to show:", cardsToShow);
 
         gsap.set(cards, {
             x: (i) => (i % cardsToShow) * cardWidth - cardWidth, // Start one card width to the left
@@ -197,7 +197,7 @@ const Spons = () => {
                                         }}
                                     />
                                     {/* Dark overlay for better logo visibility */}
-                                    <div 
+                                    <div
                                         className="absolute inset-0 bg-black/20"
                                         style={{
                                             margin: "2px",
