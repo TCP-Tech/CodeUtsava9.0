@@ -117,26 +117,37 @@ The website design incorporates carnival elements such as:
 
 ## Website Screenshots 📸
 
-<!-- TODO: Add website screenshots here once available -->
-<!-- The following sections will showcase the Code Carnival theme implementation -->
-
-### 🏠 Homepage
-
-_Screenshots to be added - showcasing the carnival-themed landing page with vibrant colors and engaging animations_
-
-### 🎪 Event Sections
-
-_Screenshots to be added - displaying the carnival-themed event information and registration areas_
-
-### 🎭 Interactive Elements
-
-_Screenshots to be added - highlighting the playful interactions and carnival-inspired design elements_
-
-### 📱 Mobile Experience
-
-_Screenshots to be added - demonstrating the responsive carnival theme across different devices_
-
-> **Note**: Website screenshots will be updated soon to showcase the complete Code Carnival theme implementation!
+<p align="center">
+  <img src="src/assets/images/Readme/home.png" alt="Homepage" width="700">
+  <br><b>🏠 Homepage</b>
+  <br><br>
+  <img src="src/assets/images/Readme/teams.png" alt="Teams" width="700">
+  <br><b>👥 Teams Section</b>
+  <br><br>
+  <img src="src/assets/images/Readme/team-cards.png" alt="Team Cards" width="700">
+  <br><b>👤 Team Cards</b>
+  <br><br>
+  <img src="src/assets/images/Readme/shortlist.png" alt="Shortlisted Teams" width="700">
+  <br><b>🏆 Shortlisted Teams</b>
+  <br><br>
+  <img src="src/assets/images/Readme/timeline.png" alt="Timeline" width="700">
+  <br><b>🕒 Timeline</b>
+  <br><br>
+  <img src="src/assets/images/Readme/faq.png" alt="FAQ" width="700">
+  <br><b>❓ FAQ Section</b>
+  <br><br>
+  <img src="src/assets/images/Readme/contact.png" alt="Contact" width="700">
+  <br><b>📞 Contact Us</b>
+  <br><br>
+  <img src="src/assets/images/Readme/spons.png" alt="Sponsors" width="700">
+  <br><b>🎪 Sponsors</b>
+  <br><br>
+  <img src="src/assets/images/Readme/social.png" alt="Socials" width="700">
+  <br><b>🌐 Socials</b>
+  <br><br>
+  <img src="src/assets/images/Readme/graph.png" alt="Graphs & Analytics" width="700">
+  <br><b>📊 Graphs & Analytics</b>
+</p>
 
 ## Getting Started
 
