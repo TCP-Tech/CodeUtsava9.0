@@ -61,7 +61,7 @@ const CountDown = () => {
         }
     };
 
-    const initializeFlipClock = (startTime, endTime = null) => {
+    const initializeFlipClock = (startTime, shouldCount = true) => {
         if (!isFlipClockReady) {
             console.warn("FlipClock is not ready yet");
             return;
@@ -82,26 +82,37 @@ const CountDown = () => {
             // Clear the container
             flipClockRef.current.innerHTML = "";
 
-            // For elapsed time that continues counting, we need to use from: past, to: future
-            // This makes it count UP continuously
-            const now = new Date();
-            const futureTime = new Date(
-                now.getTime() + 365 * 24 * 60 * 60 * 1000
-            ); // Add 1 year to allow continuous counting
+            let elapsedTimeFace;
 
-            // Create an elapsed time face showing time passed since start
-            const elapsedTimeFace = elapsedTime({
-                from: new Date(startTime),
-                to: futureTime, // Set to far future so it keeps counting
-                format: "hh:mm:ss", // lowercase format for hours:minutes:seconds
-            });
+            if (shouldCount) {
+                // For elapsed time that continues counting, we need to use from: past, to: future
+                // This makes it count UP continuously
+                const now = new Date();
+                const futureTime = new Date(
+                    now.getTime() + 365 * 24 * 60 * 60 * 1000
+                ); // Add 1 year to allow continuous counting
+
+                // Create an elapsed time face showing time passed since start
+                elapsedTimeFace = elapsedTime({
+                    from: new Date(startTime),
+                    to: futureTime, // Set to far future so it keeps counting
+                    format: "hh:mm:ss", // lowercase format for hours:minutes:seconds
+                });
+            } else {
+                // Static clock at 00:00:00 - from and to are the same
+                elapsedTimeFace = elapsedTime({
+                    from: new Date(startTime),
+                    to: new Date(startTime), // Same time = no counting
+                    format: "hh:mm:ss",
+                });
+            }
 
             // Create the FlipClock with the elapsed time face and theme
             const fc = flipClock({
                 face: elapsedTimeFace,
                 theme: theme(),
                 parent: flipClockRef.current,
-                autoStart: true,
+                autoStart: shouldCount, // Only auto-start if we want counting
             });
 
             setClock(fc);
@@ -116,7 +127,7 @@ const CountDown = () => {
             const currentTime = Date.now();
             const endTime = currentTime + countdownDuration;
             await setCounterData(true, currentTime, endTime);
-            initializeFlipClock(currentTime, endTime);
+            initializeFlipClock(currentTime, true); // true = start counting
             if (startButtonRef.current)
                 startButtonRef.current.style.display = "none";
         } else {
@@ -143,11 +154,8 @@ const CountDown = () => {
                     if (startButtonRef.current)
                         startButtonRef.current.style.display = "none";
 
-                    // Initialize clock with the actual start time from server
-                    initializeFlipClock(
-                        counterData.startTime,
-                        counterData.endTime
-                    );
+                    // Initialize clock with the actual start time from server (counting)
+                    initializeFlipClock(counterData.startTime, true);
                 } else {
                     // Timer has ended
                     if (messageRef.current) {
@@ -158,20 +166,17 @@ const CountDown = () => {
                     if (startButtonRef.current)
                         startButtonRef.current.style.display = "none";
 
-                    // Show the final elapsed time (full duration)
-                    initializeFlipClock(
-                        counterData.startTime,
-                        counterData.endTime
-                    );
+                    // Show the final elapsed time (static, not counting)
+                    initializeFlipClock(counterData.startTime, false);
                 }
             } else {
                 // No countdown has been started yet - show button and clock at 00:00:00
                 if (startButtonRef.current)
                     startButtonRef.current.style.display = "block";
 
-                // Show clock at 00:00:00 when no countdown is active
+                // Show static clock at 00:00:00 when no countdown is active
                 const now = Date.now();
-                initializeFlipClock(now, now);
+                initializeFlipClock(now, false); // false = don't count
             }
         })();
 
