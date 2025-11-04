@@ -15,7 +15,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/TCP-Tech/CodeUtsava9.0">
-    <img src="/src/assets/images/codeutsavaTitle3d.webp" alt="Logo" width="400">
+    <img src="/src/assets/images/codeutsavaLogoCropped2.webp" alt="CodeUtsava 9.0 Banner Logo" width="700" height="400">
   </a>
 
   <h3 align="center">CodeUtsava 9.0 - Code Carnival 🎪</h3>
@@ -55,7 +55,7 @@
       </ul>
     </li>
     <li><a href="#license">License</a></li>
-    <li><a href="#Turing Club Of Programmers">Turing Club Of Programmers</a></li>
+    <li><a href="#turing-club-of-programmers">Turing Club Of Programmers</a></li>
     <li><a href="#starware">Starware</a></li>
   </ol>
 </details>
@@ -68,19 +68,20 @@
 
 CodeUtsava 9.0 - Code Carnival is more than just a coding competition; it's a grand festival where:
 
-- 🎪 **Carnival Atmosphere**: Experience coding in a fun, festive environment with carnival-themed challenges
-- 🎯 **Diverse Events**: Participate in hackathons, workshops, and coding competitions
-- 🌟 **Innovation Showcase**: Present your creative solutions to real-world problems
-- 🤝 **Community Building**: Connect with like-minded developers, mentors, and industry experts
-- 🏆 **Exciting Prizes**: Compete for amazing rewards and recognition
+-   🎪 **Carnival Atmosphere**: Experience coding in a fun, festive environment with carnival-themed challenges
+-   🎯 **Diverse Events**: Participate in hackathons, workshops, and coding competitions
+-   🌟 **Innovation Showcase**: Present your creative solutions to real-world problems
+-   🤝 **Community Building**: Connect with like-minded developers, mentors, and industry experts
+-   🏆 **Exciting Prizes**: Compete for amazing rewards and recognition
 
 Students from all over India can join this coding carnival to:
-- Participate in the main hackathon event
-- Attend workshops organized under this event
-- Take part in fun coding challenges and games
-- Network with peers and industry professionals
-- Win exciting prizes and certificates
-- Be part of our vibrant coding community
+
+-   Participate in the main hackathon event
+-   Attend workshops organized under this event
+-   Take part in fun coding challenges and games
+-   Network with peers and industry professionals
+-   Win exciting prizes and certificates
+-   Be part of our vibrant coding community
 
 The event aims to foster and nurture an invigorating coding culture among students through mentorship programs, workshops, and various other engaging activities, all wrapped in the exciting theme of a carnival!
 
@@ -88,48 +89,67 @@ The event aims to foster and nurture an invigorating coding culture among studen
 
 Following technologies and libraries are used for the development of this website
 
-- [React](https://reactjs.org/) - Frontend framework for building user interfaces
-- [Django](https://www.djangoproject.com/) - Backend framework
-- [Vite](https://vitejs.dev/) - Fast build tool and development server
-- [JavaScript/JSX](https://javascript.info/) - Programming language and syntax extension
-- [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS) - Styling and animations
-- [Netlify](https://netlify.com/) - Deployment and hosting platform
+-   [React](https://reactjs.org/) - Frontend framework for building user interfaces
+-   [Django](https://www.djangoproject.com/) - Backend framework
+-   [Vite](https://vitejs.dev/) - Fast build tool and development server
+-   [JavaScript/JSX](https://javascript.info/) - Programming language and syntax extension
+-   [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS) - Styling and animations
+-   [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework for rapid UI development
+-   [FlipClock](https://flipclockjs.com/guide/what-is-flipclock.html) - Modern flip clock timer library
+-   [Netlify](https://netlify.com/) - Deployment and hosting platform
 
 ## Theme - Code Carnival 🎪
 
-CodeUtsava 9.0 embraces the **Code Carnival** theme, transforming the traditional hackathon experience into a vibrant, festive celebration of coding and creativity. 
+CodeUtsava 9.0 embraces the **Code Carnival** theme, transforming the traditional hackathon experience into a vibrant, festive celebration of coding and creativity.
 
 ### Theme Elements 🎭
-- **Carnival Aesthetics**: Bright colors, playful animations, and carnival-inspired design elements
-- **Interactive Experience**: Engaging user interface with carnival-themed interactions
-- **Festive Atmosphere**: Creating a fun and welcoming environment for all participants
-- **Celebration of Code**: Highlighting the joy and creativity in programming
+
+-   **Carnival Aesthetics**: Bright colors, playful animations, and carnival-inspired design elements
+-   **Interactive Experience**: Engaging user interface with carnival-themed interactions
+-   **Festive Atmosphere**: Creating a fun and welcoming environment for all participants
+-   **Celebration of Code**: Highlighting the joy and creativity in programming
 
 The website design incorporates carnival elements such as:
-- 🎪 Circus-inspired color schemes and graphics
-- 🎠 Playful animations and transitions
-- 🎯 Interactive carnival game elements
-- 🎭 Fun and engaging user experience
-- 🎪 Festive typography and imagery
+
+-   🎪 Circus-inspired color schemes and graphics
+-   🎠 Playful animations and transitions
+-   🎯 Interactive carnival game elements
+-   🎭 Fun and engaging user experience
+-   🎪 Festive typography and imagery
 
 ## Website Screenshots 📸
 
-<!-- TODO: Add website screenshots here once available -->
-<!-- The following sections will showcase the Code Carnival theme implementation -->
-
-### 🏠 Homepage
-*Screenshots to be added - showcasing the carnival-themed landing page with vibrant colors and engaging animations*
-
-### 🎪 Event Sections
-*Screenshots to be added - displaying the carnival-themed event information and registration areas*
-
-### 🎭 Interactive Elements
-*Screenshots to be added - highlighting the playful interactions and carnival-inspired design elements*
-
-### 📱 Mobile Experience
-*Screenshots to be added - demonstrating the responsive carnival theme across different devices*
-
-> **Note**: Website screenshots will be updated soon to showcase the complete Code Carnival theme implementation!
+<p align="center">
+  <img src="src/assets/images/Readme/home.png" alt="Homepage" width="700">
+  <br><b>🏠 Homepage</b>
+  <br><br>
+  <img src="src/assets/images/Readme/teams.png" alt="Teams" width="700">
+  <br><b>👥 Teams Section</b>
+  <br><br>
+  <img src="src/assets/images/Readme/team-cards.png" alt="Team Cards" width="700">
+  <br><b>👤 Team Cards</b>
+  <br><br>
+  <img src="src/assets/images/Readme/shortlist.png" alt="Shortlisted Teams" width="700">
+  <br><b>🏆 Shortlisted Teams</b>
+  <br><br>
+  <img src="src/assets/images/Readme/timeline.png" alt="Timeline" width="700">
+  <br><b>🕒 Timeline</b>
+  <br><br>
+  <img src="src/assets/images/Readme/faq.png" alt="FAQ" width="700">
+  <br><b>❓ FAQ Section</b>
+  <br><br>
+  <img src="src/assets/images/Readme/contact.png" alt="Contact" width="700">
+  <br><b>📞 Contact Us</b>
+  <br><br>
+  <img src="src/assets/images/Readme/spons.png" alt="Sponsors" width="700">
+  <br><b>🎪 Sponsors</b>
+  <br><br>
+  <img src="src/assets/images/Readme/social.png" alt="Socials" width="700">
+  <br><b>🌐 Socials</b>
+  <br><br>
+  <img src="src/assets/images/Readme/graph.png" alt="Graphs & Analytics" width="700">
+  <br><b>📊 Graphs & Analytics</b>
+</p>
 
 ## Getting Started
 
@@ -137,33 +157,33 @@ To setup the project locally the steps below.
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/download/)
+-   [Node.js](https://nodejs.org/en/download/)
 
-  ```sh
-  # Homebrew
-  brew install nodejs
+    ```sh
+    # Homebrew
+    brew install nodejs
 
-  # Sudo apt
-  sudo apt install nodejs
+    # Sudo apt
+    sudo apt install nodejs
 
-  # Packman
-  pacman -S nodejs
+    # Packman
+    pacman -S nodejs
 
-  # Module Install
-  dnf module install nodejs:<stream> # stream is the version
+    # Module Install
+    dnf module install nodejs:<stream> # stream is the version
 
-  # Windows (chocolaty)
-  cinst nodejs.install
+    # Windows (chocolaty)
+    cinst nodejs.install
 
-  ```
+    ```
 
-- [Yarn](https://classic.yarnpkg.com/en/docs/install/)
+-   [Yarn](https://classic.yarnpkg.com/en/docs/install/)
 
 ```sh
   npm install --global yarn
 ```
 
-- [Git](https://git-scm.com/downloads)
+-   [Git](https://git-scm.com/downloads)
 
 ```sh
   # Homebrew
@@ -263,4 +283,4 @@ Your appreciation makes us grow and glow up. ⭐
 [license-shield]: https://img.shields.io/github/license/TCP-Tech/CodeUtsava9.0?style=for-the-badge
 [license-url]: https://github.com/TCP-Tech/CodeUtsava9.0/LICENSE
 [product-screenshot]: images/Compose.png
-[tcp]: src/assets/images/tcpName.png
+[tcp]: src/assets/TCP1.png
