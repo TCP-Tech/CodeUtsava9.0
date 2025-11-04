@@ -15,7 +15,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/TCP-Tech/CodeUtsava9.0">
-    <img src="/src/assets/images/codeutsavaTitle3d.webp" alt="Logo" width="400">
+    <img src="/src/assets/images/codeutsava logo.svg" alt="CodeUtsava 9.0 Banner Logo" width="400">
   </a>
 
   <h3 align="center">CodeUtsava 9.0 - Code Carnival 🎪</h3>
@@ -68,19 +68,20 @@
 
 CodeUtsava 9.0 - Code Carnival is more than just a coding competition; it's a grand festival where:
 
-- 🎪 **Carnival Atmosphere**: Experience coding in a fun, festive environment with carnival-themed challenges
-- 🎯 **Diverse Events**: Participate in hackathons, workshops, and coding competitions
-- 🌟 **Innovation Showcase**: Present your creative solutions to real-world problems
-- 🤝 **Community Building**: Connect with like-minded developers, mentors, and industry experts
-- 🏆 **Exciting Prizes**: Compete for amazing rewards and recognition
+-   🎪 **Carnival Atmosphere**: Experience coding in a fun, festive environment with carnival-themed challenges
+-   🎯 **Diverse Events**: Participate in hackathons, workshops, and coding competitions
+-   🌟 **Innovation Showcase**: Present your creative solutions to real-world problems
+-   🤝 **Community Building**: Connect with like-minded developers, mentors, and industry experts
+-   🏆 **Exciting Prizes**: Compete for amazing rewards and recognition
 
 Students from all over India can join this coding carnival to:
-- Participate in the main hackathon event
-- Attend workshops organized under this event
-- Take part in fun coding challenges and games
-- Network with peers and industry professionals
-- Win exciting prizes and certificates
-- Be part of our vibrant coding community
+
+-   Participate in the main hackathon event
+-   Attend workshops organized under this event
+-   Take part in fun coding challenges and games
+-   Network with peers and industry professionals
+-   Win exciting prizes and certificates
+-   Be part of our vibrant coding community
 
 The event aims to foster and nurture an invigorating coding culture among students through mentorship programs, workshops, and various other engaging activities, all wrapped in the exciting theme of a carnival!
 
@@ -88,29 +89,31 @@ The event aims to foster and nurture an invigorating coding culture among studen
 
 Following technologies and libraries are used for the development of this website
 
-- [React](https://reactjs.org/) - Frontend framework for building user interfaces
-- [Django](https://www.djangoproject.com/) - Backend framework
-- [Vite](https://vitejs.dev/) - Fast build tool and development server
-- [JavaScript/JSX](https://javascript.info/) - Programming language and syntax extension
-- [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS) - Styling and animations
-- [Netlify](https://netlify.com/) - Deployment and hosting platform
+-   [React](https://reactjs.org/) - Frontend framework for building user interfaces
+-   [Django](https://www.djangoproject.com/) - Backend framework
+-   [Vite](https://vitejs.dev/) - Fast build tool and development server
+-   [JavaScript/JSX](https://javascript.info/) - Programming language and syntax extension
+-   [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS) - Styling and animations
+-   [Netlify](https://netlify.com/) - Deployment and hosting platform
 
 ## Theme - Code Carnival 🎪
 
-CodeUtsava 9.0 embraces the **Code Carnival** theme, transforming the traditional hackathon experience into a vibrant, festive celebration of coding and creativity. 
+CodeUtsava 9.0 embraces the **Code Carnival** theme, transforming the traditional hackathon experience into a vibrant, festive celebration of coding and creativity.
 
 ### Theme Elements 🎭
-- **Carnival Aesthetics**: Bright colors, playful animations, and carnival-inspired design elements
-- **Interactive Experience**: Engaging user interface with carnival-themed interactions
-- **Festive Atmosphere**: Creating a fun and welcoming environment for all participants
-- **Celebration of Code**: Highlighting the joy and creativity in programming
+
+-   **Carnival Aesthetics**: Bright colors, playful animations, and carnival-inspired design elements
+-   **Interactive Experience**: Engaging user interface with carnival-themed interactions
+-   **Festive Atmosphere**: Creating a fun and welcoming environment for all participants
+-   **Celebration of Code**: Highlighting the joy and creativity in programming
 
 The website design incorporates carnival elements such as:
-- 🎪 Circus-inspired color schemes and graphics
-- 🎠 Playful animations and transitions
-- 🎯 Interactive carnival game elements
-- 🎭 Fun and engaging user experience
-- 🎪 Festive typography and imagery
+
+-   🎪 Circus-inspired color schemes and graphics
+-   🎠 Playful animations and transitions
+-   🎯 Interactive carnival game elements
+-   🎭 Fun and engaging user experience
+-   🎪 Festive typography and imagery
 
 ## Website Screenshots 📸
 
@@ -118,16 +121,20 @@ The website design incorporates carnival elements such as:
 <!-- The following sections will showcase the Code Carnival theme implementation -->
 
 ### 🏠 Homepage
-*Screenshots to be added - showcasing the carnival-themed landing page with vibrant colors and engaging animations*
+
+_Screenshots to be added - showcasing the carnival-themed landing page with vibrant colors and engaging animations_
 
 ### 🎪 Event Sections
-*Screenshots to be added - displaying the carnival-themed event information and registration areas*
+
+_Screenshots to be added - displaying the carnival-themed event information and registration areas_
 
 ### 🎭 Interactive Elements
-*Screenshots to be added - highlighting the playful interactions and carnival-inspired design elements*
+
+_Screenshots to be added - highlighting the playful interactions and carnival-inspired design elements_
 
 ### 📱 Mobile Experience
-*Screenshots to be added - demonstrating the responsive carnival theme across different devices*
+
+_Screenshots to be added - demonstrating the responsive carnival theme across different devices_
 
 > **Note**: Website screenshots will be updated soon to showcase the complete Code Carnival theme implementation!
 
@@ -137,33 +144,33 @@ To setup the project locally the steps below.
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/download/)
+-   [Node.js](https://nodejs.org/en/download/)
 
-  ```sh
-  # Homebrew
-  brew install nodejs
+    ```sh
+    # Homebrew
+    brew install nodejs
 
-  # Sudo apt
-  sudo apt install nodejs
+    # Sudo apt
+    sudo apt install nodejs
 
-  # Packman
-  pacman -S nodejs
+    # Packman
+    pacman -S nodejs
 
-  # Module Install
-  dnf module install nodejs:<stream> # stream is the version
+    # Module Install
+    dnf module install nodejs:<stream> # stream is the version
 
-  # Windows (chocolaty)
-  cinst nodejs.install
+    # Windows (chocolaty)
+    cinst nodejs.install
 
-  ```
+    ```
 
-- [Yarn](https://classic.yarnpkg.com/en/docs/install/)
+-   [Yarn](https://classic.yarnpkg.com/en/docs/install/)
 
 ```sh
   npm install --global yarn
 ```
 
-- [Git](https://git-scm.com/downloads)
+-   [Git](https://git-scm.com/downloads)
 
 ```sh
   # Homebrew
