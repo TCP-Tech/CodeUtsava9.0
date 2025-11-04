@@ -270,4 +270,4 @@ Your appreciation makes us grow and glow up. ⭐
 [license-shield]: https://img.shields.io/github/license/TCP-Tech/CodeUtsava9.0?style=for-the-badge
 [license-url]: https://github.com/TCP-Tech/CodeUtsava9.0/LICENSE
 [product-screenshot]: images/Compose.png
-[tcp]: src/assets/images/tcpName.png
+[tcp]: src/assets/TCP1.png
