@@ -94,6 +94,8 @@ Following technologies and libraries are used for the development of this websit
 -   [Vite](https://vitejs.dev/) - Fast build tool and development server
 -   [JavaScript/JSX](https://javascript.info/) - Programming language and syntax extension
 -   [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS) - Styling and animations
+-   [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework for rapid UI development
+-   [FlipClock](https://flipclockjs.com/guide/what-is-flipclock.html) - Modern flip clock timer library
 -   [Netlify](https://netlify.com/) - Deployment and hosting platform
 
 ## Theme - Code Carnival 🎪
