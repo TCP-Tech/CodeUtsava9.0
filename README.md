@@ -14,8 +14,8 @@
 
 <br />
 <p align="center">
-  <a href="https://github.com/TCP-Tech/CodeUtsava9.0">
-    <img src="/src/assets/images/codeutsava logo.svg" alt="CodeUtsava 9.0 Banner Logo" width="700" style="object-fit:cover; object-position:top; height:100px; margin-bottom:-40px;">
+  <a href="https://github.com/TCP-Tech/CodeUtsava9.0" style="object-fit:cover; object-position:top; height:100px; margin-bottom:-40px;" width="700" >
+    <img src="/src/assets/images/codeutsava logo.svg" alt="CodeUtsava 9.0 Banner Logo" width="700" >
   </a>
 
   <h3 align="center">CodeUtsava 9.0 - Code Carnival 🎪</h3>
