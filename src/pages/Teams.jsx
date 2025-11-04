@@ -20,6 +20,7 @@ import bg_image from "../assets/images/bg-part2.jpg";
 import default_profile from "../assets/images/dummys.jpeg";
 
 import { departmentColors, hierarchyLevels } from "../assets/data/teamsData.js";
+import techTeamGithub from "../assets/data/techTeamGithub.js";
 
 // Team member card component with carnival styling
 const TeamCard = ({ member, index, level }) => {
@@ -621,6 +622,43 @@ export default function Teams() {
         });
     };
 
+    // 🎯 Function to inject GitHub IDs from techTeamGithub data
+    const injectGithubIds = (members, memberType) => {
+        if (!members || members.length === 0) return members;
+
+        // Map member_type to techTeamGithub type
+        const typeMapping = {
+            MNG: "manager",
+            // Add more mappings if needed
+        };
+
+        const techType = typeMapping[memberType];
+        if (!techType) return members; // If no mapping, return unchanged
+
+        return members.map((member) => {
+            // Find matching tech team member by name and type
+            const techMember = techTeamGithub.find(
+                (tech) =>
+                    tech.name.toLowerCase().trim() ===
+                        member.name.toLowerCase().trim() &&
+                    tech.type === techType
+            );
+
+            if (techMember && techMember.github) {
+                // Inject GitHub ID into member's social
+                return {
+                    ...member,
+                    social: {
+                        ...member.social,
+                        github: techMember.github,
+                    },
+                };
+            }
+
+            return member;
+        });
+    };
+
     useEffect(() => {
         async function getTeamData() {
             try {
@@ -723,33 +761,45 @@ export default function Teams() {
                     // Categorize by member_type
                     const categorized = {
                         overallCoordinators: sortByDomainPriority(
-                            addMockSocialLinks(
-                                transformedData.filter(
-                                    (m) => m.member_type === "OCO"
+                            injectGithubIds(
+                                addMockSocialLinks(
+                                    transformedData.filter(
+                                        (m) => m.member_type === "OCO"
+                                    ),
+                                    "OCO"
                                 ),
                                 "OCO"
                             )
                         ),
                         headCoordinators: sortByDomainPriority(
-                            addMockSocialLinks(
-                                transformedData.filter(
-                                    (m) => m.member_type === "HCO"
+                            injectGithubIds(
+                                addMockSocialLinks(
+                                    transformedData.filter(
+                                        (m) => m.member_type === "HCO"
+                                    ),
+                                    "HCO"
                                 ),
                                 "HCO"
                             )
                         ),
                         managers: sortByDomainPriority(
-                            addMockSocialLinks(
-                                transformedData.filter(
-                                    (m) => m.member_type === "MNG"
+                            injectGithubIds(
+                                addMockSocialLinks(
+                                    transformedData.filter(
+                                        (m) => m.member_type === "MNG"
+                                    ),
+                                    "MNG"
                                 ),
                                 "MNG"
                             )
                         ),
                         executives: sortByDomainPriority(
-                            addMockSocialLinks(
-                                transformedData.filter(
-                                    (m) => m.member_type === "EXC"
+                            injectGithubIds(
+                                addMockSocialLinks(
+                                    transformedData.filter(
+                                        (m) => m.member_type === "EXC"
+                                    ),
+                                    "EXC"
                                 ),
                                 "EXC"
                             )
