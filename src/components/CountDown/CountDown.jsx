@@ -3,6 +3,7 @@ import $ from "jquery";
 import "./CountDown.css";
 import SparkleLayer from "../overlays/SparkleLayer.jsx";
 import Fireworks from "../overlays/Fireworks.jsx";
+import Cursor from "../cursor/Cursor.jsx";
 
 // Make jQuery available globally BEFORE importing FlipClock
 if (typeof window !== "undefined") {
@@ -159,37 +160,57 @@ const CountDown = () => {
     }, [isFlipClockReady]);
 
     return (
-        <div className="codeutsava_countDown-container h-screen rye-regular">
-            <SparkleLayer className="fixed inset-0 z-10 pointer-events-none" />
-            <Fireworks className="fixed inset-0 z-20" />
-            <div className="dark-cover">
-                <div className="absolute top-5 text-2xl">
-                    <a href="/">Back to Home</a>
-                </div>
-                <input
-                    type="hidden"
-                    name="csrfmiddlewaretoken"
-                    value="{{ csrf_token }}"
-                />
-                <div className="cu-countDown-header">
-                    <h1 className="cu-countDown-header-heading text-6xl ">
-                        Hackathon CountDown
-                    </h1>
-                </div>
-                <div className="countdown-timer">
-                    <div id="flipclock" ref={flipClockRef}></div>
-                    <div id="countDown-message" ref={messageRef}></div>
-                    <button
-                        id="start-button"
-                        className="start-countdown button"
-                        ref={startButtonRef}
-                        onClick={handleStart}
+        <Cursor>
+            <div className="codeutsava_countDown-container h-screen">
+                <SparkleLayer className="fixed inset-0 z-10 pointer-events-none" />
+                <Fireworks className="fixed inset-0 z-20 pointer-events-none" />
+                <div className="dark-cover">
+                    {/* Back to Home Link */}
+                    <a
+                        href="/"
+                        className="absolute top-6 left-6 text-lg md:text-xl font-rye text-white hover:text-[#F3A83A] transition-all duration-300 hover:scale-105 z-50"
+                        style={{
+                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
+                        }}
                     >
-                        Start
-                    </button>
+                        ← Back to Home
+                    </a>
+
+                    <input
+                        type="hidden"
+                        name="csrfmiddlewaretoken"
+                        value="{{ csrf_token }}"
+                    />
+
+                    {/* Header */}
+                    <div className="cu-countDown-header">
+                        <h1 className="cu-countDown-header-heading font-rye text-4xl md:text-6xl lg:text-7xl text-[#F3A83A] mb-8">
+                            Hackathon CountDown
+                        </h1>
+                    </div>
+
+                    {/* Countdown Timer Container */}
+                    <div className="countdown-timer-wrapper">
+                        <div className="countdown-timer">
+                            <div id="flipclock" ref={flipClockRef}></div>
+                            <div
+                                id="countDown-message"
+                                ref={messageRef}
+                                className="countdown-message font-bebas"
+                            ></div>
+                            <button
+                                id="start-button"
+                                className="start-countdown-btn font-rye"
+                                ref={startButtonRef}
+                                onClick={handleStart}
+                            >
+                                🎪 Start Countdown 🎪
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Cursor>
     );
 };
 
