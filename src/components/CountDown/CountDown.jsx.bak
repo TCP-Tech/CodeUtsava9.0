@@ -1,33 +1,26 @@
-﻿import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import $ from "jquery";
 import "./CountDown.css";
 import SparkleLayer from "../overlays/SparkleLayer.jsx";
 import Fireworks from "../overlays/Fireworks.jsx";
+import 'flipclock/dist/flipclock.css';
 
-// Make jQuery available globally BEFORE importing FlipClock
-if (typeof window !== "undefined") {
-    window.jQuery = $;
-    window.$ = $;
-}
+// Make jQuery available globally
+window.jQuery = $;
+window.$ = $;
 
-// Import FlipClock CSS and JS with correct paths (use the exported path from package.json)
-import "flipclock/themes/flipclock";
-import { flipClock, elapsedTime, theme, stopWhen } from "flipclock";
+// Import FlipClock after jQuery is set
+import('flipclock').then(() => {
+    // FlipClock is now available as a jQuery plugin
+});
 
 const CountDown = () => {
     const messageRef = useRef(null);
     const startButtonRef = useRef(null);
     const flipClockRef = useRef(null);
     const [clock, setClock] = useState(null);
-    const [isFlipClockReady, setIsFlipClockReady] = useState(false);
     const baseUrl = "https://codeutsava.nitrr.ac.in/server/";
     const countdownDuration = 28 * 60 * 60 * 1000; // 28 hours
-
-    // Check if FlipClock is available
-    useEffect(() => {
-        // FlipClock is ready after import
-        setIsFlipClockReady(true);
-    }, []);
 
     const fetchCounterData = async () => {
         try {
@@ -43,7 +36,7 @@ const CountDown = () => {
     const setCounterData = async (flag, startTime, endTime) => {
         const csrftoken = document.querySelector(
             "[name=csrfmiddlewaretoken]"
-        )?.value;
+        ).value;
         try {
             const response = await fetch(`${baseUrl}setcounter/`, {
                 method: "POST",
@@ -61,49 +54,13 @@ const CountDown = () => {
     };
 
     const initializeFlipClock = (remainingTime) => {
-        if (!isFlipClockReady) {
-            console.warn("FlipClock is not ready yet");
-            return;
-        }
-
-        if (!flipClockRef.current) {
-            console.warn("FlipClock ref is not available");
-            return;
-        }
-
-        try {
-            // Clean up existing clock if any
-            if (clock) {
-                clock.unmount();
-                setClock(null);
-            }
-
-            // Clear the container
-            flipClockRef.current.innerHTML = "";
-
-            // Calculate start and end dates for countdown
-            const now = new Date();
-            const endDate = new Date(now.getTime() + remainingTime);
-
-            // Create an elapsed time face for countdown (from now to end date)
-            const elapsedTimeFace = elapsedTime({
-                from: now,
-                to: endDate,
-                format: "hh:mm:ss", // lowercase format for hours:minutes:seconds
-            });
-
-            // Create the FlipClock with the elapsed time face and theme
-            const fc = flipClock({
-                face: elapsedTimeFace,
-                theme: theme(),
-                parent: flipClockRef.current,
-                autoStart: true,
-            });
-
-            setClock(fc);
-        } catch (error) {
-            console.error("Error initializing FlipClock:", error);
-        }
+        const countdownSeconds = Math.floor(remainingTime / 1000);
+        const fc = $(flipClockRef.current).FlipClock(countdownSeconds, {
+            clockFace: "HourlyCounter",
+            countdown: true,
+            autoStart: true,
+        });
+        setClock(fc);
     };
 
     const handleStart = async () => {
@@ -124,8 +81,6 @@ const CountDown = () => {
     };
 
     useEffect(() => {
-        if (!isFlipClockReady) return;
-
         (async () => {
             const counterData = await fetchCounterData();
             const currentTime = Date.now();
@@ -138,28 +93,25 @@ const CountDown = () => {
                 } else {
                     if (messageRef.current) {
                         messageRef.current.textContent =
-                            "GAME OVER: Hackathon Complete! You've Leveled Up!";
+                            "GAME OVER: Hackathon Complete! You’ve Leveled Up!";
                         messageRef.current.style.fontSize = "1.5rem";
                     }
                     if (startButtonRef.current)
                         startButtonRef.current.style.display = "none";
                 }
             } else {
-                // Show clock at 00:00:00 when no countdown is active (matching last year's behavior)
                 initializeFlipClock(0);
             }
         })();
-
-        // Cleanup on unmount
-        return () => {
-            if (clock) {
-                clock.unmount();
-            }
-        };
-    }, [isFlipClockReady]);
+    }, []);
 
     return (
         <div className="codeutsava_countDown-container h-screen rye-regular">
+            {/* <BackgroundMedia
+                imageSrc={bgImage}
+                darken={0.4}
+                className="fixed inset-0 z-0"
+                /> */}
             <SparkleLayer className="fixed inset-0 z-10 pointer-events-none" />
             <Fireworks className="fixed inset-0 z-20" />
             <div className="dark-cover">

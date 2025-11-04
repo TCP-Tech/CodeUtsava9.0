@@ -389,10 +389,11 @@ const TeamCard = ({ member, index, level }) => {
                     {/* Name with carnival typography - scrolling for long names */}
                     <div
                         ref={nameContainerRef}
-                        className={`relative overflow-hidden h-7 flex items-center ${isOverflowing
-                            ? "justify-start pl-2"
-                            : "justify-center"
-                            }`}
+                        className={`relative overflow-hidden h-7 flex items-center ${
+                            isOverflowing
+                                ? "justify-start pl-2"
+                                : "justify-center"
+                        }`}
                         aria-hidden={false}
                     >
                         {/* Non-overflowing: simple centered name */}
@@ -460,7 +461,6 @@ const TeamCard = ({ member, index, level }) => {
                         >
                             {member.role}
                         </p>
-
                     </div>
 
                     {/* Enhanced Social Links with Reveal Animation */}
@@ -561,7 +561,7 @@ const TeamSection = ({ title, members, level, description }) => {
 
 export default function Teams() {
     // 🎪 MOCK SOCIAL LINKS FLAG - Set to false to remove mock data
-    const ENABLE_MOCK_SOCIAL_LINKS = true;
+    const ENABLE_MOCK_SOCIAL_LINKS = false;
 
     const [isLoading, setIsLoading] = useState(true);
     const [teamData, setTeamData] = useState({
@@ -664,7 +664,12 @@ export default function Teams() {
                                     name: member.name || "Unknown",
                                     role: member.domain || "Team Member",
                                     department: member.domain || "General",
-                                    image: (member.image || default_profile).replace("http://localhost:8000", "https://codeutsava.nitrr.ac.in"),
+                                    image: (
+                                        member.image || default_profile
+                                    ).replace(
+                                        "http://localhost:8000",
+                                        "https://codeutsava.nitrr.ac.in"
+                                    ),
                                     bio:
                                         member.branch && member.year
                                             ? `${member.branch} - Year ${member.year}`
@@ -711,7 +716,7 @@ export default function Teams() {
                                     department: s.department,
                                 }))
                             );
-                        } catch (e) { }
+                        } catch (e) {}
                         return sorted;
                     };
 
@@ -751,7 +756,7 @@ export default function Teams() {
                         ),
                     };
 
-                    categorized.overallCoordinators.map(member => {
+                    categorized.overallCoordinators.map((member) => {
                         member.role = "Overall Coordinator";
                     });
 
