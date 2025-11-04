@@ -15,7 +15,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/TCP-Tech/CodeUtsava9.0">
-    <img src="/src/assets/images/codeutsava logo.svg" alt="CodeUtsava 9.0 Banner Logo" width="400">
+    <img src="/src/assets/images/codeutsava logo.svg" alt="CodeUtsava 9.0 Banner Logo" width="400" style="object-fit:contain; object-position:top; height:220px; margin-bottom:-40px;">
   </a>
 
   <h3 align="center">CodeUtsava 9.0 - Code Carnival 🎪</h3>
@@ -55,7 +55,7 @@
       </ul>
     </li>
     <li><a href="#license">License</a></li>
-    <li><a href="#Turing Club Of Programmers">Turing Club Of Programmers</a></li>
+    <li><a href="#turing-club-of-programmers">Turing Club Of Programmers</a></li>
     <li><a href="#starware">Starware</a></li>
   </ol>
 </details>
