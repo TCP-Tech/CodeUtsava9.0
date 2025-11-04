@@ -21,13 +21,16 @@ import CountDown from "../components/CountDown/CountDown.jsx";
 import ProblemStatements from "../components/problemstatements/ProblemStatements.jsx";
 import TeamsShortlisted from "../components/teamsShortlisted/TeamsShortlisted.jsx";
 
-
 export default function Home({ skipIntro = false }) {
     // Check sessionStorage for intro flag
-    const sessionIntroSkipped = typeof window !== 'undefined' && window.sessionStorage.getItem('introSkipped') === 'true';
+    const sessionIntroSkipped =
+        typeof window !== "undefined" &&
+        window.sessionStorage.getItem("introSkipped") === "true";
     const [revealed, setRevealed] = useState(skipIntro || sessionIntroSkipped);
     const [curtainProgress, setCurtainProgress] = useState(0);
-    const [heroAnimationsStarted, setHeroAnimationsStarted] = useState(skipIntro || sessionIntroSkipped);
+    const [heroAnimationsStarted, setHeroAnimationsStarted] = useState(
+        skipIntro || sessionIntroSkipped
+    );
     const [showHero, setShowHero] = useState(skipIntro || sessionIntroSkipped);
 
     // Handle curtain progress from Intro component
@@ -48,8 +51,8 @@ export default function Home({ skipIntro = false }) {
             setTimeout(() => {
                 setRevealed(true);
                 // Set sessionStorage flag so intro won't show again this session
-                if (typeof window !== 'undefined') {
-                    window.sessionStorage.setItem('introSkipped', 'true');
+                if (typeof window !== "undefined") {
+                    window.sessionStorage.setItem("introSkipped", "true");
                 }
             }, 1800);
         }
