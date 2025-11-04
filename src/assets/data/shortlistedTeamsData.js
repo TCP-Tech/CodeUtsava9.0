@@ -5,7 +5,7 @@ const shortlistedTeams = [
         member1: "Saniya Fatima",
         member2: "Shreyas Srivastava",
         member3: "Shreyas Hegde",
-        member4: "Hemant Bhagwat",
+        member4: "Hemang Bhagwat",
         college: "Dayananda Sagar College of Engineering, Bangalore",
     },
     {
@@ -225,12 +225,12 @@ const shortlistedTeams = [
         college: "NIT Raipur",
     },
     {
-        name: "Neural Ninjas",
+        name: "Neural_Ninjas",
         leader: "",
-        member1: "Ujjwal Agrawal",
-        member2: "Tejesh Sahu",
-        member3: "Sumit Soni",
-        member4: "Vedant Parihar",
+        member1: "Vipul Mahilange",
+        member2: "Omesh Janghel",
+        member3: "Ansh Gupta",
+        member4: "Ronaki Dinesh",
         college: "NIT Raipur",
     },
     {
