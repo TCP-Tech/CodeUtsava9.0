@@ -111,28 +111,18 @@ const CountDown = () => {
             let elapsedTimeFace;
 
             if (shouldCount) {
-                // Check if we've already passed the end time
-                const now = Date.now();
-                if (now >= endTime) {
-                    // Time's up - show final elapsed time
-                    elapsedTimeFace = elapsedTime({
-                        from: new Date(startTime),
-                        to: new Date(endTime), // Use actual end time
-                        format: "hh:mm:ss",
-                    });
-                } else {
-                    // Still counting - use end time as the stopping point
-                    elapsedTimeFace = elapsedTime({
-                        from: new Date(startTime),
-                        to: new Date(endTime), // Count until end time
-                        format: "hh:mm:ss",
-                    });
-                }
-            } else {
-                // Static clock - from and to are the same
+                // Still counting - count from start to end time
                 elapsedTimeFace = elapsedTime({
                     from: new Date(startTime),
-                    to: new Date(startTime), // Same time = no counting
+                    to: new Date(endTime), // Count until end time
+                    format: "hh:mm:ss",
+                });
+            } else {
+                // Static clock - show the exact duration between start and end
+                // This ensures it shows exactly 28:00:00 (or whatever the duration was) when stopped
+                elapsedTimeFace = elapsedTime({
+                    from: new Date(startTime),
+                    to: new Date(endTime), // Use actual end time to show exact duration
                     format: "hh:mm:ss",
                 });
             }
