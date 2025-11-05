@@ -87,7 +87,7 @@ const CountDown = () => {
         }
     };
 
-    const initializeFlipClock = (startTime, shouldCount = true) => {
+    const initializeFlipClock = (startTime, endTime, shouldCount = true) => {
         if (!isFlipClockReady) {
             console.warn("FlipClock is not ready yet");
             return;
@@ -111,21 +111,25 @@ const CountDown = () => {
             let elapsedTimeFace;
 
             if (shouldCount) {
-                // For elapsed time that continues counting, we need to use from: past, to: future
-                // This makes it count UP continuously
-                const now = new Date();
-                const futureTime = new Date(
-                    now.getTime() + 365 * 24 * 60 * 60 * 1000
-                ); // Add 1 year to allow continuous counting
-
-                // Create an elapsed time face showing time passed since start
-                elapsedTimeFace = elapsedTime({
-                    from: new Date(startTime),
-                    to: futureTime, // Set to far future so it keeps counting
-                    format: "hh:mm:ss", // lowercase format for hours:minutes:seconds
-                });
+                // Check if we've already passed the end time
+                const now = Date.now();
+                if (now >= endTime) {
+                    // Time's up - show final elapsed time
+                    elapsedTimeFace = elapsedTime({
+                        from: new Date(startTime),
+                        to: new Date(endTime), // Use actual end time
+                        format: "hh:mm:ss",
+                    });
+                } else {
+                    // Still counting - use end time as the stopping point
+                    elapsedTimeFace = elapsedTime({
+                        from: new Date(startTime),
+                        to: new Date(endTime), // Count until end time
+                        format: "hh:mm:ss",
+                    });
+                }
             } else {
-                // Static clock at 00:00:00 - from and to are the same
+                // Static clock - from and to are the same
                 elapsedTimeFace = elapsedTime({
                     from: new Date(startTime),
                     to: new Date(startTime), // Same time = no counting
@@ -154,7 +158,7 @@ const CountDown = () => {
                 const currentTime = Date.now();
                 const endTime = currentTime + countdownDuration;
                 await setCounterData(true, currentTime, endTime);
-                initializeFlipClock(currentTime, true); // true = start counting
+                initializeFlipClock(currentTime, endTime, true); // true = start counting
                 if (startButtonRef.current)
                     startButtonRef.current.style.display = "none";
             } else {
@@ -176,6 +180,8 @@ const CountDown = () => {
     useEffect(() => {
         if (!isFlipClockReady) return;
 
+        let intervalId;
+
         (async () => {
             const counterData = await fetchCounterData();
             const currentTime = Date.now();
@@ -189,8 +195,35 @@ const CountDown = () => {
                     if (startButtonRef.current)
                         startButtonRef.current.style.display = "none";
 
-                    // Initialize clock with the actual start time from server (counting)
-                    initializeFlipClock(counterData.startTime, true);
+                    // Initialize clock with the actual start time and end time from server
+                    initializeFlipClock(
+                        counterData.startTime,
+                        counterData.endTime,
+                        true
+                    );
+
+                    // Set up interval to check if time has ended
+                    intervalId = setInterval(async () => {
+                        const now = Date.now();
+                        if (now >= counterData.endTime) {
+                            // Time's up - show game over message
+                            if (messageRef.current) {
+                                messageRef.current.textContent =
+                                    "GAME OVER: Hackathon Complete! You've Leveled Up!";
+                                messageRef.current.style.fontSize = "1.5rem";
+                            }
+
+                            // Reinitialize clock to show final time (static)
+                            initializeFlipClock(
+                                counterData.startTime,
+                                counterData.endTime,
+                                false
+                            );
+
+                            // Clear the interval
+                            clearInterval(intervalId);
+                        }
+                    }, 1000); // Check every second
                 } else {
                     // Timer has ended
                     if (messageRef.current) {
@@ -202,7 +235,11 @@ const CountDown = () => {
                         startButtonRef.current.style.display = "none";
 
                     // Show the final elapsed time (static, not counting)
-                    initializeFlipClock(counterData.startTime, false);
+                    initializeFlipClock(
+                        counterData.startTime,
+                        counterData.endTime,
+                        false
+                    );
                 }
             } else {
                 // No countdown has been started yet - show button and clock at 00:00:00
@@ -211,7 +248,7 @@ const CountDown = () => {
 
                 // Show static clock at 00:00:00 when no countdown is active
                 const now = Date.now();
-                initializeFlipClock(now, false); // false = don't count
+                initializeFlipClock(now, now, false); // false = don't count
             }
         })();
 
@@ -219,6 +256,9 @@ const CountDown = () => {
         return () => {
             if (clock) {
                 clock.unmount();
+            }
+            if (intervalId) {
+                clearInterval(intervalId);
             }
         };
     }, [isFlipClockReady]);
