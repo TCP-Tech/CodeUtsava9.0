@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import $ from "jquery";
 import "./CountDown.css";
 import SparkleLayer from "../overlays/SparkleLayer.jsx";
@@ -11,9 +11,9 @@ if (typeof window !== "undefined") {
     window.$ = $;
 }
 
-// Import FlipClock CSS and JS with correct paths (use the exported path from package.json)
+// Import FlipClock CSS and JS
 import "flipclock/themes/flipclock";
-import { flipClock, elapsedTime, theme, stopWhen } from "flipclock";
+import { flipClock, countdown, theme } from "flipclock";
 
 const CountDown = () => {
     const messageRef = useRef(null);
@@ -26,7 +26,6 @@ const CountDown = () => {
 
     // Check if FlipClock is available
     useEffect(() => {
-        // FlipClock is ready after import
         setIsFlipClockReady(true);
     }, []);
 
@@ -42,7 +41,6 @@ const CountDown = () => {
     };
 
     const setCounterData = async (flag, startTime, endTime) => {
-        // Try to get CSRF token from cookie (Django sets csrftoken cookie)
         const getCsrfTokenFromCookie = () => {
             const name = "csrftoken";
             const cookies = document.cookie.split(";");
@@ -60,19 +58,13 @@ const CountDown = () => {
             document.querySelector("[name=csrfmiddlewaretoken]")?.value;
 
         try {
-            const headers = {
-                "Content-Type": "application/json",
-            };
-
-            // Only add CSRF token if it exists
-            if (csrftoken) {
-                headers["X-CSRFToken"] = csrftoken;
-            }
+            const headers = { "Content-Type": "application/json" };
+            if (csrftoken) headers["X-CSRFToken"] = csrftoken;
 
             const response = await fetch(`${baseUrl}setcounter/`, {
                 method: "POST",
                 headers: headers,
-                credentials: "include", // Include cookies for CSRF
+                credentials: "include",
                 body: JSON.stringify({ flag, startTime, endTime }),
             });
 
@@ -83,56 +75,43 @@ const CountDown = () => {
             return await response.json();
         } catch (error) {
             console.error("Error setting countdown data:", error);
-            throw error; // Re-throw to handle in handleStart
+            throw error;
         }
     };
 
+    // ✅ Fixed: Countdown version (28:00:00 → 00:00:00)
     const initializeFlipClock = (startTime, endTime, shouldCount = true) => {
-        if (!isFlipClockReady) {
-            console.warn("FlipClock is not ready yet");
-            return;
-        }
-
-        if (!flipClockRef.current) {
-            console.warn("FlipClock ref is not available");
-            return;
-        }
+        if (!isFlipClockReady) return;
+        if (!flipClockRef.current) return;
 
         try {
-            // Clean up existing clock if any
             if (clock) {
                 clock.unmount();
                 setClock(null);
             }
 
-            // Clear the container
             flipClockRef.current.innerHTML = "";
 
-            let elapsedTimeFace;
+            const now = Date.now();
+            const remaining = Math.max(0, endTime - now);
 
-            if (shouldCount) {
-                // Still counting - count from start to end time
-                elapsedTimeFace = elapsedTime({
-                    from: new Date(startTime),
-                    to: new Date(endTime), // Count until end time
-                    format: "hh:mm:ss",
-                });
-            } else {
-                // Static clock - show the exact duration between start and end
-                // This ensures it shows exactly 28:00:00 (or whatever the duration was) when stopped
-                elapsedTimeFace = elapsedTime({
-                    from: new Date(startTime),
-                    to: new Date(endTime), // Use actual end time to show exact duration
-                    format: "hh:mm:ss",
-                });
-            }
+            const countdownFace = countdown({
+                duration: remaining / 1000, // in seconds
+                format: "hh:mm:ss",
+                whenEnded: () => {
+                    if (messageRef.current) {
+                        messageRef.current.textContent =
+                            "GAME OVER: Hackathon Complete! You've Leveled Up!";
+                        messageRef.current.style.fontSize = "1.5rem";
+                    }
+                },
+            });
 
-            // Create the FlipClock with the elapsed time face and theme
             const fc = flipClock({
-                face: elapsedTimeFace,
+                face: countdownFace,
                 theme: theme(),
                 parent: flipClockRef.current,
-                autoStart: shouldCount, // Only auto-start if we want counting
+                autoStart: shouldCount,
             });
 
             setClock(fc);
@@ -148,7 +127,7 @@ const CountDown = () => {
                 const currentTime = Date.now();
                 const endTime = currentTime + countdownDuration;
                 await setCounterData(true, currentTime, endTime);
-                initializeFlipClock(currentTime, endTime, true); // true = start counting
+                initializeFlipClock(currentTime, endTime, true);
                 if (startButtonRef.current)
                     startButtonRef.current.style.display = "none";
             } else {
@@ -169,7 +148,6 @@ const CountDown = () => {
 
     useEffect(() => {
         if (!isFlipClockReady) return;
-
         let intervalId;
 
         (async () => {
@@ -177,45 +155,35 @@ const CountDown = () => {
             const currentTime = Date.now();
 
             if (counterData && counterData.flag) {
-                // Countdown has been started
                 const remainingTime = counterData.endTime - currentTime;
 
                 if (remainingTime > 0) {
-                    // Timer is still running - hide button and show elapsed time
                     if (startButtonRef.current)
                         startButtonRef.current.style.display = "none";
 
-                    // Initialize clock with the actual start time and end time from server
                     initializeFlipClock(
                         counterData.startTime,
                         counterData.endTime,
                         true
                     );
 
-                    // Set up interval to check if time has ended
-                    intervalId = setInterval(async () => {
+                    intervalId = setInterval(() => {
                         const now = Date.now();
                         if (now >= counterData.endTime) {
-                            // Time's up - show game over message
                             if (messageRef.current) {
                                 messageRef.current.textContent =
                                     "GAME OVER: Hackathon Complete! You've Leveled Up!";
                                 messageRef.current.style.fontSize = "1.5rem";
                             }
-
-                            // Reinitialize clock to show final time (static)
                             initializeFlipClock(
                                 counterData.startTime,
                                 counterData.endTime,
                                 false
                             );
-
-                            // Clear the interval
                             clearInterval(intervalId);
                         }
-                    }, 1000); // Check every second
+                    }, 1000);
                 } else {
-                    // Timer has ended
                     if (messageRef.current) {
                         messageRef.current.textContent =
                             "GAME OVER: Hackathon Complete! You've Leveled Up!";
@@ -224,7 +192,6 @@ const CountDown = () => {
                     if (startButtonRef.current)
                         startButtonRef.current.style.display = "none";
 
-                    // Show the final elapsed time (static, not counting)
                     initializeFlipClock(
                         counterData.startTime,
                         counterData.endTime,
@@ -232,24 +199,16 @@ const CountDown = () => {
                     );
                 }
             } else {
-                // No countdown has been started yet - show button and clock at 00:00:00
                 if (startButtonRef.current)
                     startButtonRef.current.style.display = "block";
-
-                // Show static clock at 00:00:00 when no countdown is active
                 const now = Date.now();
-                initializeFlipClock(now, now, false); // false = don't count
+                initializeFlipClock(now, now + countdownDuration, false);
             }
         })();
 
-        // Cleanup on unmount
         return () => {
-            if (clock) {
-                clock.unmount();
-            }
-            if (intervalId) {
-                clearInterval(intervalId);
-            }
+            if (clock) clock.unmount();
+            if (intervalId) clearInterval(intervalId);
         };
     }, [isFlipClockReady]);
 
@@ -259,7 +218,6 @@ const CountDown = () => {
                 <SparkleLayer className="fixed inset-0 z-10 pointer-events-none" />
                 <Fireworks className="fixed inset-0 z-20 pointer-events-none" />
                 <div className="dark-cover">
-                    {/* Back to Home Link */}
                     <a
                         href="/"
                         className="absolute top-6 left-6 text-lg md:text-xl font-rye text-white hover:text-[#F3A83A] transition-all duration-300 hover:scale-105 z-50"
@@ -276,14 +234,12 @@ const CountDown = () => {
                         value="{{ csrf_token }}"
                     />
 
-                    {/* Header */}
                     <div className="cu-countDown-header">
                         <h1 className="cu-countDown-header-heading font-rye text-4xl md:text-6xl lg:text-7xl text-[#F3A83A] mb-8">
                             Hackathon CountDown
                         </h1>
                     </div>
 
-                    {/* Countdown Timer Container */}
                     <div className="countdown-timer-wrapper">
                         <div className="countdown-timer">
                             <div id="flipclock" ref={flipClockRef}></div>
