@@ -34,7 +34,7 @@ jobs:
           PEM: ${{secrets.PEM}}
 
       - name: Doing the magic now
-        run: sudo scp -o StrictHostKeyChecking=no -i tcp.pem -r dist/* root@142.93.212.1:/home/CodeUtsava9.0/dist
+        run: sudo scp -o StrictHostKeyChecking=no -i tcp.pem -r dist/* root@165.22.210.222:/home/CodeUtsava9.0/dist
 
       - name: LIVE!!!
         run: echo "Site is Live!🚀🚀🚀"
